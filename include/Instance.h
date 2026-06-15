@@ -13,8 +13,8 @@ struct Node {
 
     int demand;
 
-    double e;
-    double l;
+    double e; // inicio ventana de tiempo
+    double l; // fin ventana de tiempo
     double serviceTime;
 
     bool isDepot;

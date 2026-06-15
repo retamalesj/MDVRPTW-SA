@@ -113,6 +113,26 @@ int main(int argc, char* argv[])
 
       cout << '\n';
     }
+
+    cout << "\n--- REPRESENTACION ---\n";
+
+    for (const Route &route : sol.routes)
+{
+    cout << "{ depot = "
+         << route.depot
+         << ", customers = { ";
+
+    for (size_t i = 0; i < route.customers.size(); i++)
+    {
+        cout << route.customers[i];
+
+        if (i < route.customers.size() - 1)
+            cout << ", ";
+    }
+
+    cout << " } }\n";
+}
+
   #endif
   
   double value = evaluateSolution(sol, instance, ALPHA, BETA);
