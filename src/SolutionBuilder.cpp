@@ -8,21 +8,19 @@
 using namespace std;
 
 Solution buildRandomSolution(
-    const Model &model,
-    int vehiclesPerDepot,
-    int capacity,
-    unsigned int seed)
+  const Instance &instance,
+  unsigned int seed)
 {
   mt19937 rng(seed);
 
   Solution sol;
 
-  int numDepots = model.numDepots;
-  int numNodes = model.allNodes.size();
+  int numDepots = instance.numDepots;
+  int numNodes = instance.allNodes.size();
 
   int firstCustomer = numDepots;
 
-  int maxRoutes = numDepots * vehiclesPerDepot;
+  int maxRoutes = numDepots * instance.vehiclesPerDepot;
 
   // Lista de clientes
   vector<int> customers;
@@ -42,7 +40,7 @@ Solution buildRandomSolution(
 
   for (int c : customers)
   {
-    int demand = model.allNodes[c].demand;
+    int demand = instance.allNodes[c].demand;
 
     bool assigned = false;
 
@@ -55,7 +53,7 @@ Solution buildRandomSolution(
 
     for (int rIdx : candidates)
     {
-      if (load[rIdx] + demand <= capacity)
+      if (load[rIdx] + demand <= instance.capacity)
       {
         sol.routes[rIdx].customers.push_back(c);
         load[rIdx] += demand;
@@ -74,36 +72,36 @@ Solution buildRandomSolution(
 
         // Buscar depósito más cercano al cliente c
         int bestDepot = 0;
-        double bestDist = model.dist[0][c];
+        double bestDist = instance.dist[0][c];
 
-        cout << "\nCliente: " << model.allNodes[c].id << '\n';
+        // cout << "\nCliente: " << instance.allNodes[c].id << '\n';
 
-        cout << "Depot "
-             << model.allNodes[0].id
-             << " -> distancia = "
-             << model.dist[0][c]
-             << '\n';
+        // cout << "Depot "
+        //      << instance.allNodes[0].id
+        //      << " -> distancia = "
+        //      << instance.dist[0][c]
+        //      << '\n';
 
-        for (int d = 1; d < model.numDepots; d++)
+        for (int d = 1; d < instance.numDepots; d++)
         {
-          cout << "Depot "
-               << model.allNodes[d].id
-               << " -> distancia = "
-               << model.dist[d][c]
-               << '\n';
+          // cout << "Depot "
+          //      << instance.allNodes[d].id
+          //      << " -> distancia = "
+          //      << instance.dist[d][c]
+          //      << '\n';
 
-          if (model.dist[d][c] < bestDist)
+          if (instance.dist[d][c] < bestDist)
           {
-            bestDist = model.dist[d][c];
+            bestDist = instance.dist[d][c];
             bestDepot = d;
           }
         }
 
-        cout << "Seleccionado: "
-             << model.allNodes[bestDepot].id
-             << " (distancia = "
-             << bestDist
-             << ")\n";
+        // cout << "Seleccionado: "
+        //      << instance.allNodes[bestDepot].id
+        //      << " (distancia = "
+        //      << bestDist
+        //      << ")\n";
 
         route.depot = bestDepot;
         route.customers.push_back(c);
@@ -113,8 +111,8 @@ Solution buildRandomSolution(
       }
       else
       {
-        // Ya no quedan vehículos disponibles
-        // Lo metemos donde menos daño haga
+        // ya no quedan vehículos disponibles
+        // lo metemos donde menos daño haga
         int bestRoute = 0;
 
         for (int i = 1; i < (int)load.size(); i++)

@@ -8,7 +8,7 @@ TARGET = mdvrptw
 
 SRC = src/main.cpp \
       src/Parser.cpp \
-      src/ModelBuilder.cpp \
+      src/InstanceProcessor.cpp \
       src/Evaluator.cpp \
       src/SolutionBuilder.cpp \
       src/Helpers.cpp

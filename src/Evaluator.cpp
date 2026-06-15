@@ -4,8 +4,7 @@ using namespace std;
 
 double evaluateSolution(
   const Solution &sol,
-  const Model &model,
-  int capacity,
+  const Instance &instance,
   double ALPHA,
   double BETA
 )
@@ -26,14 +25,14 @@ double evaluateSolution(
 
     int first = route.customers.front();
 
-    totalDistance += model.dist[depot][first];
-    t += model.dist[depot][first];
+    totalDistance += instance.dist[depot][first];
+    t += instance.dist[depot][first];
 
     for (size_t i = 0; i < route.customers.size(); i++)
     {
       int current = route.customers[i];
 
-      const Node &node = model.allNodes[current];
+      const Node &node = instance.allNodes[current];
 
       load += node.demand;
 
@@ -56,18 +55,18 @@ double evaluateSolution(
       {
         int next = route.customers[i + 1];
 
-        totalDistance += model.dist[current][next];
-        t += model.dist[current][next];
+        totalDistance += instance.dist[current][next];
+        t += instance.dist[current][next];
       }
     }
 
     // Último cliente -> depot
     int last = route.customers.back();
 
-    totalDistance += model.dist[last][depot];
+    totalDistance += instance.dist[last][depot];
 
     // Capacidad
-    if (load > capacity) capacityPenalty += load - capacity; // Carga - Capacidad 
+    if (load > instance.capacity) capacityPenalty += load - instance.capacity; // Carga - Capacidad 
 
   }
 

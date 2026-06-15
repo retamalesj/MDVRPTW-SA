@@ -3,8 +3,10 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 struct Node {
-    std::string id;
+    string id;
 
     double x;
     double y;
@@ -19,12 +21,20 @@ struct Node {
 };
 
 struct Instance {
-    std::string name;
+    string name;
 
     int numDepots;
+    int numCustomers;
     int vehiclesPerDepot;
     int capacity;
 
-    std::vector<Node> depots;
-    std::vector<Node> customers;
+    vector<Node> depots;
+    vector<Node> customers;
+
+    // Todos los nodos en un solo arreglo:
+    // [0..m-1] depósitos
+    // [m..] clientes
+    vector<Node> allNodes; // unificación de depósitos y clientes
+    
+    vector<vector<double>> dist; // matriz de distancias
 };

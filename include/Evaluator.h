@@ -1,12 +1,11 @@
 #pragma once
 
 #include "Solution.h"
-#include "Model.h"
+#include "Instance.h"
 
 double evaluateSolution(
     const Solution& sol,
-    const Model& model,
-    int capacity,
+    const Instance& instance,
     double ALPHA,
     double BETA
 );

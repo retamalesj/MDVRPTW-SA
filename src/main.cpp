@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Parser.h"
-#include "ModelBuilder.h"
+#include "InstanceProcessor.h"
 #include "SolutionBuilder.h"
 #include "Evaluator.h"
 
@@ -11,11 +11,11 @@ int main(int argc, char* argv[])
   double ALPHA = 100.0;
   double BETA = 100.0;
 
-    if (argc >= 3)
-    {
-      ALPHA = stod(argv[1]);
-      BETA = stod(argv[2]);
-    }
+  if (argc >= 3)
+  {
+    ALPHA = stod(argv[1]);
+    BETA = stod(argv[2]);
+  }
 
 
   Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
@@ -56,40 +56,35 @@ int main(int argc, char* argv[])
     }
   #endif
 
-  Model model = buildModel(instance);
+  process(instance);
 
   #ifdef DEBUG_MODE
-    cout << "\n--- REPRESENTACION ---\n";
+    cout << "\n--- INSTANCIA PROCESADA ---\n";
 
     cout << "Primer nodo: "
-        << model.allNodes[0].id
-        << " (" << model.allNodes[0].x
-        << "," << model.allNodes[0].y << ")\n";
+        << instance.allNodes[0].id
+        << " (" << instance.allNodes[0].x
+        << "," << instance.allNodes[0].y << ")\n";
 
-    cout << "Distancia 0 -> 1: " << model.dist[0][1] << '\n';
+    cout << "Distancia 0 -> 1: " << instance.dist[0][1] << '\n';
 
     cout << "\n--- MATRIZ DE DISTANCIAS ---\n";
-    int n = model.allNodes.size();
+    int n = instance.allNodes.size();
 
     for (int i = 0; i < n; i++)
     {
       for (int j = 0; j < n; j++)
       {
-        cout << model.dist[i][j] << "\t";
+        cout << instance.dist[i][j] << "\t";
       }
       cout << "\n";
     }
 
-    cout << "Depositos en modelo: "
-        << instance.depots.size() << '\n';
-
-    cout << "--- FIN DEBUG ---\n\n";
+    cout << "Depositos en modelo: " << instance.depots.size() << '\n';
   #endif
 
   Solution sol = buildRandomSolution(
-    model,
-    instance.vehiclesPerDepot,
-    instance.capacity,
+    instance,
     42
   );
 
@@ -102,25 +97,25 @@ int main(int argc, char* argv[])
 
       for (int c : sol.routes[r].customers)
       {
-        load += model.allNodes[c].demand;
+        load += instance.allNodes[c].demand;
       }
 
       cout << "Ruta " << r
-          << " | Depot: " << model.allNodes[sol.routes[r].depot].id
+          << " | Depot: " << instance.allNodes[sol.routes[r].depot].id
           << " | Carga: " << load
           << "/" << instance.capacity
           << " | Clientes: ";
 
       for (int c : sol.routes[r].customers)
       {
-        cout << model.allNodes[c].id << " ";
+        cout << instance.allNodes[c].id << " ";
       }
 
       cout << '\n';
     }
   #endif
   
-  double value = evaluateSolution(sol, model, instance.capacity, ALPHA, BETA);
+  double value = evaluateSolution(sol, instance, ALPHA, BETA);
 
   cout << "Función de evaluación: " << value << endl;
   
