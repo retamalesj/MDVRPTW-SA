@@ -6,5 +6,7 @@
 double evaluateSolution(
     const Solution& sol,
     const Model& model,
-    int capacity
+    int capacity,
+    double ALPHA,
+    double BETA
 );

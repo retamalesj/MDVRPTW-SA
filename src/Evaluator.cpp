@@ -2,13 +2,13 @@
 
 using namespace std;
 
-const double ALPHA = 100.0;
-const double BETA = 100.0;
-
 double evaluateSolution(
   const Solution &sol,
   const Model &model,
-  int capacity)
+  int capacity,
+  double ALPHA,
+  double BETA
+)
 {
   double totalDistance = 0.0;
   double capacityPenalty = 0.0;
@@ -21,13 +21,13 @@ double evaluateSolution(
 
     int depot = route.depot;
 
-    double currentTime = 0.0;
+    double t = 0.0;
     int load = 0;
 
     int first = route.customers.front();
 
     totalDistance += model.dist[depot][first];
-    currentTime += model.dist[depot][first];
+    t += model.dist[depot][first];
 
     for (size_t i = 0; i < route.customers.size(); i++)
     {
@@ -38,18 +38,18 @@ double evaluateSolution(
       load += node.demand;
 
       // Ventana temprana
-      if (currentTime < node.e)
+      if (t < node.e)
       {
-        currentTime = node.e;
+        t = node.e;
       }
 
       // Ventana tardía
-      if (currentTime > node.l)
+      if (t > node.l)
       {
-        timePenalty += currentTime - node.l; // tardanza
+        timePenalty += t - node.l; // tardanza
       }
 
-      currentTime += node.serviceTime;
+      t += node.serviceTime;
 
       // Cliente -> siguiente cliente
       if (i < route.customers.size() - 1)
@@ -57,7 +57,7 @@ double evaluateSolution(
         int next = route.customers[i + 1];
 
         totalDistance += model.dist[current][next];
-        currentTime += model.dist[current][next];
+        t += model.dist[current][next];
       }
     }
 
@@ -67,11 +67,9 @@ double evaluateSolution(
     totalDistance += model.dist[last][depot];
 
     // Capacidad
-    if (load > capacity)
-    {
-      capacityPenalty += load - capacity; // cargado - capacidad 
-    }
+    if (load > capacity) capacityPenalty += load - capacity; // Carga - Capacidad 
+
   }
 
-  return totalDistance + ALPHA * capacityPenalty + BETA * timePenalty;
+  return totalDistance + ALPHA * timePenalty + BETA * capacityPenalty;
 }

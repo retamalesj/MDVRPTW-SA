@@ -1,3 +1,6 @@
+ALPHA ?= 100
+BETA ?= 100
+
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 
@@ -18,7 +21,7 @@ debug: clean $(TARGET)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) $(ALPHA) $(BETA)
 
 clean:
 	rm -f $(OBJ) $(TARGET)
