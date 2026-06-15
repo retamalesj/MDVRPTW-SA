@@ -2,11 +2,17 @@ ALPHA ?= 100
 BETA ?= 100
 
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra
+CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude
 
 TARGET = mdvrptw
 
-SRC = main.cpp Parser.cpp ModelBuilder.cpp Evaluator.cpp SolutionBuilder.cpp Helpers.cpp
+SRC = src/main.cpp \
+      src/Parser.cpp \
+      src/ModelBuilder.cpp \
+      src/Evaluator.cpp \
+      src/SolutionBuilder.cpp \
+      src/Helpers.cpp
+
 OBJ = $(SRC:.cpp=.o)
 
 all: $(TARGET)
