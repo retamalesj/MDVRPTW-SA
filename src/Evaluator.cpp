@@ -64,6 +64,15 @@ double evaluateSolution(
     int last = route.customers.back();
 
     totalDistance += instance.dist[last][depot];
+    t += instance.dist[last][depot];
+
+    const Node& depotNode = instance.allNodes[depot];
+
+    // penalización de tardanza si retorna tarde
+    if (t > depotNode.l)
+    {
+      timePenalty += t - depotNode.l;
+    }
 
     // Capacidad
     if (load > instance.capacity) capacityPenalty += load - instance.capacity; // Carga - Capacidad 
