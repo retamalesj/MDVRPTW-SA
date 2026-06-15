@@ -3,6 +3,7 @@
 #include "InstanceProcessor.h"
 #include "SolutionBuilder.h"
 #include "Evaluator.h"
+#include "SolutionUtils.h"
 
 using namespace std;
 
@@ -10,13 +11,14 @@ int main(int argc, char* argv[])
 {
   double ALPHA = 100.0;
   double BETA = 100.0;
+  unsigned int SEED = 42;
 
-  if (argc >= 3)
+  if (argc >= 4)
   {
     ALPHA = stod(argv[1]);
     BETA = stod(argv[2]);
+    SEED = (unsigned)stoul(argv[3]);
   }
-
 
   Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
 
@@ -85,7 +87,7 @@ int main(int argc, char* argv[])
 
   Solution sol = buildRandomSolution(
     instance,
-    42
+    SEED
   );
 
   #ifdef DEBUG_MODE
@@ -135,10 +137,7 @@ int main(int argc, char* argv[])
 
   #endif
   
-  double value = evaluateSolution(sol, instance, ALPHA, BETA);
-
-  cout << "Función de evaluación: " << value << endl;
-  
+  writeSolution(SEED, sol, instance, ALPHA, BETA);
 
   return 0;
 }

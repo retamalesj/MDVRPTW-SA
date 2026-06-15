@@ -1,5 +1,6 @@
-ALPHA ?= 100
-BETA ?= 100
+ALPHA ?= 10
+BETA ?= 10
+SEED ?= 42
 
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -Iinclude
@@ -11,6 +12,7 @@ SRC = src/main.cpp \
       src/InstanceProcessor.cpp \
       src/Evaluator.cpp \
       src/SolutionBuilder.cpp \
+      src/SolutionUtils.cpp \
       src/Helpers.cpp
 
 OBJ = $(SRC:.cpp=.o)
@@ -27,7 +29,7 @@ debug: clean $(TARGET)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET) $(ALPHA) $(BETA)
+	./$(TARGET) $(ALPHA) $(BETA) $(SEED)
 
 clean:
 	rm -f $(OBJ) $(TARGET)

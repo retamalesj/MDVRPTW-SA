@@ -1,57 +1,133 @@
 #include "SolutionUtils.h"
+#include "Evaluator.h"
 
 #include <unordered_set>
 #include <iostream>
 
 using namespace std;
 
-bool isValidSolution(const Solution &sol, const Model &model)
+void writeSolution(
+     unsigned int SEED, 
+     const Solution &sol,
+     const Instance &instance,
+     double ALPHA,
+     double BETA)
 {
-  unordered_set<int> visited;
+  EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA, BETA);
 
-  int numNodes = model.allNodes.size();
-  int numDepots = model.numDepots;
+  cout << "\n========== SOLUCION ==========\n\n";
+  cout << "Semilla: " << SEED << '\n';
 
-  int firstCustomer = numDepots;
+  cout << "Instancia: " << instance.name << '\n';
 
-  for (const auto &route : sol.routes)
+  cout << "Valor Funcion Objetivo: "
+       << eval.objectiveValue << '\n';
+
+  cout << "Distancia total recorrida: "
+       << eval.totalDistance << '\n';
+
+  cout << "Penalizacion tiempo: "
+       << eval.totalTimePenalty << '\n';
+
+  cout << "Penalizacion capacidad: "
+       << eval.totalCapacityPenalty << '\n';
+
+  cout << "Vehiculos usados: "
+       << eval.routeMetrics.size() << "\n\n";
+
+  cout << "=== RUTAS ===\n";
+
+  for (const RouteMetrics &rm : eval.routeMetrics)
   {
+    const Route &route = sol.routes[rm.routeId];
+
+    if (route.customers.empty())
+      continue;
+
+    int depot = route.depot;
+
+    cout << "\nDeposito "
+         << instance.allNodes[depot].id
+         << " (X="
+         << instance.allNodes[depot].x
+         << ", Y="
+         << instance.allNodes[depot].y
+         << ")\n";
+
+    cout << "Vehiculo " << (rm.routeId + 1) << '\n';
+
+    cout << "Ruta: "
+         << instance.allNodes[depot].id;
+
     for (int c : route.customers)
     {
-      // índice fuera de rango
-      if (c < 0 || c >= numNodes)
-      {
-        cout << "Cliente fuera de rango: " << c << "\n";
-        return false;
-      }
-
-      // no debe ser depósito
-      if (c < firstCustomer)
-      {
-        cout << "Nodo inválido (es depósito): " << c << "\n";
-        return false;
-      }
-
-      // clientes duplicados
-      if (visited.count(c))
-      {
-        cout << "Cliente repetido: " << c << "\n";
-        return false;
-      }
-
-      visited.insert(c);
+      cout << " -> "
+           << instance.allNodes[c].id;
     }
+
+    cout << " -> "
+         << instance.allNodes[depot].id
+         << '\n';
+
+    cout << "Carga: "
+         << rm.load
+         << " / "
+         << instance.capacity
+         << '\n';
+
+    cout << "Distancia: "
+         << rm.distance
+         << '\n';
+
+    cout << "Tiempo: "
+         << rm.time
+         << '\n';
   }
 
-  // todos los clientes deben estar presentes
-  for (int i = firstCustomer; i < numNodes; i++)
+  cout << "\n=== PENALIZACIONES DE TIEMPO ===\n";
+
+  if (eval.timePenalties.empty())
   {
-    if (!visited.count(i))
+    cout << "Ninguna\n";
+  }
+  else
+  {
+    for (const TimePenalty &p : eval.timePenalties)
     {
-      cout << "Cliente faltante: " << i << "\n";
-      return false;
+      cout << (p.isDepot ? "Deposito " : "Cliente ")
+           << p.nodeId
+           << ": llegada="
+           << p.arrivalTime
+           << ", ventana=["
+           << p.windowStart
+           << ", "
+           << p.windowEnd
+           << "]"
+           << ", tardanza="
+           << p.violation
+           << '\n';
     }
   }
 
-  return true;
+  cout << "\n=== PENALIZACIONES DE CAPACIDAD ===\n";
+
+  if (eval.capacityPenalties.empty())
+  {
+    cout << "Ninguna\n";
+  }
+  else
+  {
+    for (const CapacityPenalty &p : eval.capacityPenalties)
+    {
+      cout << "Ruta "
+           << p.routeId
+           << ": carga="
+           << p.load
+           << ", capacidad="
+           << p.capacity
+           << ", exceso="
+           << p.violation
+           << '\n';
+    }
+  }
 }
