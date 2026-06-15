@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     }
 
 
-  Instance instance = readInstance("../Instancias/instancias_25/C101.txt");
+  Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
 
   #ifdef DEBUG_MODE
     cout << "Instancia: " << instance.name << '\n';
