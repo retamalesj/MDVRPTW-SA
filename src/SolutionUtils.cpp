@@ -3,6 +3,7 @@
 
 #include <unordered_set>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -37,14 +38,18 @@ void writeSolution(
 
   cout << "=== RUTAS ===\n";
 
+  // Agrupar por depósito
+  map<int, vector<const RouteMetrics*>> byDepot;
+
   for (const RouteMetrics &rm : eval.routeMetrics)
   {
     const Route &route = sol.routes[rm.routeId];
+    byDepot[route.depot].push_back(&rm);
+  }
 
-    if (route.customers.empty())
-      continue;
-
-    int depot = route.depot;
+  for (const auto &entry : byDepot)
+  {
+    int depot = entry.first;
 
     cout << "\nDeposito "
          << instance.allNodes[depot].id
@@ -52,36 +57,42 @@ void writeSolution(
          << instance.allNodes[depot].x
          << ", Y="
          << instance.allNodes[depot].y
-         << ")\n";
+         << ")";
 
-    cout << "Vehiculo " << (rm.routeId + 1) << '\n';
-
-    cout << "Ruta: "
-         << instance.allNodes[depot].id;
-
-    for (int c : route.customers)
+    for (const RouteMetrics *rmPtr : entry.second)
     {
+      const RouteMetrics &rm = *rmPtr;
+      const Route &route = sol.routes[rm.routeId];
+
+      cout << "\nVehiculo " << (rm.routeId + 1) << '\n';
+
+      cout << "Ruta: "
+           << instance.allNodes[depot].id;
+
+      for (int c : route.customers)
+      {
+        cout << " -> "
+             << instance.allNodes[c].id;
+      }
+
       cout << " -> "
-           << instance.allNodes[c].id;
+           << instance.allNodes[depot].id
+           << '\n';
+
+      cout << "Carga: "
+           << rm.load
+           << " / "
+           << instance.capacity
+           << '\n';
+
+      cout << "Distancia: "
+           << rm.distance
+           << '\n';
+
+      cout << "Tiempo: "
+           << rm.time
+           << '\n';
     }
-
-    cout << " -> "
-         << instance.allNodes[depot].id
-         << '\n';
-
-    cout << "Carga: "
-         << rm.load
-         << " / "
-         << instance.capacity
-         << '\n';
-
-    cout << "Distancia: "
-         << rm.distance
-         << '\n';
-
-    cout << "Tiempo: "
-         << rm.time
-         << '\n';
   }
 
   cout << "\n=== PENALIZACIONES DE TIEMPO ===\n";
