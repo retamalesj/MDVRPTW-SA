@@ -4,6 +4,8 @@
 #include <unordered_set>
 #include <iostream>
 #include <map>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -16,24 +18,26 @@ void writeSolution(
 {
   EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA, BETA);
 
-  cout << "\n========== SOLUCION ==========\n\n";
-  cout << "Semilla: " << SEED << '\n';
+  ostringstream out;
 
-  cout << "Instancia: " << instance.name << '\n';
+  out << "\n========== SOLUCION ==========\n\n";
+  out << "Semilla: " << SEED << '\n';
 
-  cout << "Valor Funcion Objetivo: "
+  out << "Instancia: " << instance.name << '\n';
+
+  out << "Valor Funcion Objetivo: "
        << eval.objectiveValue << '\n';
 
-  cout << "Distancia total recorrida: "
+  out << "Distancia total recorrida: "
        << eval.totalDistance << '\n';
 
-  cout << "Penalizacion tiempo: "
+  out << "Penalizacion tiempo: "
        << eval.totalTimePenalty << '\n';
 
-  cout << "Vehiculos usados: "
+  out << "Vehiculos usados: "
        << eval.routeMetrics.size() << "\n\n";
 
-  cout << "=== RUTAS ===\n";
+  out << "=== RUTAS ===\n";
 
   // Agrupar por depósito
   map<int, vector<const RouteMetrics *>> byDepot;
@@ -48,7 +52,7 @@ void writeSolution(
   {
     int depot = entry.first;
 
-    cout << "\nDeposito "
+    out << "\nDeposito "
          << instance.allNodes[depot].id
          << " (X="
          << instance.allNodes[depot].x
@@ -61,48 +65,48 @@ void writeSolution(
       const RouteMetrics &rm = *rmPtr;
       const Route &route = sol.routes[rm.routeId];
 
-      cout << "\nVehiculo " << (rm.routeId + 1) << '\n';
+      out << "\nVehiculo " << (rm.routeId + 1) << '\n';
 
-      cout << "Ruta: "
+      out << "Ruta: "
            << instance.allNodes[depot].id;
 
       for (int c : route.customers)
       {
-        cout << " -> "
+        out << " -> "
              << instance.allNodes[c].id;
       }
 
-      cout << " -> "
+      out << " -> "
            << instance.allNodes[depot].id
            << '\n';
 
-      cout << "Carga: "
+      out << "Carga: "
            << rm.load
            << " / "
            << instance.capacity
            << '\n';
 
-      cout << "Distancia: "
+      out << "Distancia: "
            << rm.distance
            << '\n';
 
-      cout << "Tiempo: "
+      out << "Tiempo: "
            << rm.time
            << '\n';
     }
   }
 
-  cout << "\n=== PENALIZACIONES DE TIEMPO ===\n";
+  out << "\n=== PENALIZACIONES DE TIEMPO ===\n";
 
   if (eval.timePenalties.empty())
   {
-    cout << "Ninguna\n";
+    out << "Ninguna\n";
   }
   else
   {
     for (const TimePenalty &p : eval.timePenalties)
     {
-      cout << (p.isDepot ? "Deposito " : "Cliente ")
+      out << (p.isDepot ? "Deposito " : "Cliente ")
            << p.nodeId
            << ": llegada="
            << p.arrivalTime
@@ -138,6 +142,18 @@ void writeSolution(
   //          << '\n';
   //   }
   // }
+
+  string text = out.str();
+
+  cout << text;
+
+  string filename = "./Soluciones/instancias_" + to_string(instance.numCustomers) + "/" + instance.name + ".txt";
+  ofstream file(filename);
+
+  if (file)
+  {
+      file << text;
+  }
 }
 
 bool isFeasible(
