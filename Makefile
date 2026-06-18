@@ -10,6 +10,8 @@ TARGET = mdvrptw
 SRC = src/main.cpp \
       src/Parser.cpp \
       src/InstanceProcessor.cpp \
+      src/SA.cpp \
+      src/Moves.cpp \
       src/Evaluator.cpp \
       src/SolutionBuilder.cpp \
       src/SolutionUtils.cpp \

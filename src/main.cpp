@@ -4,6 +4,7 @@
 #include "SolutionBuilder.h"
 #include "Evaluator.h"
 #include "SolutionUtils.h"
+#include "SA.h"
 
 using namespace std;
 
@@ -85,7 +86,7 @@ int main(int argc, char* argv[])
     cout << "Depositos en modelo: " << instance.depots.size() << '\n';
   #endif
 
-  Solution sol = buildRandomSolution(
+  Solution initialSolution = buildRandomSolution(
     instance,
     SEED
   );
@@ -137,7 +138,19 @@ int main(int argc, char* argv[])
 
   #endif
   
-  writeSolution(SEED, sol, instance, ALPHA, BETA);
+  Solution Sbest = simulatedAnnealing(
+    initialSolution,
+    instance,
+    ALPHA,
+    BETA,
+    100000,
+    50,
+    SEED
+  );
+  
+  writeSolution(SEED, initialSolution, instance, ALPHA, BETA);
+
+  writeSolution(SEED, Sbest, instance, ALPHA, BETA);
 
   return 0;
 }
