@@ -3,6 +3,8 @@
 #include "Solution.h"
 #include "Instance.h"
 
+#include <random>
+
 Solution simulatedAnnealing(
   const Solution& initialSolution,
   const Instance& instance,
