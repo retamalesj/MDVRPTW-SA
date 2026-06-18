@@ -10,27 +10,23 @@ using namespace std;
 Solution simulatedAnnealing(
   const Solution &initialSolution,
   const Instance &instance,
-  double ALPHA,
-  double BETA,
-  int maxIterations,
-  int coolingInterval,
+  const Parameters& parameters,
   mt19937& rng)
 {
   Solution current = initialSolution;
   Solution Sbest = initialSolution;
 
-  double currentCost = evaluate(current, instance, ALPHA, BETA);
+  double currentCost = evaluate(current, instance, parameters.ALPHA, parameters.BETA);
 
   double bestCost = currentCost;
 
-  double temperature = 1000.0;
-  double coolingRate = 0.995;
+  double temperature = parameters.initialTemperature;
 
   uniform_real_distribution<double> probabilityDist(0.0, 1.0);
 
   uniform_int_distribution<int> moveDist(0, 1);
 
-  for (int iter = 1; iter <= maxIterations; iter++)
+  for (int iter = 1; iter <= parameters.maxIterations; iter++)
   {
     Solution neighbor = current;
 
@@ -49,7 +45,7 @@ Solution simulatedAnnealing(
 
     if (!success) continue;
 
-    double neighborCost = evaluate(neighbor, instance, ALPHA, BETA);
+    double neighborCost = evaluate(neighbor, instance, parameters.ALPHA, parameters.BETA);
 
     double delta = neighborCost - currentCost;
 
@@ -78,7 +74,7 @@ Solution simulatedAnnealing(
       }
     }
 
-    if (iter % coolingInterval == 0) temperature *= coolingRate;
+    if (iter % parameters.coolingInterval == 0) temperature *= parameters.coolingRate;
   }
 
   return Sbest;

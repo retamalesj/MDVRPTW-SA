@@ -10,15 +10,29 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-  double ALPHA = 100.0;
-  double BETA = 100.0;
+  double ALPHA = 10.0;
+  double BETA = 10.0;
+
+  double INITIAL_TEMPERATURE = 1000.0;
+  double COOLING_RATE = 0.995;
+
+  int MAX_ITERATIONS = 1000000;
+  int COOLING_INTERVAL = 100;
+
   unsigned int SEED = 42;
 
-  if (argc >= 4)
+  if (argc >= 8)
   {
     ALPHA = stod(argv[1]);
     BETA = stod(argv[2]);
-    SEED = (unsigned)stoul(argv[3]);
+    
+    INITIAL_TEMPERATURE = stod(argv[3]);
+    COOLING_RATE = stod(argv[4]);
+
+    MAX_ITERATIONS = stoi(argv[5]);
+    COOLING_INTERVAL = stoi(argv[6]);
+
+    SEED = (unsigned)stoul(argv[7]);
   }
 
   mt19937 rng(SEED);
@@ -140,13 +154,19 @@ int main(int argc, char* argv[])
 
   #endif
   
+  Parameters parameters = {
+    ALPHA,
+    BETA,
+    INITIAL_TEMPERATURE,
+    COOLING_RATE,
+    MAX_ITERATIONS,
+    COOLING_INTERVAL
+  };
+
   Solution Sbest = simulatedAnnealing(
     initialSolution,
     instance,
-    ALPHA,
-    BETA,
-    100000,
-    50,
+    parameters,
     rng
   );
   

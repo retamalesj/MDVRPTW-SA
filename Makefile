@@ -1,5 +1,12 @@
 ALPHA ?= 10
 BETA ?= 10
+
+INITIAL_TEMPERATURE ?= 1000
+COOLING_RATE ?= 0.995
+
+MAX_ITERATIONS ?= 1000000
+COOLING_INTERVAL ?= 100
+
 SEED ?= 42
 
 CXX = g++
@@ -31,7 +38,14 @@ debug: clean $(TARGET)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET) $(ALPHA) $(BETA) $(SEED)
+	./$(TARGET) \
+	$(ALPHA) \
+	$(BETA) \
+	$(INITIAL_TEMPERATURE) \
+	$(COOLING_RATE) \
+	$(MAX_ITERATIONS) \
+	$(COOLING_INTERVAL) \
+	$(SEED)
 
 clean:
 	rm -f $(OBJ) $(TARGET)
