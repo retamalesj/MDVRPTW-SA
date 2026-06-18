@@ -1,6 +1,7 @@
 #include "SA.h"
 #include "Evaluator.h"
 #include "Moves.h"
+#include "SolutionUtils.h"
 
 #include <random>
 #include <cmath>
@@ -44,6 +45,8 @@ Solution simulatedAnnealing(
     }
 
     if (!success) continue;
+    
+    if (!isFeasible(neighbor, instance)) continue;
 
     double neighborCost = evaluate(neighbor, instance, parameters.ALPHA, parameters.BETA);
 

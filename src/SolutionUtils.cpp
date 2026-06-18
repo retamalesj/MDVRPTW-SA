@@ -8,11 +8,11 @@
 using namespace std;
 
 void writeSolution(
-     unsigned int SEED, 
-     const Solution &sol,
-     const Instance &instance,
-     double ALPHA,
-     double BETA)
+    unsigned int SEED,
+    const Solution &sol,
+    const Instance &instance,
+    double ALPHA,
+    double BETA)
 {
   EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA, BETA);
 
@@ -30,16 +30,13 @@ void writeSolution(
   cout << "Penalizacion tiempo: "
        << eval.totalTimePenalty << '\n';
 
-  cout << "Penalizacion capacidad: "
-       << eval.totalCapacityPenalty << '\n';
-
   cout << "Vehiculos usados: "
        << eval.routeMetrics.size() << "\n\n";
 
   cout << "=== RUTAS ===\n";
 
   // Agrupar por depósito
-  map<int, vector<const RouteMetrics*>> byDepot;
+  map<int, vector<const RouteMetrics *>> byDepot;
 
   for (const RouteMetrics &rm : eval.routeMetrics)
   {
@@ -120,25 +117,47 @@ void writeSolution(
     }
   }
 
-  cout << "\n=== PENALIZACIONES DE CAPACIDAD ===\n";
+  // cout << "\n=== PENALIZACIONES DE CAPACIDAD ===\n";
 
-  if (eval.capacityPenalties.empty())
+  // if (eval.capacityPenalties.empty())
+  // {
+  //   cout << "Ninguna\n";
+  // }
+  // else
+  // {
+  //   for (const CapacityPenalty &p : eval.capacityPenalties)
+  //   {
+  //     cout << "Ruta "
+  //          << p.routeId
+  //          << ": carga="
+  //          << p.load
+  //          << ", capacidad="
+  //          << p.capacity
+  //          << ", exceso="
+  //          << p.violation
+  //          << '\n';
+  //   }
+  // }
+}
+
+bool isFeasible(
+  const Solution &sol,
+  const Instance &instance)
+{
+  for (const Route &route : sol.routes)
   {
-    cout << "Ninguna\n";
-  }
-  else
-  {
-    for (const CapacityPenalty &p : eval.capacityPenalties)
+    int load = 0;
+
+    for (int customer : route.customers)
     {
-      cout << "Ruta "
-           << p.routeId
-           << ": carga="
-           << p.load
-           << ", capacidad="
-           << p.capacity
-           << ", exceso="
-           << p.violation
-           << '\n';
+      load += instance.allNodes[customer].demand;
+    }
+
+    if (load > instance.capacity)
+    {
+      return false;
     }
   }
+
+  return true;
 }

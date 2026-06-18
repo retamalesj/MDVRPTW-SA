@@ -10,3 +10,8 @@ void writeSolution(
   double ALPHA,
   double BETA
 );
+
+bool isFeasible(
+  const Solution& sol,
+  const Instance& instance
+);

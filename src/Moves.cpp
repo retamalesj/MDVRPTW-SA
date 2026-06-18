@@ -3,22 +3,27 @@
 using namespace std;
 
 bool relocateMove(
-  Solution& sol,
-  mt19937& rng)
+    Solution &sol,
+    mt19937 &rng)
 {
-  if (sol.routes.size() < 2) return false;
+  if (sol.routes.size() < 2)
+    return false;
 
   uniform_int_distribution<int> routeDist(0, sol.routes.size() - 1);
 
   int originRouteId = routeDist(rng);
   int destinationRouteId = routeDist(rng);
 
-  while (originRouteId == destinationRouteId) { destinationRouteId = routeDist(rng); }
+  while (originRouteId == destinationRouteId)
+  {
+    destinationRouteId = routeDist(rng);
+  }
 
-  Route& originRoute = sol.routes[originRouteId];
-  Route& destinationRoute = sol.routes[destinationRouteId];
+  Route &originRoute = sol.routes[originRouteId];
+  Route &destinationRoute = sol.routes[destinationRouteId];
 
-  if (originRoute.customers.empty()) return false;
+  if (originRoute.customers.empty())
+    return false;
 
   uniform_int_distribution<int> customerDist(0, originRoute.customers.size() - 1);
 
@@ -34,7 +39,10 @@ bool relocateMove(
   destinationRoute.customers.insert(destinationRoute.customers.begin() + insertPos, customer);
 
   // si la ruta de origen queda vacía se elimina.
-  if (sol.routes[originRouteId].customers.empty()) { sol.routes.erase(sol.routes.begin() + originRouteId); }
+  if (sol.routes[originRouteId].customers.empty())
+  {
+    sol.routes.erase(sol.routes.begin() + originRouteId);
+  }
 
   return true;
 }
@@ -52,16 +60,14 @@ bool swapMove(
   int routeId = routeDist(rng);
   Route &route = sol.routes[routeId];
 
-  if (route.customers.size() < 2)
-    return false; // no hay suficientes clientes para el swap
+  if (route.customers.size() < 2) return false; // no hay suficientes clientes para el swap
 
   uniform_int_distribution<int> customerDist(0, route.customers.size() - 1);
 
   int i = customerDist(rng);
   int j = customerDist(rng);
 
-  while (i == j)
-    j = customerDist(rng);
+  while (i == j) j = customerDist(rng);
 
   swap(route.customers[i], route.customers[j]);
 
