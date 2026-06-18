@@ -9,10 +9,8 @@ using namespace std;
 
 Solution buildRandomSolution(
   const Instance &instance,
-  unsigned int seed)
+  mt19937& rng)
 {
-  mt19937 rng(seed);
-
   Solution sol;
 
   int numDepots = instance.numDepots;

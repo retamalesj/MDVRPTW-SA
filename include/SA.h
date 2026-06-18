@@ -10,5 +10,5 @@ Solution simulatedAnnealing(
   double BETA,
   int maxIterations,
   int coolingInterval,
-  unsigned int seed
+  mt19937& rng
 );

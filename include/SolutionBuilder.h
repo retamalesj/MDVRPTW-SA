@@ -7,5 +7,5 @@
 
 Solution buildRandomSolution(
   const Instance& instance,
-  unsigned int seed = 42
+  mt19937& rng
 );

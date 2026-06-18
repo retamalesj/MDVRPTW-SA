@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
     SEED = (unsigned)stoul(argv[3]);
   }
 
+  mt19937 rng(SEED);
+
   Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
 
   #ifdef DEBUG_MODE
@@ -88,7 +90,7 @@ int main(int argc, char* argv[])
 
   Solution initialSolution = buildRandomSolution(
     instance,
-    SEED
+    rng
   );
 
   #ifdef DEBUG_MODE
@@ -145,7 +147,7 @@ int main(int argc, char* argv[])
     BETA,
     100000,
     50,
-    SEED
+    rng
   );
   
   writeSolution(SEED, initialSolution, instance, ALPHA, BETA);
