@@ -31,3 +31,8 @@ string trim(const string &str)
 
   return string(begin, end);
 }
+
+int extractNumber(const string &id)
+{
+  return stoi(id.substr(id.find_first_of("0123456789")));
+}

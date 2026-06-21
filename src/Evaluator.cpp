@@ -9,7 +9,6 @@ double evaluate(
 )
 {
   double totalDistance = 0.0;
-  double capacityPenalty = 0.0;
   double timePenalty = 0.0;
 
   for (const Route &route : sol.routes)
@@ -71,10 +70,6 @@ double evaluate(
     {
       timePenalty += t - depotNode.l;
     }
-
-    // Capacidad
-    if (load > instance.capacity) capacityPenalty += load - instance.capacity; // Carga - Capacidad 
-
   }
 
   return totalDistance + ALPHA * timePenalty;

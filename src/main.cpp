@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
   mt19937 rng(SEED);
 
-  Instance instance = readInstance("./Instancias/instancias_1000/C110_1.txt");
+  Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
 
   #ifdef DEBUG_MODE
     cout << "Instancia: " << instance.name << '\n';

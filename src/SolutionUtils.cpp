@@ -1,11 +1,14 @@
 #include "SolutionUtils.h"
 #include "Evaluator.h"
+#include "Helpers.h"
 
 #include <unordered_set>
 #include <iostream>
 #include <map>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -95,16 +98,27 @@ void writeSolution(
     }
   }
 
-  out << "\n=== PENALIZACIONES DE TIEMPO ===\n";
+  set<string> penalizedNodes;
 
+  out << "\n=== PENALIZACIONES DE TIEMPO ===\n";
   if (eval.timePenalties.empty())
   {
     out << "Ninguna\n";
   }
   else
   {
-    for (const TimePenalty &p : eval.timePenalties)
+    vector<TimePenalty> sorted = eval.timePenalties;
+
+    sort(sorted.begin(), sorted.end(),
+        [](const TimePenalty &a, const TimePenalty &b)
+        {
+          return extractNumber(a.nodeId) < extractNumber(b.nodeId);
+        });
+
+    for (const TimePenalty &p : sorted)
     {
+      if (!p.isDepot) penalizedNodes.insert(p.nodeId);
+
       out << (p.isDepot ? "Deposito " : "Cliente ")
            << p.nodeId
            << ": llegada="
@@ -119,6 +133,9 @@ void writeSolution(
            << '\n';
     }
   }
+
+  out << "\nTotal nodos penalizados: " << penalizedNodes.size() << "\n";
+  
 
   // cout << "\n=== PENALIZACIONES DE CAPACIDAD ===\n";
 
