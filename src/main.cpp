@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
 
   int MAX_ITERATIONS = 1000000;
   int COOLING_INTERVAL = 100;
+  int MAX_STAGNATION = 5000;
 
   unsigned int SEED = 42;
 
@@ -31,8 +32,9 @@ int main(int argc, char* argv[])
 
     MAX_ITERATIONS = stoi(argv[5]);
     COOLING_INTERVAL = stoi(argv[6]);
+    MAX_STAGNATION = stoi(argv[7]);
 
-    SEED = (unsigned)stoul(argv[7]);
+    SEED = (unsigned)stoul(argv[8]);
   }
 
   mt19937 rng(SEED);
@@ -160,7 +162,8 @@ int main(int argc, char* argv[])
     INITIAL_TEMPERATURE,
     COOLING_RATE,
     MAX_ITERATIONS,
-    COOLING_INTERVAL
+    COOLING_INTERVAL,
+    MAX_STAGNATION
   };
 
   Solution Sbest = simulatedAnnealing(

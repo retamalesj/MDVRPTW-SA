@@ -15,6 +15,7 @@ struct Parameters
 
   int maxIterations;
   int coolingInterval; // Cada cuantas iteraciones se enfría
+  int maxStagnation; // umbral de calentamiento
 };
 
 Solution simulatedAnnealing(

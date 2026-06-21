@@ -27,6 +27,8 @@ Solution simulatedAnnealing(
 
   uniform_int_distribution<int> moveDist(0, 1);
 
+  int noImprovement = 0;
+
   for (int iter = 1; iter <= parameters.maxIterations; iter++)
   {
     Solution neighbor = current;
@@ -65,6 +67,8 @@ Solution simulatedAnnealing(
       if (probabilityDist(rng) < acceptanceProbability) accept = true;
     }
 
+    bool improved = false;
+
     if (accept)
     {
       current = neighbor;
@@ -74,10 +78,22 @@ Solution simulatedAnnealing(
       {
         Sbest = current;
         bestCost = currentCost;
+        improved = true;
+        noImprovement = 0;
       }
     }
 
+    if (!improved) noImprovement++;
+
+    // enfriamiento
     if (iter % parameters.coolingInterval == 0) temperature *= parameters.coolingRate;
+
+    // recalentamiento
+    if (noImprovement > parameters.maxStagnation)
+    {
+      temperature = parameters.initialTemperature * 0.3;
+      noImprovement = 0;
+    }
   }
 
   return Sbest;
