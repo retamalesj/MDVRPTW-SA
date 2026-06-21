@@ -25,7 +25,7 @@ Solution simulatedAnnealing(
 
   uniform_real_distribution<double> probabilityDist(0.0, 1.0);
 
-  uniform_int_distribution<int> moveDist(0, 1);
+  uniform_real_distribution<double> move_probability(0.0, 1.0);
 
   int noImprovement = 0;
 
@@ -35,16 +35,11 @@ Solution simulatedAnnealing(
 
     bool success = false;
 
-    int move = moveDist(rng);
+    double r = move_probability(rng);
 
-    if (move == 0)
-    {
-      success = swapMove(neighbor, rng);
-    }
-    else
-    {
-      success = relocateMove(neighbor, rng);
-    }
+    if (r < 0.7) { success = swapMove(neighbor, rng); }
+    else if (r < 0.9) { success = relocateMove(neighbor, rng); }
+    else { success = splitMove(neighbor, rng); }
 
     if (!success) continue;
     

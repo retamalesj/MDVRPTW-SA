@@ -48,8 +48,8 @@ bool relocateMove(
 }
 
 bool swapMove(
-  Solution &sol,
-  mt19937 &rng)
+    Solution &sol,
+    mt19937 &rng)
 {
   if (sol.routes.empty())
     return false;
@@ -60,23 +60,66 @@ bool swapMove(
   int routeId = routeDist(rng);
   Route &route = sol.routes[routeId];
 
-  if (route.customers.size() < 2) return false; // no hay suficientes clientes para el swap
+  if (route.customers.size() < 2)
+    return false; // no hay suficientes clientes para el swap
 
   uniform_int_distribution<int> customerDist(0, route.customers.size() - 1);
 
   int i = customerDist(rng);
   int j = customerDist(rng);
 
-  while (i == j) j = customerDist(rng);
+  while (i == j)
+    j = customerDist(rng);
 
   swap(route.customers[i], route.customers[j]);
 
   return true;
 }
 
-// bool splitMove(
-//     Solution &sol,
-//     mt19937 &rng)
-// {
-//   // implementación
-// }
+bool splitMove(
+    Solution &sol,
+    mt19937 &rng)
+{
+  if (sol.routes.empty())
+    return false;
+
+  // buscar rutas con al menos 2 clientes
+  vector<int> candidateRoutes;
+
+  for (size_t i = 0; i < sol.routes.size(); i++)
+  {
+    if (sol.routes[i].customers.size() >= 2)
+      candidateRoutes.push_back(i);
+  }
+
+  if (candidateRoutes.empty())
+    return false;
+
+  uniform_int_distribution<int> routeDist(0, candidateRoutes.size() - 1);
+
+  int routeId = candidateRoutes[routeDist(rng)];
+  Route &route = sol.routes[routeId];
+
+  int n = route.customers.size();
+
+  // punto de corte (1 .. n-1)
+  uniform_int_distribution<int> cutDist(1, n - 1);
+  int cut = cutDist(rng);
+
+  // se crea una nueva ruta
+  Route newRoute;
+  newRoute.depot = route.depot;
+
+  // mover segunda parte a nueva ruta
+  for (int i = cut; i < n; i++)
+  {
+    newRoute.customers.push_back(route.customers[i]);
+  }
+
+  route.customers.resize(cut);
+
+  // insertar nueva ruta
+  sol.routes.push_back(newRoute);
+
+  return true;
+}
