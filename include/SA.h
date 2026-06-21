@@ -8,7 +8,6 @@
 struct Parameters
 {
   double ALPHA; // Constante de penalización del tiempo
-  double BETA; // Constante de penalización de la capacidad
 
   double initialTemperature;
   double coolingRate; // Ti+1 = Ti* coolingRate

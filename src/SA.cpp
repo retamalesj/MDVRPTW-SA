@@ -17,7 +17,7 @@ Solution simulatedAnnealing(
   Solution current = initialSolution;
   Solution Sbest = initialSolution;
 
-  double currentCost = evaluate(current, instance, parameters.ALPHA, parameters.BETA);
+  double currentCost = evaluate(current, instance, parameters.ALPHA);
 
   double bestCost = currentCost;
 
@@ -45,7 +45,7 @@ Solution simulatedAnnealing(
     
     if (!isFeasible(neighbor, instance)) continue;
 
-    double neighborCost = evaluate(neighbor, instance, parameters.ALPHA, parameters.BETA);
+    double neighborCost = evaluate(neighbor, instance, parameters.ALPHA);
 
     double delta = neighborCost - currentCost;
 

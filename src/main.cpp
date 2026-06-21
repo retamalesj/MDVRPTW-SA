@@ -11,7 +11,6 @@ using namespace std;
 int main(int argc, char* argv[])
 {
   double ALPHA = 10.0;
-  double BETA = 10.0;
 
   double INITIAL_TEMPERATURE = 1000.0;
   double COOLING_RATE = 0.995;
@@ -22,19 +21,18 @@ int main(int argc, char* argv[])
 
   unsigned int SEED = 42;
 
-  if (argc >= 8)
+  if (argc >= 7)
   {
     ALPHA = stod(argv[1]);
-    BETA = stod(argv[2]);
     
-    INITIAL_TEMPERATURE = stod(argv[3]);
-    COOLING_RATE = stod(argv[4]);
+    INITIAL_TEMPERATURE = stod(argv[2]);
+    COOLING_RATE = stod(argv[3]);
 
-    MAX_ITERATIONS = stoi(argv[5]);
-    COOLING_INTERVAL = stoi(argv[6]);
-    MAX_STAGNATION = stoi(argv[7]);
+    MAX_ITERATIONS = stoi(argv[4]);
+    COOLING_INTERVAL = stoi(argv[5]);
+    MAX_STAGNATION = stoi(argv[6]);
 
-    SEED = (unsigned)stoul(argv[8]);
+    SEED = (unsigned)stoul(argv[7]);
   }
 
   mt19937 rng(SEED);
@@ -158,7 +156,6 @@ int main(int argc, char* argv[])
   
   Parameters parameters = {
     ALPHA,
-    BETA,
     INITIAL_TEMPERATURE,
     COOLING_RATE,
     MAX_ITERATIONS,
@@ -173,7 +170,7 @@ int main(int argc, char* argv[])
     rng
   );
   
-  writeSolution(SEED, Sbest, instance, ALPHA, BETA);
+  writeSolution(SEED, Sbest, instance, ALPHA);
 
   return 0;
 }

@@ -6,8 +6,7 @@
 double evaluate(
     const Solution& sol,
     const Instance& instance,
-    double ALPHA,
-    double BETA
+    double ALPHA
 );
 
 struct RouteMetrics
@@ -57,6 +56,5 @@ struct EvaluationResult
 EvaluationResult evaluateWithDetails(
     const Solution& sol,
     const Instance& instance,
-    double ALPHA,
-    double BETA
+    double ALPHA
 );

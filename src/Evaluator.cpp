@@ -5,8 +5,7 @@ using namespace std;
 double evaluate(
   const Solution &sol,
   const Instance &instance,
-  double ALPHA,
-  double BETA
+  double ALPHA
 )
 {
   double totalDistance = 0.0;
@@ -15,8 +14,7 @@ double evaluate(
 
   for (const Route &route : sol.routes)
   {
-    if (route.customers.empty())
-      continue;
+    if (route.customers.empty()) continue;
 
     int depot = route.depot;
 
@@ -79,14 +77,13 @@ double evaluate(
 
   }
 
-  return totalDistance + ALPHA * timePenalty + BETA * capacityPenalty;
+  return totalDistance + ALPHA * timePenalty;
 }
 
 EvaluationResult evaluateWithDetails(
   const Solution &sol,
   const Instance &instance,
-  double ALPHA,
-  double BETA
+  double ALPHA
 )
 {
   EvaluationResult result;
@@ -221,8 +218,7 @@ EvaluationResult evaluateWithDetails(
 
   result.objectiveValue =
     totalDistance +
-    ALPHA * timePenalty +
-    BETA * capacityPenalty;
+    ALPHA * timePenalty;
 
   return result;
 }

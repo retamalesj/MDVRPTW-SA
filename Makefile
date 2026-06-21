@@ -1,5 +1,4 @@
 ALPHA ?= 10
-BETA ?= 10
 
 INITIAL_TEMPERATURE ?= 1000
 COOLING_RATE ?= 0.995
@@ -41,7 +40,6 @@ debug: clean $(TARGET)
 run: $(TARGET)
 	./$(TARGET) \
 	$(ALPHA) \
-	$(BETA) \
 	$(INITIAL_TEMPERATURE) \
 	$(COOLING_RATE) \
 	$(MAX_ITERATIONS) \

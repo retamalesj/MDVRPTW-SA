@@ -7,8 +7,7 @@ void writeSolution(
   unsigned int SEED,
   const Solution& sol,
   const Instance& instance,
-  double ALPHA,
-  double BETA
+  double ALPHA
 );
 
 bool isFeasible(
