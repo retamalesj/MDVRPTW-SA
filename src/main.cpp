@@ -173,9 +173,7 @@ int main(int argc, char* argv[])
     rng
   );
   
-  writeSolution(SEED, initialSolution, instance, ALPHA, BETA);
-
-  // writeSolution(SEED, Sbest, instance, ALPHA, BETA);
+  writeSolution(SEED, Sbest, instance, ALPHA, BETA);
 
   return 0;
 }
