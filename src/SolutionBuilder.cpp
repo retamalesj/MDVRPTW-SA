@@ -109,20 +109,8 @@ Solution buildRandomSolution(
       }
       else
       {
-        // ya no quedan vehículos disponibles
-        // lo metemos donde menos daño haga
-        int bestRoute = 0;
-
-        for (int i = 1; i < (int)load.size(); i++)
-        {
-          if (load[i] < load[bestRoute])
-          {
-            bestRoute = i;
-          }
-        }
-
-        sol.routes[bestRoute].customers.push_back(c);
-        load[bestRoute] += demand;
+        // ya no quedan vehículos disponibles, por lo que no hay solucion
+        return Solution{};
       }
     }
   }
