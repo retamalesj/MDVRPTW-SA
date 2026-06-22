@@ -78,10 +78,15 @@ bool swapMove(
 
 bool splitMove(
     Solution &sol,
+    const Instance& instance,
     mt19937 &rng)
 {
-  if (sol.routes.empty())
-    return false;
+  // se revisa si hay vehiculos disponibles o no para generar nueva ruta
+  int maxRoutes = instance.numDepots * instance.vehiclesPerDepot;
+
+  if ((int)sol.routes.size() >= maxRoutes) return false;
+
+  if (sol.routes.empty()) return false;
 
   // buscar rutas con al menos 2 clientes
   vector<int> candidateRoutes;

@@ -39,7 +39,7 @@ Solution simulatedAnnealing(
 
     if (r < 0.7) { success = swapMove(neighbor, rng); }
     else if (r < 0.9) { success = relocateMove(neighbor, rng); }
-    else { success = splitMove(neighbor, rng); }
+    else { success = splitMove(neighbor, instance, rng); }
 
     if (!success) continue;
     

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Solution.h"
+#include "Instance.h"
 
 #include <random>
 
@@ -16,4 +17,5 @@ bool swapMove(
 
 bool splitMove(
   Solution& sol,
+  const Instance& instance,
   mt19937& rng);
