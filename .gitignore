@@ -3,6 +3,7 @@ mdvrptw
 Soluciones/*
 
 # latex
+*.fls
 *-blx.bib
 *.aux
 *.bbl

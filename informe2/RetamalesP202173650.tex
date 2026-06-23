@@ -58,11 +58,17 @@ distribución para atender a un conjunto de clientes con intervalos de tiempo de
 
 En este informe se presenta la definición del problema, sus variables, parámetros, restricciones y objetivo, además de una revisión de los métodos utilizados para resolverlo.
 A través de este análisis, el informe busca consolidar el estado del arte del problema para identificar cuáles son las estrategias de resolución más eficientes y detectar las brechas metodológicas que guiarán el desarrollo de trabajos futuros.
-Posteriormente, se expone su modelo matemático de programación entera mixta, se discuten tendencias actuales de investigación y trabajo futuro.
+Posteriormente, se expone su modelo matemático de programación entera mixta y se discuten tendencias actuales de investigación.
 
 El interés por estudiar el MDVRP-TW se debe a su aplicación en sistemas reales de distribución y transporte, utilizados por empresas de logística como Amazon.
-Debido a su complejidad computacional y a su naturaleza NP-hard, hace que encontrar soluciones eficientes siga siendo un desafío importante dentro del área de optimización
-combinatoria.
+El problema es de naturaleza NP-hard, ya que generaliza problemas de optimización combinatoria conocidos por ser NP-hard,
+como el problema del vendedor viajero (TSP) y sus variantes de ruteo de vehículos. Además,
+integra simultáneamente decisiones de asignación de clientes a depósitos, planificación de rutas y cumplimiento
+de ventanas de tiempo, lo que incrementa significativamente la complejidad del problema. La interacción entre estos
+subproblemas provoca un crecimiento combinatorio del espacio de búsqueda de soluciones, dificultando la obtención del
+óptimo global en tiempos computacionales razonables para instancias de gran tamaño. Por ello, el desarrollo de métodos
+capaces de encontrar soluciones de alta calidad en tiempos acotados sigue siendo un desafío relevante dentro del área
+de optimización combinatoria.
 
 Para abordar este desaf\'io, el acercamiento propuesto consiste en el diseño e implementaci\'on de la técnica de
 Simulated Annealing, enfocada en la exploración eficiente del espacio de búsqueda mediante múltiples operadores de vecindad.
