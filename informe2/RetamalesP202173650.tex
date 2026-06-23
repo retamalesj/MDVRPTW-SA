@@ -198,9 +198,12 @@ clase amplia de problemas VRP con ventanas de tiempo, obteniendo resultados de a
 gracias a la combinación de operadores de cruce ricos en información con búsqueda local
 intensiva.
 
-Desde una perspectiva empírica, este enfoque demostró una precisión sobresaliente en las 20 instancias de referencia del MDVRP-TW,
-alcanzando un gap promedio del $0.00\%$ respecto a las BKS disponibles en su momento, logrando igualar o mejorar los
-registros históricos en la casi totalidad de las 20 instancias de referencia del MDVRP-TW~\cite{VidalAG2013}.
+Desde una perspectiva empírica, el análisis textual de los autores detalla que el \textit{Hybrid Genetic Search with Advanced Diversity Control} (HGS-ADC) superó a todos
+los enfoques existentes del estado del arte en su momento, reportando que la inclusión de la proximidad temporal redujo
+el gap promedio de desviación de $0.68\%$ a $0.53\%$ frente a búsquedas puramente espaciales. Asimismo, las
+pruebas estadísticas de Wilcoxon ($p=0.000$) y Levene ($p=0.011$) confirmaron con alta significancia una mejora
+crítica en la estabilidad de las soluciones y una escalabilidad capaz de resolver instancias masivas de hasta 1000
+clientes~\cite{VidalAG2013}.
 
 En trabajos recientes han explorado hibridaciones con búsqueda por gran vecindario.
 El Hybrid Adaptive Large Neighborhood Search (HALNS) de Voigt et al.~\cite{HALNS2022} combina la capacidad
@@ -216,6 +219,11 @@ peso a aquellos que han mostrado mejor desempeño histórico durante la búsqued
 Wang et al.~\cite{Wang2024} aplicaron una variante del ALNS al problema dinámico multi-depósito con
 ventanas de tiempo (MD-DVRPTW), incorporando operadores de eliminación innovadores y un método de inserción
 basado en compatibilidad de ventanas de tiempo.
+Desde una perspectiva empírica, el ALNS ha demostrado una alta efectividad en
+problemas con restricciones temporales, logrando identificar históricamente 48 nuevas
+soluciones de referencia BKS. Esto valida la capacidad de su estructura adaptativa para manejar
+la complejidad en escenarios que, como la variante de Wang et al.~\cite{Wang2024}, escalan
+con éxito hasta los 288 clientes mediante un mecanismo de inserción en tiempo constante $O(1)$.
 
 \subsection{Aceleración mediante GPU}
 
