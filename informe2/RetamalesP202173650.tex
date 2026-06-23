@@ -41,7 +41,7 @@ Bibliograf\'ia (5\%): & \underline{\hspace{2cm}}\\
 %---------------------------------------------------------------------------%
 
 \begin{abstract}
-  % Resumen del informe en no m\'as de 10 l\'ineas, donde se sintetice el problema que se trata, el acercamiento propuesto
+  % Resumen del informe en no más de 10 líneas, donde se sintetice el problema que se trata, el acercamiento propuesto
   % y sirva para que un lector no involucrado comprenda el objetivo del documento.
   El Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW) es una variante del
   Vehicle Routing Problem (VRP) que considera múltiples depósitos y restricciones de tiempo para la atención de clientes.
@@ -50,8 +50,8 @@ Bibliograf\'ia (5\%): & \underline{\hspace{2cm}}\\
   Este informe presenta una descripción general del problema, sus principales variantes, métodos de resolución y un modelo matemático de programación entera mixta.
 \end{abstract}
 
-\section{Introducci\'on}
-% Una explicaci\'on breve del contenido del informe, es decir, detalla: Prop\'osito, Estructura del Documento, Descripci\'on (muy breve) del Problema y Motivaci\'on e ideas fundamentales de la propuesta de soluci\'on. Incluye la descripci\'on del contenido del Informe secci\'on por secci\'on.
+\section{Introducción}
+% Una explicación breve del contenido del informe, es decir, detalla: Propósito, Estructura del Documento, Descripción (muy breve) del Problema y Motivación e ideas fundamentales de la propuesta de solución. Incluye la descripción del contenido del Informe sección por sección.
 El presente informe tiene como propósito describir y analizar el Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW), un problema de optimización combinatoria de
 gran relevancia en el ámbito de la logística y la distribución. Este problema surge de la necesidad de coordinar flotas de vehículos que operan desde múltiples centros de
 distribución para atender a un conjunto de clientes con intervalos de tiempo definidos, buscando minimizar el costo total de las rutas.
@@ -70,21 +70,21 @@ subproblemas provoca un crecimiento combinatorio del espacio de búsqueda de sol
 capaces de encontrar soluciones de alta calidad en tiempos acotados sigue siendo un desafío relevante dentro del área
 de optimización combinatoria.
 
-Para abordar este desaf\'io, el acercamiento propuesto consiste en el diseño e implementaci\'on de la técnica de
+Para abordar este desafío, el acercamiento propuesto consiste en el diseño e implementación de la técnica de
 Simulated Annealing, enfocada en la exploración eficiente del espacio de búsqueda mediante múltiples operadores de vecindad.
-El comportamiento del algoritmo se eval\'ua bajo un entorno experimental estructurado sobre instancias
-desde 25 hasta 1000 clientes, permitiendo ajustar sus par\'ametros cr\'iticos.
-En cuanto a la estructura del documento, la Secci\'on 2 detalla la definici\'on general del problema; la Secci\'on 3
-revisa el estado del arte; la Secci\'on 4 expone el modelo matem\'atico formal; la Secci\'on 5
-describe la representaci\'on de soluciones; la Secci\'on 6 profundiza en el algoritmo implementado;
-la Secci\'on 7 detalla la metodolog\'ia de la experimentaci\'on, la Secci\'on 8 presenta los resultados de la experimentación y, finalmente,
+El comportamiento del algoritmo se evalúa bajo un entorno experimental estructurado sobre instancias
+desde 25 hasta 1000 clientes, permitiendo ajustar sus parámetros críticos.
+En cuanto a la estructura del documento, la Sección 2 detalla la definición general del problema; la Sección 3
+revisa el estado del arte; la Sección 4 expone el modelo matemático formal; la Sección 5
+describe la representación de soluciones; la Sección 6 profundiza en el algoritmo implementado;
+la Sección 7 detalla la metodología de la experimentación, la Sección 8 presenta los resultados de la experimentación y, finalmente,
 la Sección 9 presenta las conclusiones. 
 
-\section{Definici\'on del Problema}
-% Explicaci\'on del problema que se va a estudiar, en qu\'e consiste, cu\'ales son sus variables , restricciones y objetivo(s) de manera general (en palabras, no una formulaci\'on matem\'atica). Debe entenderse claramente el problema y qu\'e busca resolver.
+\section{Definición del Problema}
+% Explicación del problema que se va a estudiar, en qué consiste, cuáles son sus variables , restricciones y objetivo(s) de manera general (en palabras, no una formulación matemática). Debe entenderse claramente el problema y qué busca resolver.
 % Explicar si existen problemas relacionados.
-% Destacar, si existen, las variantes m\'as conocidas.\\
-% Redactar en tercera persona, sin faltas de ortograf\'ia y referenciar correctamente sus fuentes mediante el comando  \verb+\cite{ }+. Por ejemplo, para hacer referencia al art\'iculo de algoritmos h\'ibridos para problemas de satisfacci\'on de restricciones~\cite{Prosser93Hybrid}.
+% Destacar, si existen, las variantes más conocidas.\\
+% Redactar en tercera persona, sin faltas de ortografía y referenciar correctamente sus fuentes mediante el comando  \verb+\cite{ }+. Por ejemplo, para hacer referencia al artículo de algoritmos híbridos para problemas de satisfacción de restricciones~\cite{Prosser93Hybrid}.
 
 El Vehicle Routing Problem (VRP) es un problema de optimización combinatoria que consiste en determinar el conjunto de rutas de menor costo para una flota de
 vehículos que parte desde un depósito central para atender a un conjunto de clientes, retornando al mismo depósito~\cite{Tan2001}. El MDVRP-TW extiende esta formulación
@@ -135,24 +135,24 @@ El MDVRP-TW se enmarca dentro de la familia de problemas VRP. Las variantes más
 \end{itemize}
 
 \section{Estado del Arte}
-% La informaci\'on que describen en este punto se basa en los estudios realizados con antelaci\'on respecto al tema.
-% Lo m\'as importante que se ha hecho hasta ahora con relaci\'on al problema. Deber\'ia responder preguntas como las siguientes:
-% ?`cu\'ando surge?, ?`qu\'e m\'etodos se han usado para resolverlo?, ?`cu\'ales son los mejores algoritmos que se han creado hasta
-% la fecha?, ?`qu\'e representaciones han tenido los mejores resultados?, ?`cu\'al es la tendencia actual para resolver el problema?, tipos de movimientos, heur\'isticas, m\'etodos completos, tendencias, etc... Puede incluir gr\'aficos comparativos o explicativos.\\
+% La información que describen en este punto se basa en los estudios realizados con antelación respecto al tema.
+% Lo más importante que se ha hecho hasta ahora con relación al problema. Debería responder preguntas como las siguientes:
+% ?`cuándo surge?, ?`qué métodos se han usado para resolverlo?, ?`cuáles son los mejores algoritmos que se han creado hasta
+% la fecha?, ?`qué representaciones han tenido los mejores resultados?, ?`cuál es la tendencia actual para resolver el problema?, tipos de movimientos, heurísticas, métodos completos, tendencias, etc... Puede incluir gráficos comparativos o explicativos.\\
 
 El VRP fue introducido por Dantzig y Ramser en 1959 en el contexto de la distribución de gasolina desde un depósito central a múltiples estaciones~\cite{Dantzig1959}.
 La incorporación de ventanas de tiempo al VRP (VRPTW) fue formalizada y sistematizada por Solomon en 1987, quien propuso tanto heurísticas de construcción basadas en inserción
 como instancias de prueba que se han convertido en un estándar para evaluar algoritmos dentro del VRP~\cite{Solomon1987}.
 La extensión al caso multi-depósito fue formalizada por Cordeau et al. en 1997 con el MDVRP, siendo extendida en 2001 al MDVRP-TW mediante una Búsqueda Tabú Unificada (Unified Tabu Search, UTS)~\cite{Cordeau2001}.
 
-\subsection{Representaci\'on de Soluciones}
+\subsection{Representación de Soluciones}
 
-En la resoluci\'on del MDVRP-TW, la elecci\'on de la estructura de datos para codificar las rutas es cr\'itica para el desempeño del
+En la resolución del MDVRP-TW, la elección de la estructura de datos para codificar las rutas es crítica para el desempeño del
 algoritmo. El estado del arte clasifica las representaciones principalmente en dos enfoques:
 
 \begin{itemize}
-  \item \textbf{Representaci\'on Directa (Multi-ruta):} Codifica las soluciones como una lista expl\'icita de rutas asociadas a cada dep\'osito, delimitadas por el origen y fin de cada viaje. Permite una evaluaci\'on inmediata de las restricciones de capacidad y ventanas de tiempo, facilitando la aplicaci\'on directa de operadores de vecindad locales como \textit{Swap} o \textit{Relocate}~\cite{Cordeau2001}.
-  \item \textbf{Representaci\'on Indirecta (Basada en Permutaciones):} Consiste en una secuencia continua de clientes sin delinear los veh\'iculos ni los dep\'ositos. Este enfoque delega la construcci\'on f\'isica de las rutas a un algoritmo decodificador (como el procedimiento Split, introducido por Prins y adaptado para problemas con ventanas de tiempo por Vidal et al.~\cite{VidalAG2013}), el cual segmenta la permutaci\'on de forma \'optima introduciendo los dep\'ositos y veh\'iculos requeridos. Es la representaci\'on predilecta en algoritmos gen\'eticos para evitar la generaci\'on de descendencia inv\'alida tras los cruces.
+  \item \textbf{Representación Directa (Multi-ruta):} Codifica las soluciones como una lista explícita de rutas asociadas a cada depósito, delimitadas por el origen y fin de cada viaje. Permite una evaluación inmediata de las restricciones de capacidad y ventanas de tiempo, facilitando la aplicación directa de operadores de vecindad locales como \textit{Swap} o \textit{Relocate}~\cite{Cordeau2001}.
+  \item \textbf{Representación Indirecta (Basada en Permutaciones):} Consiste en una secuencia continua de clientes sin delinear los vehículos ni los depósitos. Este enfoque delega la construcción física de las rutas a un algoritmo decodificador (como el procedimiento Split, introducido por Prins y adaptado para problemas con ventanas de tiempo por Vidal et al.~\cite{VidalAG2013}), el cual segmenta la permutación de forma óptima introduciendo los depósitos y vehículos requeridos. Es la representación predilecta en algoritmos genéticos para evitar la generación de descendencia inválida tras los cruces.
 \end{itemize}
 
 \subsection{Métodos Exactos}
@@ -264,8 +264,8 @@ La tendencia actual se orienta hacia métodos híbridos que combinan búsqueda l
 para mantener la diversidad de soluciones. Además, se han propuesto enfoques basados en aprendizaje automático para predecir configuraciones de parámetros
 adecuadas en metaheurísticas aplicadas a problemas de ruteo~\cite{MLparams2025}.
 
-\section{Modelo Matem\'atico}
-% Uno o m\'as modelos matem\'aticos para el problema, idealmente indicando el espacio de b\'usqueda para cada uno. Cada modelo debe estar correctamente referenciado, adem\'as no debe ser una imagen extraida. Tambi\'en deben explicarse en detalle cada una de las partes, mostrando claramente la funci\'on a maximizar/minimizar, variables y restricciones. Tanto las f\'ormulas como las explicaciones deben ser consistentes.
+\section{Modelo Matemático}
+% Uno o más modelos matemáticos para el problema, idealmente indicando el espacio de búsqueda para cada uno. Cada modelo debe estar correctamente referenciado, además no debe ser una imagen extraida. También deben explicarse en detalle cada una de las partes, mostrando claramente la función a maximizar/minimizar, variables y restricciones. Tanto las fórmulas como las explicaciones deben ser consistentes.
 
 A continuación se presenta un modelo de programación entera mixta (MIP) para el MDVRP-TW, basado en la formulación de Cordeau et al.~\cite{Cordeau2001} y extendido según Li y He~\cite{Li2024}.
 
@@ -363,8 +363,8 @@ donde $M$ es un valor suficientemente grande (constante de Big-M).
 
 El espacio de búsqueda del modelo anterior está determinado principalmente por las variables binarias $x_{ijk}$. Con $n$ clientes, $m$ depósitos y $|K|$ vehículos, el número de variables binarias es del orden de $O((n+m)^2 \cdot |K|)$, lo que para instancias medianas (e.g., $n = 100$, $m = 5$, $|K| = 20$) representa del orden de $10^5$ variables binarias. Dado que el problema es NP-hard, el espacio de soluciones factibles crece de manera superpolinomial con el tamaño de la instancia, justificando el uso de metaheurísticas para instancias de mediano y gran tamaño.
 
-\section{Representaci\'on}
-% Representaci\'on de \textbf{soluciones} (arreglos, matrices, etc.). En caso de t\'ecnicas completas indicar variables y dominios. Incluir justificaci\'on y ejemplos para mayor claridad.
+\section{Representación}
+% Representación de \textbf{soluciones} (arreglos, matrices, etc.). En caso de técnicas completas indicar variables y dominios. Incluir justificación y ejemplos para mayor claridad.
 Para abordar el MDVRP-TW mediante la técnica de Simulated Annealing, se define una
 representación estructurada basada en un vector de rutas activas. Cada componente de este vector corresponde
 a un objeto que modela de forma independiente la trayectoria de un vehículo, el cual está compuesto por un
@@ -382,47 +382,47 @@ el tiempo de cómputo por iteración. Finalmente, esta estructura agiliza la apl
 vecindad, ya que los movimientos locales como transferencias o intercambios modifican directamente los
 vectores internos de las rutas seleccionadas sin alterar el resto del sistema.
 
-\section{Descripci\'on del algoritmo}
-% C\'omo fue implementada la soluci\'on. Interesa la implementaci\'on particular m\'as que el algoritmo gen\'erico, es decir, si se tiene que implementar SA, lo que se espera es que se explique en pseudoc\'odigo la estructura
-% general y en p\'arrafos explicativos c\'omo fue implementada cada parte para su problema particular. Si
-% se utilizan operadores/movimientos se debe justificar por qu\'e se utilizaron dichos operadores/movimientos. 
-% En caso de una t\'ecnica completa, describir detalles relevantes del proceso, si se utiliza recursi\'on o no, explicar c\'omo se van construyendo soluciones, cu\'ando se revisan restricciones, c\'omo se registran conflictos, etc. En este punto no se espera que se incluya c\'odigo, eso va aparte.
-La resoluci\'on del MDVRP-TW se aborda mediante una implementaci\'on de la t\'ecnica Simulated Annealing (SA).
-El algoritmo comienza fijando una soluci\'on inicial como punto de partida en el espacio de b\'usqueda.
+\section{Descripción del algoritmo}
+% Cómo fue implementada la solución. Interesa la implementación particular más que el algoritmo genérico, es decir, si se tiene que implementar SA, lo que se espera es que se explique en pseudocódigo la estructura
+% general y en párrafos explicativos cómo fue implementada cada parte para su problema particular. Si
+% se utilizan operadores/movimientos se debe justificar por qué se utilizaron dichos operadores/movimientos. 
+% En caso de una técnica completa, describir detalles relevantes del proceso, si se utiliza recursión o no, explicar cómo se van construyendo soluciones, cuándo se revisan restricciones, cómo se registran conflictos, etc. En este punto no se espera que se incluya código, eso va aparte.
+La resolución del MDVRP-TW se aborda mediante una implementación de la técnica Simulated Annealing (SA).
+El algoritmo comienza fijando una solución inicial como punto de partida en el espacio de búsqueda.
 A partir de este estado, el proceso opera bajo un esquema iterativo controlado por un ciclo fijo que ejecuta
-un n\'umero determinado de iteraciones m\'aximas ($MaxIteraciones$). En cada iteraci\'on se selecciona estoc\'asticamente
+un número determinado de iteraciones máximas ($MaxIteraciones$). En cada iteración se selecciona estocásticamente
 un movimiento de vecindad aplicando probabilidades específicas: existe un $70\%$ de probabilidad de realizar un intercambio
 interno de clientes en una misma ruta (\textbf{Swap}), un $20\%$ de mover un cliente hacia otra trayectoria
 (\textbf{Relocate}), y un $10\%$ de dividir una ruta activa para transferir sus clientes restantes a un nuevo
-veh\'iculo del mismo dep\'osito (\textbf{Split}). Estas ponderaciones asim\'etricas se establecieron con el
-prop\'osito de equilibrar la intensificaci\'on local y la diversificaci\'on global en el espacio de
-b\'usqueda. Al asignar un sesgo mayoritario al operador \textbf{Swap} ($70\%$), el algoritmo prioriza
-la optimizaci\'on interna de las secuencias ya consolidadas, buscando corregir de forma r\'apida los
-cruces geogr\'aficos y los desajustes en las ventanas de tiempo de rutas individuales sin alterar la
-asignaci\'on general de dep\'ositos. Por su parte, la probabilidad del $20\%$ otorgada a \textbf{Relocate}
-act\'ua como un mecanismo intermedio que redistribuye la carga laboral transfiriendo clientes problem\'aticos
+vehículo del mismo depósito (\textbf{Split}). Estas ponderaciones asimétricas se establecieron con el
+propósito de equilibrar la intensificación local y la diversificación global en el espacio de
+búsqueda. Al asignar un sesgo mayoritario al operador \textbf{Swap} ($70\%$), el algoritmo prioriza
+la optimización interna de las secuencias ya consolidadas, buscando corregir de forma rápida los
+cruces geográficos y los desajustes en las ventanas de tiempo de rutas individuales sin alterar la
+asignación general de depósitos. Por su parte, la probabilidad del $20\%$ otorgada a \textbf{Relocate}
+actúa como un mecanismo intermedio que redistribuye la carga laboral transfiriendo clientes problemáticos
 entre distintas rutas. Finalmente, se reserva una probabilidad restrictiva del $10\%$ para el operador
-\textbf{Split} debido a su car\'acter altamente disruptivo; dado que este movimiento altera dr\'asticamente
-la estructura del vector de soluciones al activar nuevos veh\'iculos e incrementar los costos fijos de transporte,
-una frecuencia baja asegura que s\'olo se aplique para romper estancamientos mayores o abrir nuevos frentes de
-exploraci\'on cuando la temperatura sea lo suficientemente favorable.
+\textbf{Split} debido a su carácter altamente disruptivo; dado que este movimiento altera drásticamente
+la estructura del vector de soluciones al activar nuevos vehículos e incrementar los costos fijos de transporte,
+una frecuencia baja asegura que sólo se aplique para romper estancamientos mayores o abrir nuevos frentes de
+exploración cuando la temperatura sea lo suficientemente favorable.
 
-Inmediatamente despu\'es de alterar las rutas, se eval\'ua de forma estricta su factibilidad computacional
-frente a las restricciones de capacidad de carga de los veh\'iculos ($Q$) y los intervalos de las ventanas de
+Inmediatamente después de alterar las rutas, se evalúa de forma estricta su factibilidad computacional
+frente a las restricciones de capacidad de carga de los vehículos ($Q$) y los intervalos de las ventanas de
 tiempo ($[e_i, l_i]$). Si el vecino viola cualquiera de estos criterios, se descarta el movimiento de inmediato
-mediante una condici\'on de rechazo duro y se contin\'ua a la siguiente iteraci\'on, asegurando de esta manera
-que el algoritmo explore de forma exclusiva el espacio de soluciones v\'alidas. Para los vecinos factibles,
+mediante una condición de rechazo duro y se continúa a la siguiente iteración, asegurando de esta manera
+que el algoritmo explore de forma exclusiva el espacio de soluciones válidas. Para los vecinos factibles,
 se determina la diferencia de costos de las distancias euclidianas ($\Delta$). Si el vecino disminuye el
-costo total, se acepta autom\'aticamente; si representa un deterioro, se acepta de manera condicional con
-base en el criterio de Metr\'opolis utilizando una probabilidad exponencial gobernada por la temperatura
-actual ($T$). La mejor soluci\'on hist\'orica ($S_{best}$) se actualiza cada vez que se halla un costo menor,
-restableciendo a cero el contador de estancamiento. Por su parte, la temperatura disminuye geom\'etricamente
+costo total, se acepta automáticamente; si representa un deterioro, se acepta de manera condicional con
+base en el criterio de Metrópolis utilizando una probabilidad exponencial gobernada por la temperatura
+actual ($T$). La mejor solución histórica ($S_{best}$) se actualiza cada vez que se halla un costo menor,
+restableciendo a cero el contador de estancamiento. Por su parte, la temperatura disminuye geométricamente
 tras transcurrir un intervalo fijo de iteraciones ($IntervaloEnfriamiento$). Finalmente, si el sistema
-experimenta un estancamiento prolongado superior al l\'imite tolerado ($MaxEstancamiento$), se activa un
+experimenta un estancamiento prolongado superior al límite tolerado ($MaxEstancamiento$), se activa un
 mecanismo de recalentamiento ligero que reajusta la temperatura del sistema al $30\%$ de su valor inicial
 ($T_{inicial}$), restituyendo transitoriamente la capacidad de aceptar peores soluciones para facilitar la
-salida de \'optimos locales. El flujo general de este comportamiento particular se detalla en el siguiente
-bloque de pseudoc\'odigo:
+salida de óptimos locales. El flujo general de este comportamiento particular se detalla en el siguiente
+bloque de pseudocódigo:
 
 \begin{verbatim}
 Procedimiento SimulatedAnnealing(S_inicial, instancia)
@@ -465,45 +465,45 @@ Fin Procedimiento
 \end{verbatim}
 
 \section{Experimentos}
-% Se necesita saber c\'omo experimentaron, c\'omo definieron par\'ametros, 
-% c\'omo los fueron modificando, cu\'ales problemas/instancias se estudiaron y por qu\'e, etc. 
-% Recuerde que las t\'ecnicas completas son deterministas y las t\'ecnicas incompletas son estoc\'asticas.
-La metodolog\'ia experimental se diseñ\'o para evaluar el comportamiento del algoritmo de Simulated Annealing
-ante instancias de diferente complejidad y determinar la configuraci\'on de par\'ametros que optimice la
-calidad de las soluciones. Al tratarse de una t\'ecnica incompleta y estoc\'astica, el rendimiento est\'a
-fuertemente condicionado por los operadores probabil\'isticos y los valores asignados al esquema de enfriamiento,
+% Se necesita saber cómo experimentaron, cómo definieron parámetros, 
+% cómo los fueron modificando, cuáles problemas/instancias se estudiaron y por qué, etc. 
+% Recuerde que las técnicas completas son deterministas y las técnicas incompletas son estocásticas.
+La metodología experimental se diseñó para evaluar el comportamiento del algoritmo de Simulated Annealing
+ante instancias de diferente complejidad y determinar la configuración de parámetros que optimice la
+calidad de las soluciones. Al tratarse de una técnica incompleta y estocástica, el rendimiento está
+fuertemente condicionado por los operadores probabilísticos y los valores asignados al esquema de enfriamiento,
 requiriendo un ajuste paramétrico secuencial.
 
-Para el estudio se seleccionaron cuatro instancias representativas de la literatura con un n\'umero escalar
-de clientes que define su dimensi\'on: una instancia muy peque\~na de 25 clientes, una peque\~na de 100
-clientes, una mediana de 400 clientes y una grande de 1000 clientes. La selecci\'on de este espectro permite
-analizar la escalabilidad del algoritmo y observar las variaciones en la propagaci\'on de restricciones de
-tiempo ante espacios de b\'usqueda masivos. Todas las pruebas fueron ejecutadas en un entorno controlado
+Para el estudio se seleccionaron cuatro instancias representativas de la literatura con un número escalar
+de clientes que define su dimensión: una instancia muy peque\~na de 25 clientes, una peque\~na de 100
+clientes, una mediana de 400 clientes y una grande de 1000 clientes. La selección de este espectro permite
+analizar la escalabilidad del algoritmo y observar las variaciones en la propagación de restricciones de
+tiempo ante espacios de búsqueda masivos. Todas las pruebas fueron ejecutadas en un entorno controlado
 mediante el uso de archivos \texttt{Makefile} para garantizar la reproducibilidad, fijando la semilla del
-generador de n\'umeros aleatorios (\texttt{SEED=42}).
+generador de números aleatorios (\texttt{SEED=42}).
 
-El proceso de ajuste de parámetros se estructur\'o en cuatro etapas sucesivas e incrementales:
+El proceso de ajuste de parámetros se estructuró en cuatro etapas sucesivas e incrementales:
 \begin{enumerate}
-  \item \textbf{Evaluaci\'on del par\'ametro $\alpha$:} Se evalu\'o el impacto de este factor de ponderaci\'on variando su valor en el conjunto $\{0, 0.25, 0.5, 0.75, 1, 3, 5, 10\}$ a lo largo de las cuatro instancias definidas, manteniendo constantes los dem\'as elementos de configuraci\'on, con el fin de identificar tendencias de convergencia seg\'un el tamaño del problema.
+  \item \textbf{Evaluación del parámetro $\alpha$:} Se evaluó el impacto de este factor de ponderación variando su valor en el conjunto $\{0, 0.25, 0.5, 0.75, 1, 3, 5, 10\}$ a lo largo de las cuatro instancias definidas, manteniendo constantes los demás elementos de configuración, con el fin de identificar tendencias de convergencia según el tamaño del problema.
   \item \textbf{Ajuste de la temperatura inicial ($T_0$):} Fijando la instancia mediana de 400 clientes y estableciendo parámetros fijos \texttt{COOLING\_RATE=0.99}, \texttt{MAX\_ITERATIONS=1000000}, \texttt{COOLING\_INTERVAL=50} y \texttt{MAX\_STAGNATION=5000}, se probaron distintas magnitudes de temperatura en el rango de 100 a 10000 para determinar la temperatura inicial adecuada.
-  \item \textbf{Determinaci\'on del ratio de enfriamiento (\texttt{COOLING\_RATE}):} Con la temperatura inicial cr\'itica ya seleccionada y fijada, se procedi\'o a variar exclusivamente la tasa de descenso geom\'etrico dentro de los valores $\{0.95, 0.97, 0.98, 0.99, 0.995\}$ para calibrar la velocidad de convergencia y el balance de aceptaci\'on de soluciones de peor calidad.
-  \item \textbf{Calibraci\'on del umbral de estancamiento (\texttt{MAX\_STAGNATION}):} Utilizando los mejores valores consolidados en las fases previas, se modific\'o de forma aislada el l\'imite de iteraciones permitidas sin mejoras experimentando en valores desde 1000 hasta 30000 iteraciones, con el fin de evaluar la capacidad del algoritmo para mitigar el estancamiento y escapar de \'optimos locales mediante el recalentamiento.
+  \item \textbf{Determinación del ratio de enfriamiento (\texttt{COOLING\_RATE}):} Con la temperatura inicial crítica ya seleccionada y fijada, se procedió a variar exclusivamente la tasa de descenso geométrico dentro de los valores $\{0.95, 0.97, 0.98, 0.99, 0.995\}$ para calibrar la velocidad de convergencia y el balance de aceptación de soluciones de peor calidad.
+  \item \textbf{Calibración del umbral de estancamiento (\texttt{MAX\_STAGNATION}):} Utilizando los mejores valores consolidados en las fases previas, se modificó de forma aislada el límite de iteraciones permitidas sin mejoras experimentando en valores desde 1000 hasta 30000 iteraciones, con el fin de evaluar la capacidad del algoritmo para mitigar el estancamiento y escapar de óptimos locales mediante el recalentamiento.
 \end{enumerate}
 
 \section{Resultados}
-% Qu\'e fue lo que se logr\'o con la experimentaci\'on, incluir tablas y gr\'aficos (lo m\'as explicativos posible).
-% Los resultados deben ser comentados y justificados en detalle en esta secci\'on.
-Los resultados obtenidos en las fases de calibraci\'on param\'etrica reflejan de manera clara el comportamiento
-estoc\'astico del algoritmo y el impacto crucial de equilibrar adecuadamente las restricciones frente a la funci\'on objetivo.
+% Qué fue lo que se logró con la experimentación, incluir tablas y gráficos (lo más explicativos posible).
+% Los resultados deben ser comentados y justificados en detalle en esta sección.
+Los resultados obtenidos en las fases de calibración paramétrica reflejan de manera clara el comportamiento
+estocástico del algoritmo y el impacto crucial de equilibrar adecuadamente las restricciones frente a la función objetivo.
 
-\subsection{An\'alisis del par\'ametro 'alpha' y escalabilidad}
-La primera fase experimental consisti\'o en evaluar la sensibilidad del algoritmo frente a variaciones del par\'ametro $\alpha$, el cual pondera los componentes de la funci\'on objetivo. Los datos consolidados para las cuatro instancias de prueba se presentan en la Cuadro~\ref{tab:resultados_alpha}.
+\subsection{Análisis del parámetro 'alpha' y escalabilidad}
+La primera fase experimental consistió en evaluar la sensibilidad del algoritmo frente a variaciones del parámetro $\alpha$, el cual pondera los componentes de la función objetivo. Los datos consolidados para las cuatro instancias de prueba se presentan en la Cuadro~\ref{tab:resultados_alpha}.
 
 {
 \sloppy
 \begin{table}[htbp]
 \centering
-\caption{Resultados de la evaluaci\'on del par\'ametro $\alpha$ en las cuatro instancias basales.}
+\caption{Resultados de la evaluación del parámetro $\alpha$ en las cuatro instancias basales.}
 \label{tab:resultados_alpha}
 
 \begin{tabularx}{\textwidth}{
@@ -515,7 +515,7 @@ l
 >{\raggedright\arraybackslash}X
 }
 \hline
-\textbf{Instancia} & $\alpha$ & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalizaci\'on Tiempo} & \textbf{Distancia Recorrida} \\ \hline
+\textbf{Instancia} & $\alpha$ & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalización Tiempo} & \textbf{Distancia Recorrida} \\ \hline
 \textbf{(25) C101}  & 0    & 141,039 & 19  & 12289,9 & 141,039 \\
                     & 0,25 & 213,568 & 1   & 10,6011 & 210,918 \\
                     & 0,5  & 162,577 & 0   & 0       & 162,577 \\
@@ -552,18 +552,18 @@ l
 \end{table}
 }
 
-A partir de estos datos, se observa que el comportamiento ideal de $\alpha$ se desplaza en funci\'on de la dimensi\'on del problema. Para instancias peque\~nas y muy peque\~nas (25 y 100 clientes), un valor de $\alpha = 0.5$ proporciona el mejor equilibrio, logrando una penalizaci\'on de tiempo de cero y minimizando eficientemente la distancia total recorrida. Esto ocurre porque en espacios muestrales reducidos, penalizar moderadamente los desajustes temporales gu\'ia r\'apidamente la b\'usqueda hacia regiones factibles de alta calidad. 
+A partir de estos datos, se observa que el comportamiento ideal de $\alpha$ se desplaza en función de la dimensión del problema. Para instancias peque\~nas y muy peque\~nas (25 y 100 clientes), un valor de $\alpha = 0.5$ proporciona el mejor equilibrio, logrando una penalización de tiempo de cero y minimizando eficientemente la distancia total recorrida. Esto ocurre porque en espacios muestrales reducidos, penalizar moderadamente los desajustes temporales guía rápidamente la búsqueda hacia regiones factibles de alta calidad. 
 
-Sin embargo, a medida que la complejidad escala hacia las instancias mediana y grande (400 y 1000 clientes), la presi\'on de las restricciones de ventanas de tiempo se vuelve masiva. En este escenario, valores bajos de $\alpha$ (como $0.25$ o $0.5$) provocan que la funci\'on objetivo no castigue lo suficiente la infactibilidad interna explorada, resultando en un elevado n\'umero de nodos penalizados y tiempos remanentes altos. Para estas instancias m\'as complejas, fijar $\alpha = 1.0$ demostr\'o ser significativamente m\'as robusto, reduciendo sustancialmente el valor objetivo y la distancia total v\'alida recorrida al coordinar de mejor manera la transici\'on de vecindarios m\'as densos.
+Sin embargo, a medida que la complejidad escala hacia las instancias mediana y grande (400 y 1000 clientes), la presión de las restricciones de ventanas de tiempo se vuelve masiva. En este escenario, valores bajos de $\alpha$ (como $0.25$ o $0.5$) provocan que la función objetivo no castigue lo suficiente la infactibilidad interna explorada, resultando en un elevado número de nodos penalizados y tiempos remanentes altos. Para estas instancias más complejas, fijar $\alpha = 1.0$ demostró ser significativamente más robusto, reduciendo sustancialmente el valor objetivo y la distancia total válida recorrida al coordinar de mejor manera la transición de vecindarios más densos.
 
-\subsection{Calibraci\'on del Esquema de Enfriamiento y Mecanismo de Estancamiento}
-Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedi\'o a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en la Cuadro~\ref{tab:calibracion_sa}.
+\subsection{Calibración del Esquema de Enfriamiento y Mecanismo de Estancamiento}
+Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedió a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en la Cuadro~\ref{tab:calibracion_sa}.
 
 {
 \sloppy
 \begin{table}[htbp]
 \centering
-\caption{Resultados detallados del proceso secuencial de sintonizaci\'on para la instancia de 400 clientes ($\alpha=1.0$).}
+\caption{Resultados detallados del proceso secuencial de sintonización para la instancia de 400 clientes ($\alpha=1.0$).}
 \label{tab:calibracion_sa}
 
 \begin{tabularx}{\textwidth}{
@@ -575,7 +575,7 @@ l
 >{\raggedright\arraybackslash}X
 }
 \hline
-\textbf{Par\'ametro Evaluado} & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalizaci\'on Tiempo} & \textbf{Distancia Recorrida} \\ \hline
+\textbf{Parámetro Evaluado} & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalización Tiempo} & \textbf{Distancia Recorrida} \\ \hline
 \textit{Temperatura Inicial ($T_0$)} & & & & \\
 100   & 17088,6 & 11 & 183,465 & 16905,2 \\
 500   & 18108,8 & 11 & 253,658 & 17855,1 \\
@@ -600,50 +600,81 @@ l
 \end{table}
 }
 
-Al analizar la \textbf{temperatura inicial}, se identific\'o que $T_0 = 5000$ proporciona el
-mejor desempe\~no balanceado, registrando la distancia recorrida m\'as baja ($15940,6$). Valores
+Al analizar la \textbf{temperatura inicial}, se identificó que $T_0 = 5000$ proporciona el
+mejor desempe\~no balanceado, registrando la distancia recorrida más baja ($15940,6$). Valores
 inferiores ($100$ a $1000$) provocan un enfriamiento temprano del sistema, transformando la b'usqueda
 en un comportamiento codicioso que tiende a intensificar en las primeras
 regiones exploradas, quedando atrapado rápidamente en óptimos locales. Por el contrario, una
-temperatura excesivamente alta ($10000$), asemeja el proceso a una b\'usqueda totalmente aleatoria que no busca
+temperatura excesivamente alta ($10000$), asemeja el proceso a una búsqueda totalmente aleatoria que no busca
 converger.
 
-En cuanto al \textbf{ratio de enfriamiento}, la tasa de descenso de $0.98$ destac\'o significativamente
-sobre las dem\'as configuraciones. Un enfriamiento muy acelerado ($0.95$ o $0.97$) reduce dr\'asticamente la
-aceptaci\'on de soluciones no prometedoras en las etapas iniciales, impidiendo que el algoritmo diversifique
-la b\'usqueda en el espacio de soluciones. En el otro extremo, ritmos extremadamente lentos
+En cuanto al \textbf{ratio de enfriamiento}, la tasa de descenso de $0.98$ destacó significativamente
+sobre las demás configuraciones. Un enfriamiento muy acelerado ($0.95$ o $0.97$) reduce drásticamente la
+aceptación de soluciones no prometedoras en las etapas iniciales, impidiendo que el algoritmo diversifique
+la búsqueda en el espacio de soluciones. En el otro extremo, ritmos extremadamente lentos
 ($0.995$) permiten una tolerancia excesiva hacia soluciones perjudiciales, retrasando la
-estabilizaci\'on del algoritmo y deteriorando la calidad del resultado final dentro del
-l\'imite de iteraciones fijado. El factor de $0.98$ ofrece el balance din\'amico exacto para
-explorar y luego intensificar con \'exito la soluci\'on.
+estabilización del algoritmo y deteriorando la calidad del resultado final dentro del
+límite de iteraciones fijado. El factor de $0.98$ ofrece el balance dinámico exacto para
+explorar y luego intensificar con éxito la solución.
 
-Finalmente, la calibraci\'on del \textbf{umbral de estancamiento} (\texttt{MAX\_STAGNATION}) revel\'o ser el componente
-con mayor impacto en el refinamiento de la soluci\'on. Al incrementar el umbral hacia un valor de $20000$, se alcanz\'o el
-valor objetivo m\'as bajo registrado ($11175,8$) junto con una dr\'astica disminuci\'on en métricas como
-las penalizaciones temporales a un m\'inimo hist\'orico de $12,1153$. Un umbral demasiado bajo ($1000$ a $5000$) activa el
+Finalmente, la calibración del \textbf{umbral de estancamiento} (\texttt{MAX\_STAGNATION}) reveló ser el componente
+con mayor impacto en el refinamiento de la solución. Al incrementar el umbral hacia un valor de $20000$, se alcanzó el
+valor objetivo más bajo registrado ($11175,8$) junto con una drástica disminución en métricas como
+las penalizaciones temporales a un mínimo histórico de $12,1153$. Un umbral demasiado bajo ($1000$ a $5000$) activa el
 recalentamiento con excesiva frecuencia, interrumpiendo constantemente el proceso de enfriamiento fino y
 desestabilizando la convergencia local. Permitir $20000$ iteraciones asegura que el algoritmo agote rigurosamente la
-explotaci\'on fina de un vecindario v\'alido a bajas temperaturas; una vez estabilizado, el recalentamiento al $30\%$ de la temperatura inicial
-proporciona el impulso exacto para saltar barreras hacia valles de b\'usqueda a\'un m\'as
+explotación fina de un vecindario válido a bajas temperaturas; una vez estabilizado, el recalentamiento al $30\%$ de la temperatura inicial
+proporciona el impulso exacto para saltar barreras hacia valles de búsqueda aún más
 prometedores y liberarse del estancamiento.
 Cabe notar que un aumento extra a $30000$ iteraciones no produjo variaciones en el resultado, indicando que el
-algoritmo alcanz\'o su l\'imite de convergencia para la semilla dada, manteniendose estable.
+algoritmo alcanzó su límite de convergencia para la semilla dada, manteniendose estable.
 
 \section{Conclusiones}
-% Conclusiones RELEVANTES del estudio realizado. Incluir conclusiones acerca de la adecuaci\'on de la propuesta de soluci\'on al problema que se busca resolver. Listar y analizar ventajas y desventajas de la propuesta en base a los resultados obtenidos y comportamiento de la propuesta en diferentes escenarios (problemas/instancias/par\'ametros). Incluir trabajo futuro en base a las conclusiones.
+% Conclusiones RELEVANTES del estudio realizado. Incluir conclusiones acerca de la adecuación de la propuesta de solución al problema que se busca resolver. Listar y analizar ventajas y desventajas de la propuesta en base a los resultados obtenidos y comportamiento de la propuesta en diferentes escenarios (problemas/instancias/parámetros). Incluir trabajo futuro en base a las conclusiones.
+A partir del estudio y desarrollo llevado a cabo, es posible concluir que el MDVRP-TW
+representa uno de los desafíos más complejos en el ámbito de la optimización logística. Su dificultad reside
+no sólo en la naturaleza combinatoria de coordinar múltiples depósitos, sino en el acoplamiento estricto de
+restricciones híbridas de capacidad volumétrica y ventanas temporales de servicio, donde la alteración mínima
+de una secuencia puede desencadenar infactibilidades masivas de propagación temporal.
+
+Frente a esta complejidad, la implementación personalizada de la metaheurística Simulated Annealing (SA)
+demostró ser una propuesta de solución altamente adecuada y eficiente. Las conclusiones del proceso de
+experimentación revelan que un algoritmo de búsqueda local estocástica, enriquecido con operadores
+estructurados y políticas de control térmico, es perfectamente capaz de aproximar soluciones de alta
+calidad en escenarios escalables donde los métodos exactos quedan limitados por el crecimiento exponencial del espacio de soluciones.
+
+El análisis de las ventajas y desventajas de la propuesta en base a los escenarios evaluados arroja
+las siguientes observaciones científicas:
+\begin{itemize}
+  \item \textbf{Ventajas:} La principal fortaleza de la aproximación radica en su flexibilidad estructural. El esquema probabilístico asimétrico de vecindarios (Swap 70\%, Relocate 20\% y Split 10\%) demostró ser un acierto de dise\~no, permitiendo una explotación fina y localizada en la secuencia de clientes antes de alterar masivamente la carga de los depósitos. Asimismo, el mecanismo de recalentamiento al 30\% resultó ser el componente de mayor impacto adaptativo para escapar de óptimos locales; tal como evidenciaron las pruebas con un umbral de 20,000 iteraciones, el algoritmo logró refinar las penalizaciones técnicas hasta un mínimo histórico de 12.1153.
+  \item \textbf{Desventajas:} Por otro lado, la principal desventaja estriba en la alta sensibilidad paramétrica y la dependencia del factor de escala. Mientras que para instancias peque\~nas de 25 y 100 nodos un balance equilibrado de $\alpha = 0.5$ suprime por completo las penalizaciones de tiempo, el desempe\~no en instancias masivas de 400 y 1000 clientes decae significativamente si no se reajusta rápidamente la penalización hacia un $\alpha = 1.0$. Esto demuestra que la formulación basal carece de una convergencia uniforme autónoma frente al crecimiento del espectro de clientes.
+\end{itemize}
+
+Los resultados obtenidos permiten contrastar los supuestos de la formulación analítica. Inicialmente se
+asumió que un ritmo de enfriamiento lento ($\alpha_{cooling} \ge 0.99$) propiciaría una exploración superior;
+sin embargo, la experimentación contradijo este supuesto al demostrar que tasas tan lentas saturan la tolerancia
+del criterio de Metrópolis con soluciones de baja calidad dentro del límite de ciclos técnicos, validando al
+ratio de 0.98 como el balance idéoneo entre diversificación y convergencia para este problema en particular.
+
+Como líneas de trabajo futuro derivadas de este análisis, se propone la integración de un esquema de
+sintonización dinámica o adaptativa para el parámetro $\alpha$, de modo que el peso de las penalizaciones
+de tiempo varíe automáticamente según la densidad de la instancia procesada. Además, se sugiere transicionar
+hacia una arquitectura de Simulated Annealing Híbrido, incorporando estructuras de memoria de corto plazo
+provenientes de la Búsqueda Tabú para restringir la repetición de operadores locales ineficientes y
+acelerar los tiempos de cómputo en instancias que superen los 1000 clientes.
 
 \section{Uso LLMs}
-% Indique ac\'a, las herramientas de LLMs/IA usadas en su proyecto. \\En caso de no utilizar ninguna explicitar:
+% Indique acá, las herramientas de LLMs/IA usadas en su proyecto. \\En caso de no utilizar ninguna explicitar:
 
 % \textbf{Declaro no haber utilizado ninguna herramienta de LLMs/IA en el desarrollo de este trabajo.}\\
 
-% \noindent En caso de s\'i utilizarlo, para cada herramienta/uso, indicar:
+% \noindent En caso de sí utilizarlo, para cada herramienta/uso, indicar:
 % \begin{enumerate}
-% \item Herramienta utilizada: ChatGPT, Copilot, Gemini. Incluya versi\'on si es posible: Gratuita, plan.
-% \item Prop\'osito de uso: Generar ideas iniciales, explicar,  conceptos, redactar borradores, corregir estilo o gram\'atica, programar/depurar c\'odigo.
+% \item Herramienta utilizada: ChatGPT, Copilot, Gemini. Incluya versión si es posible: Gratuita, plan.
+% \item Propósito de uso: Generar ideas iniciales, explicar,  conceptos, redactar borradores, corregir estilo o gramática, programar/depurar código.
 % \item Prompts relevantes: Preguntas clave que hicieron, iteraciones relevantes (si cambiaron la pregunta para mejorar resultados)
-% \item Nivel de edici\'on: ?`Copiaron y pegaron?, ?`reescribieron?, ?`verificaron con otras fuentes?
-% \item Validaci\'on: Uso de Libros/papers, apuntes de clase, juicio propio.
+% \item Nivel de edición: ?`Copiaron y pegaron?, ?`reescribieron?, ?`verificaron con otras fuentes?
+% \item Validación: Uso de Libros/papers, apuntes de clase, juicio propio.
 % \end{enumerate}
 %Herramienta: ChatGPT (GPT-5.x)
 %Uso: Generación de ideas y revisión de redacción
