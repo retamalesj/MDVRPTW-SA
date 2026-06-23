@@ -309,34 +309,34 @@ El primer término minimiza la distancia total recorrida por la flota, mientras 
 
 \subsection{Restricciones}
 
-\textbf{(1) Cada cliente es visitado exactamente una vez:}
+\textbf{(1) Cada cliente es visitado exactamente una vez:} Esta restricción asegura que cada cliente sea atendido por un único vehículo proveniente de un único depósito, garantizando que se satisfaga la totalidad de la demanda sin duplicidad de visitas.
 \begin{equation}
   \sum_{k \in K} \sum_{j \in V} x_{ijk} = 1 \qquad \forall i \in C
 \end{equation}
 
-\textbf{(2) Conservación de flujo en cada nodo:}
+\textbf{(2) Conservación de flujo en cada nodo:} Establece la continuidad de las rutas e indica que si un vehículo $k$ visita a un cliente $i$, tiene la obligación estricta de salir de dicho nodo hacia cualquier otro destino $j$, impidiendo rutas inconclusas.
 \begin{equation}
   \sum_{j \in V} x_{ijk} - \sum_{j \in V} x_{jik} = 0 \qquad \forall i \in C,\; \forall k \in K
 \end{equation}
 
-\textbf{(3) Cada vehículo parte de su depósito de origen:}
+\textbf{(3) Cada vehículo parte de su depósito de origen:} Determina las condiciones de inicio de las rutas, indicando que cada vehículo $k$ puede salir a lo sumo una vez desde el depósito que tiene asignado como origen, denotado por $o(k)$.
 \begin{equation}
   \sum_{j \in C} x_{o(k),j,k} \leq 1 \qquad \forall k \in K
 \end{equation}
 
-\textbf{(4) Restricción de capacidad:}
+\textbf{(4) Restricción de capacidad:} Restringe la carga total transportada, obligando a que la suma de las demandas individuales $q_i$ de los clientes asignados en la secuencia de recorrido de un vehículo $k$ no exceda la capacidad máxima $Q$ de la flota.
 \begin{equation}
   \sum_{i \in C} q_i \sum_{j \in V} x_{ijk} \leq Q \qquad \forall k \in K
 \end{equation}
 
-\textbf{(5) Consistencia temporal (propagación de tiempos):}
+\textbf{(5) Consistencia temporal (propagación de tiempos):} Modela de forma lineal la secuencia del cronograma. Si el vehículo $k$ transita directamente desde $i$ hacia $j$ ($x_{ijk} = 1$), el tiempo de llegada a $j$ ($t_{jk}$) debe ser mayor o igual al arribo en $i$ ($t_{ik}$), más su respectivo tiempo de servicio $s_i$ y el tiempo de viaje determinado por la distancia $d_{ij}$ y la velocidad $v$. Si $x_{ijk} = 0$, la ecuación queda desactivada mediante el valor $M$.
 \begin{equation}
   t_{ik} + s_i + \frac{d_{ij}}{v} \leq t_{jk} + M(1 - x_{ijk}) \qquad \forall i,j \in V,\; \forall k \in K
 \end{equation}
 
 donde $M$ es un valor suficientemente grande (constante de Big-M).
 
-\textbf{(6) Penalización por violación de la ventana de tiempo:}
+\textbf{(6) Penalización por violación de la ventana de tiempo:} Estas ecuaciones definen la variable de holgura no negativa $w_{ik}$, la cual cuantifica el retraso temporal incurrido por el vehículo $k$ en caso de llegar después del límite superior permitido ($l_i$) por el cliente $i$.
 \begin{equation}
   w_{ik} \geq t_{ik} - l_i \qquad \forall i \in C,\; \forall k \in K
 \end{equation}
@@ -345,12 +345,12 @@ donde $M$ es un valor suficientemente grande (constante de Big-M).
   w_{ik} \geq 0 \qquad \forall i \in C,\; \forall k \in K
 \end{equation}
 
-\textbf{(7) Espera por ventana de tiempo temprana:}
+\textbf{(7) Espera por ventana de tiempo temprana:} Obliga a que si un vehículo arriba a un nodo antes de la hora de apertura permitida ($e_i$), el inicio del servicio se retrase hasta que la ventana horaria se active formalmente. El cálculo solo tiene efecto si el nodo $i$ es visitado.
 \begin{equation}
   t_{ik} \geq e_i \cdot \sum_{j \in V} x_{jik} \qquad \forall i \in C,\; \forall k \in K
 \end{equation}
 
-\textbf{(8) Naturaleza de las variables:}
+\textbf{(8) Naturaleza de las variables:} Establece el dominio matemático del modelo, restringiendo las variables de ruteo $x_{ijk}$ a valores binarios y los tiempos continuos de llegada $t_{ik}$ a valores no negativos.
 \begin{equation}
   x_{ijk} \in \{0,1\} \qquad \forall i,j \in V,\; \forall k \in K
 \end{equation}
