@@ -169,16 +169,26 @@ infactibles de manera temporal. Este enfoque, basado en el manejo de restriccion
 difíciles de alcanzar. Posteriormente, Cordeau y Maischberger~\cite{Cordeau2012} mejoraron este enfoque
 mediante búsqueda tabú iterada en paralelo, aprovechando arquitecturas de múltiples núcleos para reducir tiempos de cómputo.
 
+Desde una perspectiva empírica, este enfoque demostró que el rendimiento de la búsqueda está estrechamente ligado al
+número de iteraciones fijadas. Para el MDVRP-TW, una ejecución estándar de $10^5$ iteraciones permite alcanzar
+soluciones de alta calidad con un gap promedio inferior al $1.5\%$ respecto a las mejores soluciones conocidas (Best-known solutions, BKS),
+requiriendo tiempos de cómputo de entre 5 minutos y un poco más de 3 horas dependiendo de la dimensión
+de la instancia. Asimismo, el algoritmo demuestra ser altamente eficiente para configuraciones rápidas, logrando
+soluciones factibles con un gap promedio por debajo del $5\%$ en menos de 20 minutos al limitar la búsqueda a solo
+$10^4$ iteraciones~\cite{Cordeau2012}.
+
 \subsection{Búsqueda por Vecindad Variable (VNS)}
 
-La Búsqueda por Vecindad Variable (Variable Neighborhood Search, VNS) fue aplicada al MDVRP-TW por Polacek et al.~(2004),
-obteniendo resultados competitivos con la Búsqueda Tabú de Cordeau et al.~\cite{VNS2004}, obteniendo
-resultados comparables a los de la Búsqueda Tabú de Cordeau et al. El método explora vecindarios de tamaño
+La Búsqueda por Vecindad Variable (Variable Neighborhood Search, VNS) fue aplicada al MDVRP-TW por Polacek et al.~\cite{VNS2004},
+obteniendo resultados comparables y competitivos con la Búsqueda Tabú tradicional. El método explora vecindarios de tamaño
 creciente a partir de la solución actual, lo que permite escapar de óptimos locales mediante cambios
 sistemáticos de vecindario.
 Sadati et al.~\cite{Sadati2021} propusieron una variante denominada Variable Tabu Neighborhood Search (VTNS),
-que incorpora elementos de búsqueda tabú durante la fase de perturbación del VNS. Esta combinación logró
-mejorar varios de los mejores resultados conocidos en instancias de referencia del MDVRP, MDVRP-TW y MDOVRP.
+que incorpora elementos de búsqueda tabú durante la fase de perturbación del VNS.
+Desde una perspectiva empírica, al evaluar esta metodología sobre las 20 instancias de referencia de Cordeau,
+el algoritmo VTNS demostró una alta precisión al alcanzar un gap promedio de $0.05\%$ en sus mejores soluciones
+respecto a las BKS vigentes en su momento, logrando igualar el récord histórico en 11 problemas y establecer $1$ nueva
+cota superior~\cite{Sadati2021}.
 
 \subsection{Algoritmos Genéticos e Híbridos}
 
