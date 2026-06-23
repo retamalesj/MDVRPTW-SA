@@ -101,39 +101,26 @@ El objetivo del problema, de forma explícita, es determinar un conjunto de ruta
 de ventanas de tiempo, de manera que el costo total de operación sea lo más bajo posible. Este costo incluye principalmente la distancia recorrida, el tiempo de desplazamiento
 y posibles penalizaciones asociadas al incumplimiento de los intervalos de atención de los clientes.
 
-\subsection{Parámetros del problema}
-
-Los parámetros del problema son los siguientes:
-\begin{itemize}
-  \item $D = \{d_1, d_2, \ldots, d_m\}$: conjunto de depósitos, con $m$ depósitos en total.
-  \item $C = \{c_1, c_2, \ldots, c_n\}$: conjunto de clientes, con $n$ clientes en total.
-  \item $k$: número máximo de vehículos disponibles por depósito.
-  \item $Q$: capacidad máxima de carga de cada vehículo.
-  \item $q_i$: demanda del cliente $i \in C$.
-  \item $[e_i, l_i]$: ventana de tiempo válida en la que puede ser atendido un cliente $i$.
-  \item $s_i$: tiempo de servicio del cliente $i$.
-  \item $d_{ij}$: distancia euclidiana entre los nodos $i$ y $j$.
-  \item $v$: velocidad constante de los vehículos.
-  \item $\alpha$: coeficiente de penalización por minuto fuera de la ventana de tiempo.
-\end{itemize}
-
 \subsection{Variables de Decisión}
 
+Las principales decisiones que deben determinarse en el MDVRP-TW son:
+
 \begin{itemize}
-  \item $x_{ijk} \in \{0,1\}$: indica si el vehículo $k$ viaja del nodo $i$ al nodo $j$.
-  \item $t_{ik}$: tiempo de inicio de servicio del vehículo $k$ en el nodo $i$.
-  \item $w_{ik}$: penalización por violación de ventana de tiempo.
+\item Determinar qué vehículo atenderá a cada cliente y el orden en que se realizarán las visitas.
+\item Establecer los tiempos de llegada e inicio de servicio en cada cliente.
+\item Calcular los posibles retrasos respecto a las ventanas de tiempo establecidas, los cuales pueden generar penalizaciones.
 \end{itemize}
 
 \subsection{Restricciones}
 
-Las restricciones fundamentales del MDVRP-TW son:
+Las restricciones fundamentales del MDVRP-TW son las siguientes:
+
 \begin{itemize}
-  \item Cada cliente $c_i \in C$ debe ser visitado exactamente una vez.
-  \item Todos los vehículos parten en tiempo $t = 0$ desde su depósito asignado.
-  \item La suma de demandas en cada ruta no puede exceder la capacidad $Q$ del vehículo.
-  \item Los vehículos deben retornar al depósito de origen dentro de los intervalos de tiempo especificados, con penalizaciones en sus desvíos.
-  \item Cuando un vehículo llega al cliente $i$ en tiempo $t$: si $t < e_i$, el vehículo debe esperar; si $e_i \leq t \leq l_i$, inicia el servicio inmediatamente; si $t > l_i$, se aplica una penalización lineal proporcional a $(t - l_i)$.
+  \item Cada cliente debe ser atendido exactamente una vez.
+  \item Todos los vehículos deben iniciar su recorrido desde el depósito que les ha sido asignado.
+  \item La demanda total de los clientes atendidos en una ruta no puede superar la capacidad del vehículo.
+  \item Los vehículos deben regresar a su depósito de origen dentro de los intervalos de tiempo establecidos; en caso contrario, se aplican las penalizaciones correspondientes.
+  \item Si un vehículo llega antes de la apertura de la ventana de tiempo de un cliente, debe esperar hasta el inicio del servicio. Si llega después del límite establecido, se aplica una penalización proporcional al retraso.
 \end{itemize}
 
 \subsection{Problemas Relacionados y Variantes}
