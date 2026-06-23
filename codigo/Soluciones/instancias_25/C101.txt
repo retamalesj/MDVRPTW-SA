@@ -1,0 +1,41 @@
+
+========== SOLUCION ==========
+
+Semilla: 42
+Instancia: C101
+Valor Funcion Objetivo: 162.577
+Distancia total recorrida: 162.577
+Penalizacion tiempo: 0
+Vehiculos usados: 4
+
+=== RUTAS ===
+
+Deposito D1 (X=35.76, Y=62.12)
+Vehiculo 1
+Ruta: D1 -> 20 -> 24 -> 25 -> 23 -> 22 -> 21 -> D1
+Carga: 110 / 200
+Distancia: 41.3061
+Tiempo: 1018.64
+
+Vehiculo 2
+Ruta: D1 -> 13 -> 17 -> 18 -> 19 -> 15 -> 16 -> 14 -> 12 -> D1
+Carga: 190 / 200
+Distancia: 71.1314
+Tiempo: 802.284
+
+Vehiculo 3
+Ruta: D1 -> 5 -> 3 -> 7 -> 8 -> D1
+Carga: 60 / 200
+Distancia: 18.9932
+Tiempo: 387.121
+
+Vehiculo 4
+Ruta: D1 -> 10 -> 11 -> 9 -> 6 -> 4 -> 2 -> 1 -> D1
+Carga: 100 / 200
+Distancia: 31.146
+Tiempo: 1017.95
+
+=== PENALIZACIONES DE TIEMPO ===
+Ninguna
+
+Total nodos penalizados: 0

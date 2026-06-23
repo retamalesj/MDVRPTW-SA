@@ -1,0 +1,445 @@
+
+========== SOLUCION ==========
+
+Semilla: 42
+Instancia: c1_4_1
+Valor Funcion Objetivo: 11175.8
+Distancia total recorrida: 11163.6
+Penalizacion tiempo: 12.1153
+Vehiculos usados: 71
+
+=== RUTAS ===
+
+Deposito D0 (X=147.25, Y=30.68)
+Vehiculo 5
+Ruta: D0 -> 286 -> 83 -> 99 -> 184 -> 175 -> 15 -> 311 -> 241 -> D0
+Carga: 140 / 200
+Distancia: 240.647
+Tiempo: 1207.02
+
+Vehiculo 6
+Ruta: D0 -> 17 -> 160 -> 337 -> 281 -> 129 -> 263 -> D0
+Carga: 90 / 200
+Distancia: 136.987
+Tiempo: 837.26
+
+Vehiculo 7
+Ruta: D0 -> 105 -> 100 -> 106 -> 297 -> 329 -> 163 -> D0
+Carga: 110 / 200
+Distancia: 141.931
+Tiempo: 1085.87
+
+Vehiculo 11
+Ruta: D0 -> 371 -> 62 -> 39 -> 382 -> 338 -> 256 -> 261 -> 131 -> D0
+Carga: 130 / 200
+Distancia: 270.114
+Tiempo: 1071.23
+
+Vehiculo 12
+Ruta: D0 -> 114 -> 44 -> 36 -> 161 -> 254 -> 293 -> 60 -> 53 -> 384 -> D0
+Carga: 150 / 200
+Distancia: 236.731
+Tiempo: 1164.6
+
+Vehiculo 14
+Ruta: D0 -> 334 -> 273 -> 350 -> 352 -> D0
+Carga: 60 / 200
+Distancia: 123.382
+Tiempo: 827.029
+
+Vehiculo 17
+Ruta: D0 -> 381 -> 202 -> 400 -> 34 -> 230 -> D0
+Carga: 80 / 200
+Distancia: 179.023
+Tiempo: 1131.64
+
+Vehiculo 18
+Ruta: D0 -> 298 -> 87 -> 302 -> 201 -> 25 -> 91 -> 130 -> D0
+Carga: 160 / 200
+Distancia: 298.215
+Tiempo: 1035.36
+
+Vehiculo 31
+Ruta: D0 -> 385 -> 121 -> 210 -> 67 -> 65 -> 242 -> 316 -> 276 -> 142 -> D0
+Carga: 180 / 200
+Distancia: 300.278
+Tiempo: 1227.63
+
+Vehiculo 34
+Ruta: D0 -> 269 -> 64 -> 318 -> D0
+Carga: 50 / 200
+Distancia: 123.323
+Tiempo: 687.618
+
+Vehiculo 35
+Ruta: D0 -> 255 -> 135 -> 136 -> 317 -> 22 -> 372 -> D0
+Carga: 100 / 200
+Distancia: 358.688
+Tiempo: 1100.33
+
+Vehiculo 36
+Ruta: D0 -> 72 -> 203 -> 365 -> 341 -> 183 -> 75 -> D0
+Carga: 80 / 200
+Distancia: 94.8538
+Tiempo: 1209.58
+
+Vehiculo 38
+Ruta: D0 -> 5 -> 284 -> 351 -> 58 -> 344 -> 376 -> D0
+Carga: 100 / 200
+Distancia: 231.674
+Tiempo: 1083.72
+
+Vehiculo 46
+Ruta: D0 -> 155 -> 395 -> 330 -> 143 -> 147 -> D0
+Carga: 70 / 200
+Distancia: 106.158
+Tiempo: 872.073
+
+Vehiculo 49
+Ruta: D0 -> 214 -> 355 -> 320 -> 168 -> 158 -> D0
+Carga: 60 / 200
+Distancia: 65.2111
+Tiempo: 1210.54
+
+Vehiculo 51
+Ruta: D0 -> 154 -> 21 -> 200 -> 119 -> 232 -> D0
+Carga: 90 / 200
+Distancia: 91.5783
+Tiempo: 1118.5
+
+Vehiculo 52
+Ruta: D0 -> 186 -> 358 -> 195 -> 238 -> 42 -> D0
+Carga: 100 / 200
+Distancia: 137.718
+Tiempo: 1207.26
+
+Vehiculo 53
+Ruta: D0 -> 397 -> 216 -> 285 -> 18 -> 207 -> 187 -> 123 -> 228 -> D0
+Carga: 160 / 200
+Distancia: 145.08
+Tiempo: 1304.01
+
+Vehiculo 58
+Ruta: D0 -> 303 -> 144 -> 24 -> 93 -> 295 -> 103 -> 220 -> 137 -> D0
+Carga: 130 / 200
+Distancia: 150.777
+Tiempo: 1050.81
+
+Vehiculo 59
+Ruta: D0 -> 306 -> 377 -> 124 -> 2 -> 347 -> D0
+Carga: 70 / 200
+Distancia: 22.3922
+Tiempo: 992.402
+
+Vehiculo 60
+Ruta: D0 -> 292 -> 226 -> 172 -> 117 -> 247 -> 162 -> D0
+Carga: 100 / 200
+Distancia: 62.932
+Tiempo: 743.561
+
+Vehiculo 62
+Ruta: D0 -> 301 -> 139 -> 280 -> 392 -> 191 -> D0
+Carga: 90 / 200
+Distancia: 143.809
+Tiempo: 632.42
+
+Vehiculo 65
+Ruta: D0 -> 326 -> 109 -> 342 -> 309 -> 118 -> 346 -> 45 -> D0
+Carga: 130 / 200
+Distancia: 101.807
+Tiempo: 996.184
+
+Vehiculo 66
+Ruta: D0 -> 272 -> 215 -> 46 -> 153 -> 166 -> D0
+Carga: 90 / 200
+Distancia: 107.162
+Tiempo: 1144.39
+
+Deposito D1 (X=145.25, Y=140.51)
+Vehiculo 2
+Ruta: D1 -> 393 -> 112 -> 108 -> 47 -> 196 -> 321 -> D1
+Carga: 80 / 200
+Distancia: 175.615
+Tiempo: 827.596
+
+Vehiculo 3
+Ruta: D1 -> 399 -> 132 -> D1
+Carga: 40 / 200
+Distancia: 109.585
+Tiempo: 959.262
+
+Vehiculo 4
+Ruta: D1 -> 221 -> 134 -> D1
+Carga: 60 / 200
+Distancia: 75.346
+Tiempo: 807.231
+
+Vehiculo 9
+Ruta: D1 -> 361 -> 26 -> 282 -> 40 -> 283 -> 289 -> 104 -> 227 -> D1
+Carga: 150 / 200
+Distancia: 293.984
+Tiempo: 1499.96
+
+Vehiculo 10
+Ruta: D1 -> 360 -> 198 -> 140 -> 279 -> 90 -> D1
+Carga: 130 / 200
+Distancia: 136.764
+Tiempo: 648.295
+
+Vehiculo 13
+Ruta: D1 -> 88 -> 217 -> 209 -> D1
+Carga: 50 / 200
+Distancia: 115.874
+Tiempo: 418.688
+
+Vehiculo 19
+Ruta: D1 -> 366 -> 150 -> 354 -> 185 -> 10 -> 152 -> 336 -> 76 -> D1
+Carga: 160 / 200
+Distancia: 153.138
+Tiempo: 956.361
+
+Vehiculo 20
+Ruta: D1 -> 32 -> 111 -> 194 -> 396 -> 307 -> 264 -> D1
+Carga: 110 / 200
+Distancia: 103.944
+Tiempo: 956.729
+
+Vehiculo 21
+Ruta: D1 -> 23 -> 151 -> 173 -> 359 -> 50 -> 383 -> D1
+Carga: 90 / 200
+Distancia: 154.013
+Tiempo: 889.965
+
+Vehiculo 24
+Ruta: D1 -> 51 -> 1 -> 127 -> 245 -> 259 -> D1
+Carga: 100 / 200
+Distancia: 101.65
+Tiempo: 941.894
+
+Vehiculo 27
+Ruta: D1 -> 375 -> 149 -> 257 -> 3 -> D1
+Carga: 80 / 200
+Distancia: 123.431
+Tiempo: 878.061
+
+Vehiculo 28
+Ruta: D1 -> 290 -> 182 -> 11 -> 37 -> 20 -> D1
+Carga: 90 / 200
+Distancia: 285.089
+Tiempo: 986.815
+
+Vehiculo 29
+Ruta: D1 -> 80 -> 315 -> 133 -> 333 -> 251 -> D1
+Carga: 60 / 200
+Distancia: 129.35
+Tiempo: 841.221
+
+Vehiculo 30
+Ruta: D1 -> 270 -> 19 -> 205 -> D1
+Carga: 60 / 200
+Distancia: 104.343
+Tiempo: 854.09
+
+Vehiculo 32
+Ruta: D1 -> 322 -> 213 -> 296 -> 356 -> 107 -> D1
+Carga: 110 / 200
+Distancia: 133.907
+Tiempo: 899.868
+
+Vehiculo 37
+Ruta: D1 -> 291 -> 52 -> 16 -> 314 -> 243 -> 239 -> D1
+Carga: 150 / 200
+Distancia: 185.592
+Tiempo: 884.184
+
+Vehiculo 39
+Ruta: D1 -> 374 -> 38 -> 193 -> 55 -> 120 -> 313 -> D1
+Carga: 100 / 200
+Distancia: 155.312
+Tiempo: 1130.68
+
+Vehiculo 40
+Ruta: D1 -> 335 -> 199 -> 82 -> 349 -> D1
+Carga: 60 / 200
+Distancia: 148.239
+Tiempo: 689.688
+
+Vehiculo 43
+Ruta: D1 -> 70 -> 328 -> 177 -> 95 -> 96 -> 353 -> D1
+Carga: 160 / 200
+Distancia: 109.828
+Tiempo: 959.721
+
+Vehiculo 45
+Ruta: D1 -> 49 -> 181 -> 389 -> 116 -> 363 -> 30 -> D1
+Carga: 110 / 200
+Distancia: 165.82
+Tiempo: 897.112
+
+Vehiculo 47
+Ruta: D1 -> 324 -> 156 -> 233 -> 229 -> 122 -> 86 -> D1
+Carga: 100 / 200
+Distancia: 201.279
+Tiempo: 1220.86
+
+Vehiculo 48
+Ruta: D1 -> 206 -> 300 -> D1
+Carga: 40 / 200
+Distancia: 88.2294
+Tiempo: 695.046
+
+Vehiculo 54
+Ruta: D1 -> 97 -> 331 -> 9 -> 212 -> 169 -> 13 -> D1
+Carga: 100 / 200
+Distancia: 204.046
+Tiempo: 788.275
+
+Vehiculo 55
+Ruta: D1 -> 73 -> 265 -> 380 -> 85 -> D1
+Carga: 70 / 200
+Distancia: 100.293
+Tiempo: 509.464
+
+Vehiculo 56
+Ruta: D1 -> 63 -> 348 -> 235 -> 388 -> 204 -> 294 -> D1
+Carga: 160 / 200
+Distancia: 231.721
+Tiempo: 846.851
+
+Vehiculo 67
+Ruta: D1 -> 33 -> 174 -> 390 -> 244 -> 57 -> 48 -> 345 -> 98 -> 250 -> D1
+Carga: 140 / 200
+Distancia: 268.324
+Tiempo: 1131.69
+
+Deposito D2 (X=39.79, Y=97.32)
+Vehiculo 1
+Ruta: D2 -> 364 -> 275 -> 240 -> D2
+Carga: 30 / 200
+Distancia: 87.2883
+Tiempo: 1112.79
+
+Vehiculo 8
+Ruta: D2 -> 94 -> 54 -> 180 -> 394 -> 68 -> 288 -> 6 -> 178 -> 327 -> D2
+Carga: 130 / 200
+Distancia: 144.176
+Tiempo: 1039.68
+
+Vehiculo 15
+Ruta: D2 -> 29 -> 157 -> 148 -> 378 -> 164 -> D2
+Carga: 80 / 200
+Distancia: 158.756
+Tiempo: 776.293
+
+Vehiculo 16
+Ruta: D2 -> 126 -> 398 -> 66 -> 299 -> 305 -> D2
+Carga: 90 / 200
+Distancia: 183.759
+Tiempo: 769.126
+
+Vehiculo 22
+Ruta: D2 -> 340 -> 218 -> 190 -> D2
+Carga: 40 / 200
+Distancia: 127.76
+Tiempo: 925.869
+
+Vehiculo 23
+Ruta: D2 -> 287 -> 31 -> 362 -> 248 -> 171 -> 192 -> 128 -> 27 -> D2
+Carga: 130 / 200
+Distancia: 225.128
+Tiempo: 1177.73
+
+Vehiculo 25
+Ruta: D2 -> 189 -> 370 -> 274 -> 138 -> 170 -> 4 -> 223 -> D2
+Carga: 150 / 200
+Distancia: 206.903
+Tiempo: 1059.42
+
+Vehiculo 26
+Ruta: D2 -> 102 -> 386 -> 379 -> 323 -> 197 -> D2
+Carga: 70 / 200
+Distancia: 159.597
+Tiempo: 1028.87
+
+Vehiculo 33
+Ruta: D2 -> 357 -> 74 -> 179 -> 319 -> 260 -> 43 -> 224 -> 41 -> D2
+Carga: 110 / 200
+Distancia: 176.034
+Tiempo: 1282.25
+
+Vehiculo 41
+Ruta: D2 -> 208 -> 268 -> 312 -> 246 -> 84 -> D2
+Carga: 70 / 200
+Distancia: 195.579
+Tiempo: 1105.73
+
+Vehiculo 42
+Ruta: D2 -> 77 -> 14 -> 253 -> D2
+Carga: 70 / 200
+Distancia: 89.2841
+Tiempo: 1011.47
+
+Vehiculo 44
+Ruta: D2 -> 332 -> 310 -> 339 -> 262 -> 8 -> D2
+Carga: 90 / 200
+Distancia: 112.14
+Tiempo: 628.273
+
+Vehiculo 50
+Ruta: D2 -> 56 -> 141 -> 252 -> 271 -> 234 -> D2
+Carga: 70 / 200
+Distancia: 188.057
+Tiempo: 1173.06
+
+Vehiculo 57
+Ruta: D2 -> 373 -> 167 -> D2
+Carga: 40 / 200
+Distancia: 21.3649
+Tiempo: 499.683
+
+Vehiculo 61
+Ruta: D2 -> 92 -> 266 -> 165 -> 308 -> 146 -> 79 -> D2
+Carga: 140 / 200
+Distancia: 93.6168
+Tiempo: 713.073
+
+Vehiculo 63
+Ruta: D2 -> 343 -> 145 -> 176 -> 89 -> 258 -> D2
+Carga: 90 / 200
+Distancia: 349.051
+Tiempo: 1356.15
+
+Vehiculo 64
+Ruta: D2 -> 387 -> 278 -> 78 -> 231 -> 188 -> 125 -> 225 -> 81 -> D2
+Carga: 180 / 200
+Distancia: 156.172
+Tiempo: 925.855
+
+Vehiculo 68
+Ruta: D2 -> 69 -> 222 -> 159 -> 304 -> 71 -> 113 -> 211 -> 59 -> D2
+Carga: 160 / 200
+Distancia: 71.6373
+Tiempo: 926.279
+
+Vehiculo 69
+Ruta: D2 -> 267 -> 12 -> 237 -> 219 -> 28 -> 249 -> D2
+Carga: 100 / 200
+Distancia: 196.826
+Tiempo: 1033.16
+
+Vehiculo 70
+Ruta: D2 -> 236 -> 61 -> 369 -> 110 -> 35 -> D2
+Carga: 90 / 200
+Distancia: 131.524
+Tiempo: 965.139
+
+Vehiculo 71
+Ruta: D2 -> 115 -> 101 -> 7 -> 277 -> 325 -> 368 -> 367 -> 391 -> D2
+Carga: 180 / 200
+Distancia: 163.799
+Tiempo: 1003.46
+
+=== PENALIZACIONES DE TIEMPO ===
+Cliente 400: llegada=474.115, ventana=[397, 462], tardanza=12.1153
+
+Total nodos penalizados: 1
