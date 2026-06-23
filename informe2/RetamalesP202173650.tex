@@ -145,6 +145,16 @@ La incorporación de ventanas de tiempo al VRP (VRPTW) fue formalizada y sistema
 como instancias de prueba que se han convertido en un estándar para evaluar algoritmos dentro del VRP~\cite{Solomon1987}.
 La extensión al caso multi-depósito fue formalizada por Cordeau et al. en 1997 con el MDVRP, siendo extendida en 2001 al MDVRP-TW mediante una Búsqueda Tabú Unificada (Unified Tabu Search, UTS)~\cite{Cordeau2001}.
 
+\subsection{Representaci\'on de Soluciones}
+
+En la resoluci\'on del MDVRP-TW, la elecci\'on de la estructura de datos para codificar las rutas es cr\'itica para el desempeño del
+algoritmo. El estado del arte clasifica las representaciones principalmente en dos enfoques:
+
+\begin{itemize}
+  \item \textbf{Representaci\'on Directa (Multi-ruta):} Codifica las soluciones como una lista expl\'icita de rutas asociadas a cada dep\'osito, delimitadas por el origen y fin de cada viaje. Permite una evaluaci\'on inmediata de las restricciones de capacidad y ventanas de tiempo, facilitando la aplicaci\'on directa de operadores de vecindad locales como \textit{Swap} o \textit{Relocate}~\cite{Cordeau2001}.
+  \item \textbf{Representaci\'on Indirecta (Basada en Permutaciones):} Consiste en una secuencia continua de clientes sin delinear los veh\'iculos ni los dep\'ositos. Este enfoque delega la construcci\'on f\'isica de las rutas a un algoritmo decodificador (como el procedimiento Split, introducido por Prins y adaptado para problemas con ventanas de tiempo por Vidal et al.~\cite{VidalAG2013}), el cual segmenta la permutaci\'on de forma \'optima introduciendo los dep\'ositos y veh\'iculos requeridos. Es la representaci\'on predilecta en algoritmos gen\'eticos para evitar la generaci\'on de descendencia inv\'alida tras los cruces.
+\end{itemize}
+
 \subsection{Métodos Exactos}
 
 Los métodos exactos para el MDVRP-TW, tales como Branch-and-Bound, Branch-and-Cut y generación de columnas, permiten obtener soluciones óptimas garantizadas. Sin embargo,
