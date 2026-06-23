@@ -214,9 +214,17 @@ multi-movimiento tipo \textit{leader-follower} (leader–follower strategy). Est
 simultáneamente múltiples vecindarios, mejorando tanto la eficiencia computacional como la calidad de las
 soluciones obtenidas.
 
-En este contexto, se han reportado mejoras significativas en instancias de referencia del MDVRP-TW,
+En este contexto, se han reportado mejoras significativas en instancias de referencia del MDVRP-TW
+mediante el algoritmo híbrido multifactorial por descomposición (MDFIHA),
 incluyendo la obtención de nuevas cotas superiores en problemas de pequeña y gran escala, evidenciando el
 potencial de estas técnicas para acelerar metaheurísticas modernas sin degradar el desempeño de la búsqueda~\cite{GPU2026}.
+
+Específicamente, en las instancias clásicas C01, la variante MDFIHA logra un gap promedio de -0.03\% y establece 4 nuevas cotas
+superiores (BKS). En las instancias de gran escala V13, a pesar de emplear un límite de tiempo menor
+(7,200 s frente a los 12,960 s de enfoques en CPU), MDFIHA alcanza un gap de -0.22\% mejorando 19 BKS,
+mientras que su variante acelerada por GPU con algoritmos genéticos (MDFIHA-ETGA) potencia este rendimiento con un gap de -0.60\% y 26 nuevas
+soluciones récord. Se comprobó además que estas mejoras en la calidad de las soluciones y tiempos de cómputo son
+estadísticamente significativas frente a los algoritmos de referencia ($p < 0.05$)~\cite{GPU2026}.
 
 \subsection{Variantes Modernas y Tendencias}
 
