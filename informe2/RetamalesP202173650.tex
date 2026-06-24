@@ -443,7 +443,8 @@ La resolución del MDVRP-TW se aborda mediante una implementación particular de
 El proceso comienza construyendo una solución inicial ($S_{inicial}$) mediante una heurística estocástica de empaquetamiento:
 se altera aleatoriamente el orden de la lista de clientes (\textit{shuffle}) y se asignan secuencialmente a las rutas respetando
 la capacidad de carga ($Q$); si un cliente no cabe en las trayectorias existentes,
-se abre una nueva ruta asociada deterministamente al depósito geográficamente más cercano.
+se abre una nueva ruta asociada deterministamente al depósito geográficamente más cercano. 
+Como ejemplo, si un cliente con demanda mayor al espacio restante en las rutas actuales es procesado, el algoritmo calcula las distancias hacia todos los depósitos disponibles y abre una ruta exclusiva desde el más próximo.
 El flujo de esta construcción inicial se detalla a continuación:
 
 \begin{verbatim}
@@ -481,14 +482,13 @@ $$f(S) = \sum_{r \in S} D(r) + \alpha \cdot P_{tiempo}$$
 Donde $D(r)$ es la sumatoria de distancias euclidianas (trayectos depósito-cliente, inter-clientes y retorno) y $P_{tiempo}$
 acumula linealmente la tardanza total. Esta penalización computa el retraso respecto a la ventana de tiempo tardía ($t - l_i$)
 en cada nodo visitado y en el retorno al depósito, utilizando el parámetro $\alpha$ como factor de ponderación para inducir el
-regreso hacia zonas factibles del dominio.
+regreso hacia zonas factibles del dominio. Un valor elevado de $\alpha$ prioriza la factibilidad temporal de manera agresiva restringiendo la búsqueda, mientras que un $\alpha$ bajo permite diversificar explorando soluciones infactibles con trayectos más cortos.
 
 El algoritmo ejecuta un ciclo de $MaxIteraciones$, seleccionando en cada paso un operador de vecindad según ponderaciones
 asimétricas para balancear intensificación y diversificación: un \textbf{Swap} ($70\%$, intercambia dos clientes en la misma
-ruta para corregir cruces sin alterar depósitos), un \textbf{Relocate} ($20\%$, traslada un cliente a otra ruta y elimina la
-de origen si queda vacía), o un \textbf{Split} ($10\%$, corta una ruta y transfiere el resto de clientes a un nuevo vehículo
-del mismo depósito). La baja frecuencia del \textbf{Split} evita el incremento descontrolado de vehículos, reservándolo para
-romper estancamientos severos bajo temperaturas favorables.
+ruta para corregir cruces sin alterar depósitos; por ejemplo, transformar la secuencia $[c_1, c_2, c_3]$ en $[c_3, c_2, c_1]$), un \textbf{Relocate} ($20\%$, traslada un cliente a otra ruta y elimina la
+de origen si queda vacía; por ejemplo, mover $c_1$ de una ruta saturada a una con capacidad disponible), o un \textbf{Split} ($10\%$, corta una ruta y transfiere el resto de clientes a un nuevo vehículo
+del mismo depósito; por ejemplo, segmentar $[c_1, c_2, c_3, c_4]$ en dos rutas independientes desde el mismo origen). La asignación asimétrica se justifica para priorizar la intensificación mediante el ajuste fino de secuencias (Swap), delegando las mutaciones macro (Split) a una frecuencia mínima que evite el crecimiento descontrolado de vehículos, reservándolo para romper estancamientos severos bajo temperaturas favorables.
 
 Tras alterar las rutas, se evalúa estrictamente la factibilidad frente a la capacidad de carga ($Q$); si el vecino viola
 este límite, se descarta mediante un rechazo duro para continuar a la siguiente iteración, garantizando una exploración
@@ -499,8 +499,7 @@ solución histórica ($S_{best}$) se mantiene actualizada ante cualquier reducci
 el contador de estancamiento. Por su parte, la temperatura disminuye geométricamente tras transcurrir un $IntervaloEnfriamiento$
 fijo de iteraciones. Finalmente, si el sistema alcanza el límite de $MaxEstancamiento$, se activa un mecanismo de recalentamiento
 ligero que reajusta la temperatura al $30\%$ de su valor inicial ($T_{inicial}$), restituyendo transitoriamente la capacidad de
-aceptar peores soluciones para facilitar la salida de óptimos locales. El comportamiento general de la búsqueda se detalla a
-continuación:
+aceptar peores soluciones para facilitar la salida de óptimos locales. El comportamiento de los parámetros regula la búsqueda de la siguiente forma: $T_{inicial}$ controla la emisividad de aceptación inicial para diversificar; $IntervaloEnfriamiento$ y $MaxIteraciones$ definen la tasa y extensión de la convergencia hacia la explotación; y $MaxEstancamiento$ actúa como el disparador energético ante óptimos locales. El comportamiento general de la búsqueda se detalla a continuación:
 
 \begin{verbatim}
 Procedimiento SimulatedAnnealing(instancia)
