@@ -17,6 +17,7 @@ style=numeric
 ]{biblatex}
 \addbibresource{Referencias.bib}
 
+
 \begin{document}
 \title{Inteligencia Artificial \\ \begin{Large}Informe Final: Problema Multi Depot Vehicle Routing Problem with Time Windows \end{Large}}
 \author{Pablo Retamales}
@@ -438,45 +439,72 @@ internos de las rutas seleccionadas sin alterar el resto del sistema.
 % general y en párrafos explicativos cómo fue implementada cada parte para su problema particular. Si
 % se utilizan operadores/movimientos se debe justificar por qué se utilizaron dichos operadores/movimientos. 
 % En caso de una técnica completa, describir detalles relevantes del proceso, si se utiliza recursión o no, explicar cómo se van construyendo soluciones, cuándo se revisan restricciones, cómo se registran conflictos, etc. En este punto no se espera que se incluya código, eso va aparte.
-La resolución del MDVRP-TW se aborda mediante una implementación de la técnica Simulated Annealing (SA).
-El algoritmo comienza fijando una solución inicial como punto de partida en el espacio de búsqueda.
-A partir de este estado, el proceso opera bajo un esquema iterativo controlado por un ciclo fijo que ejecuta
-un número determinado de iteraciones máximas ($MaxIteraciones$). En cada iteración se selecciona estocásticamente
-un movimiento de vecindad aplicando probabilidades específicas: existe un $70\%$ de probabilidad de realizar un intercambio
-interno de clientes en una misma ruta (\textbf{Swap}), un $20\%$ de mover un cliente hacia otra trayectoria
-(\textbf{Relocate}), y un $10\%$ de dividir una ruta activa para transferir sus clientes restantes a un nuevo
-vehículo del mismo depósito (\textbf{Split}). Estas ponderaciones asimétricas se establecieron con el
-propósito de equilibrar la intensificación local y la diversificación global en el espacio de
-búsqueda. Al asignar un sesgo mayoritario al operador \textbf{Swap} ($70\%$), el algoritmo prioriza
-la optimización interna de las secuencias ya consolidadas, buscando corregir de forma rápida los
-cruces geográficos y los desajustes en las ventanas de tiempo de rutas individuales sin alterar la
-asignación general de depósitos. Por su parte, la probabilidad del $20\%$ otorgada a \textbf{Relocate}
-actúa como un mecanismo intermedio que redistribuye la carga laboral transfiriendo clientes problemáticos
-entre distintas rutas. Finalmente, se reserva una probabilidad restrictiva del $10\%$ para el operador
-\textbf{Split} debido a su carácter altamente disruptivo; dado que este movimiento altera drásticamente
-la estructura del vector de soluciones al activar nuevos vehículos e incrementar los costos fijos de transporte,
-una frecuencia baja asegura que sólo se aplique para romper estancamientos mayores o abrir nuevos frentes de
-exploración cuando la temperatura sea lo suficientemente favorable.
-
-Inmediatamente después de alterar las rutas, se evalúa de forma estricta su factibilidad computacional
-frente a las restricciones de capacidad de carga de los vehículos ($Q$) y los intervalos de las ventanas de
-tiempo ($[e_i, l_i]$). Si el vecino viola cualquiera de estos criterios, se descarta el movimiento de inmediato
-mediante una condición de rechazo duro y se continúa a la siguiente iteración, asegurando de esta manera
-que el algoritmo explore de forma exclusiva el espacio de soluciones válidas. Para los vecinos factibles,
-se determina la diferencia de costos de las distancias euclidianas ($\Delta$). Si el vecino disminuye el
-costo total, se acepta automáticamente; si representa un deterioro, se acepta de manera condicional con
-base en el criterio de Metrópolis utilizando una probabilidad exponencial gobernada por la temperatura
-actual ($T$). La mejor solución histórica ($S_{best}$) se actualiza cada vez que se halla un costo menor,
-restableciendo a cero el contador de estancamiento. Por su parte, la temperatura disminuye geométricamente
-tras transcurrir un intervalo fijo de iteraciones ($IntervaloEnfriamiento$). Finalmente, si el sistema
-experimenta un estancamiento prolongado superior al límite tolerado ($MaxEstancamiento$), se activa un
-mecanismo de recalentamiento ligero que reajusta la temperatura del sistema al $30\%$ de su valor inicial
-($T_{inicial}$), restituyendo transitoriamente la capacidad de aceptar peores soluciones para facilitar la
-salida de óptimos locales. El flujo general de este comportamiento particular se detalla en el siguiente
-bloque de pseudocódigo:
+La resolución del MDVRP-TW se aborda mediante una implementación particular de la metaheurística Simulated Annealing (SA).
+El proceso comienza construyendo una solución inicial ($S_{inicial}$) mediante una heurística estocástica de empaquetamiento:
+se altera aleatoriamente el orden de la lista de clientes (\textit{shuffle}) y se asignan secuencialmente a las rutas respetando
+la capacidad de carga ($Q$); si un cliente no cabe en las trayectorias existentes,
+se abre una nueva ruta asociada deterministamente al depósito geográficamente más cercano.
+El flujo de esta construcción inicial se detalla a continuación:
 
 \begin{verbatim}
-Procedimiento SimulatedAnnealing(S_inicial, instancia)
+Procedimiento ConstruirSolucionInicialAleatoria(instancia)
+    ClientesAleatorios <- Shuffle(instancia.clientes)
+    Solución <- CrearSoluciónVacia()
+    
+    Para Cada cliente En ClientesAleatorios Hacer
+        Asignado <- Falso
+        Para Cada ruta En Solución.rutas En OrdenAleatorio() Hacer
+            Si ruta.cargaActual + cliente.demanda <= Q Entonces
+                InsertarCliente(ruta, cliente)
+                Asignado <- Verdadero
+                Romper Ciclo
+            Fin Si
+        Fin Para
+        
+        Si No Asignado Entonces
+            DepósitoCercano <- ObtenerDepósitoMasCercano(cliente, instancia.depósitos)
+            NuevaRuta <- CrearNuevaRuta(DepósitoCercano)
+            InsertarCliente(NuevaRuta, cliente)
+            AgregarRutaASolución(Solución, NuevaRuta)
+        Fin Si
+    Fin Para
+    
+    Retornar Solución
+Fin Procedimiento
+\end{verbatim}
+
+A partir de este estado, la calidad de cada solución se mide mediante una función de evaluación $f(S)$ que relaja las restricciones
+de tiempo para explorar el espacio infactible mediante la siguiente ecuación:
+
+$$f(S) = \sum_{r \in S} D(r) + \alpha \cdot P_{tiempo}$$
+
+Donde $D(r)$ es la sumatoria de distancias euclidianas (trayectos depósito-cliente, inter-clientes y retorno) y $P_{tiempo}$
+acumula linealmente la tardanza total. Esta penalización computa el retraso respecto a la ventana de tiempo tardía ($t - l_i$)
+en cada nodo visitado y en el retorno al depósito, utilizando el parámetro $\alpha$ como factor de ponderación para inducir el
+regreso hacia zonas factibles del dominio.
+
+El algoritmo ejecuta un ciclo de $MaxIteraciones$, seleccionando en cada paso un operador de vecindad según ponderaciones
+asimétricas para balancear intensificación y diversificación: un \textbf{Swap} ($70\%$, intercambia dos clientes en la misma
+ruta para corregir cruces sin alterar depósitos), un \textbf{Relocate} ($20\%$, traslada un cliente a otra ruta y elimina la
+de origen si queda vacía), o un \textbf{Split} ($10\%$, corta una ruta y transfiere el resto de clientes a un nuevo vehículo
+del mismo depósito). La baja frecuencia del \textbf{Split} evita el incremento descontrolado de vehículos, reservándolo para
+romper estancamientos severos bajo temperaturas favorables.
+
+Tras alterar las rutas, se evalúa estrictamente la factibilidad frente a la capacidad de carga ($Q$); si el vecino viola
+este límite, se descarta mediante un rechazo duro para continuar a la siguiente iteración, garantizando una exploración
+exclusiva en soluciones válidas respecto al peso. Para los vecinos válidos en carga, se determina la diferencia de la
+función de evaluación ($\Delta = f(S_{vecino}) - f(S)$): las mejoras se aceptan automáticamente, mientras que las
+soluciones desfavorables se aceptan de manera condicional bajo la probabilidad exponencial $e^{-\Delta / T}$. La mejor
+solución histórica ($S_{best}$) se mantiene actualizada ante cualquier reducción del costo mínimo, restableciendo a cero
+el contador de estancamiento. Por su parte, la temperatura disminuye geométricamente tras transcurrir un $IntervaloEnfriamiento$
+fijo de iteraciones. Finalmente, si el sistema alcanza el límite de $MaxEstancamiento$, se activa un mecanismo de recalentamiento
+ligero que reajusta la temperatura al $30\%$ de su valor inicial ($T_{inicial}$), restituyendo transitoriamente la capacidad de
+aceptar peores soluciones para facilitar la salida de óptimos locales. El comportamiento general de la búsqueda se detalla a
+continuación:
+
+\begin{verbatim}
+Procedimiento SimulatedAnnealing(instancia)
+    S_inicial <- ConstruirSolucionInicialAleatoria(instancia)
     S <- S_inicial
     S_best <- S_inicial
     T <- T_inicial
@@ -485,15 +513,15 @@ Procedimiento SimulatedAnnealing(S_inicial, instancia)
     Para iter <- 1 hasta MaxIteraciones Hacer
         S_vecino <- GenerarVecino(S)  // Swap (70%), Relocate (20%) o Split (10%)
         
-        Si No EsFactible(S_vecino, instancia) entonces
+        Si No EsFactibleCapacidad(S_vecino, instancia) entonces
             Siguiente iteración
         Fin Si
 
-        Delta <- CalcularCosto(S_vecino) - CalcularCosto(S)
+        Delta <- CalcularEvaluacion(S_vecino) - CalcularEvaluacion(S)
 
         Si (Delta < 0) O (GenerarAleatorioReal(0, 1) < e^(-Delta / T)) entonces
             S <- S_vecino
-            Si CalcularCosto(S) < CalcularCosto(S_best) entonces
+            Si CalcularEvaluacion(S) < CalcularEvaluacion(S_best) entonces
                 S_best <- S
                 estancamiento <- 0
             Fin Si
