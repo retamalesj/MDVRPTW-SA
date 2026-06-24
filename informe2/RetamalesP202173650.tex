@@ -732,37 +732,20 @@ entre ejecuciones.
 
 \section{Conclusiones}
 % Conclusiones RELEVANTES del estudio realizado. Incluir conclusiones acerca de la adecuación de la propuesta de solución al problema que se busca resolver. Listar y analizar ventajas y desventajas de la propuesta en base a los resultados obtenidos y comportamiento de la propuesta en diferentes escenarios (problemas/instancias/parámetros). Incluir trabajo futuro en base a las conclusiones.
-A partir del estudio y desarrollo llevado a cabo, es posible concluir que el MDVRP-TW
-representa uno de los desafíos más complejos en el ámbito de la optimización logística. Su dificultad reside
-no sólo en la naturaleza combinatoria de coordinar múltiples depósitos, sino en el acoplamiento estricto de
-restricciones híbridas de capacidad volumétrica y ventanas temporales de servicio, donde la alteración mínima
-de una secuencia puede desencadenar infactibilidades masivas de propagación temporal.
 
-Frente a esta complejidad, la implementación personalizada de la metaheurística Simulated Annealing (SA)
-demostró ser una propuesta de solución altamente adecuada y eficiente. Las conclusiones del proceso de
-experimentación revelan que un algoritmo de búsqueda local estocástica, enriquecido con operadores
-estructurados y políticas de control térmico, es perfectamente capaz de aproximar soluciones de alta
-calidad en escenarios escalables donde los métodos exactos quedan limitados por el crecimiento exponencial del espacio de soluciones.
+El Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW) constituye un problema de optimización combinatoria de alta complejidad, caracterizado por la integración simultánea de decisiones de asignación de clientes a depósitos, construcción de rutas y cumplimiento de restricciones temporales. Su naturaleza NP-hard y el crecimiento exponencial del espacio de búsqueda explican la dificultad de obtener soluciones óptimas mediante métodos exactos en instancias de tamaño realista, lo que justifica el uso de técnicas metaheurísticas.
 
-El análisis de las ventajas y desventajas de la propuesta en base a los escenarios evaluados arroja
-las siguientes observaciones científicas:
-\begin{itemize}
-  \item \textbf{Ventajas:} La principal fortaleza de la aproximación radica en su flexibilidad estructural. El esquema probabilístico asimétrico de vecindarios (Swap 70\%, Relocate 20\% y Split 10\%) demostró ser un acierto de dise\~no, permitiendo una explotación fina y localizada en la secuencia de clientes antes de alterar masivamente la carga de los depósitos. Asimismo, el mecanismo de recalentamiento al 30\% resultó ser el componente de mayor impacto adaptativo para escapar de óptimos locales; tal como evidenciaron las pruebas con un umbral de 20,000 iteraciones, el algoritmo logró refinar las penalizaciones técnicas hasta un mínimo histórico de 12.1153.
-  \item \textbf{Desventajas:} Por otro lado, la principal desventaja estriba en la alta sensibilidad paramétrica y la dependencia del factor de escala. Mientras que para instancias peque\~nas de 25 y 100 nodos un balance equilibrado de $\alpha = 0.5$ suprime por completo las penalizaciones de tiempo, el desempe\~no en instancias masivas de 400 y 1000 clientes decae significativamente si no se reajusta rápidamente la penalización hacia un $\alpha = 1.0$. Esto demuestra que la formulación basal carece de una convergencia uniforme autónoma frente al crecimiento del espectro de clientes.
-\end{itemize}
+En este trabajo se implementó una estrategia basada en Simulated Annealing (SA), orientada a explorar eficientemente el espacio de soluciones mediante aceptación probabilística de movimientos y el uso de operadores de vecindad heterogéneos. La propuesta incorpora además una función objetivo penalizada que permite manejar violaciones de ventanas de tiempo durante la búsqueda, favoreciendo la exploración de regiones inicialmente infactibles con el objetivo de mejorar la calidad final de las soluciones.
 
-Los resultados obtenidos permiten contrastar los supuestos de la formulación analítica. Inicialmente se
-asumió que un ritmo de enfriamiento lento ($\alpha_{cooling} \ge 0.99$) propiciaría una exploración superior;
-sin embargo, la experimentación contradijo este supuesto al demostrar que tasas tan lentas saturan la tolerancia
-del criterio de Metrópolis con soluciones de baja calidad dentro del límite de ciclos técnicos, validando al
-ratio de 0.98 como el balance idéoneo entre diversificación y convergencia para este problema en particular.
+Desde el punto de vista experimental, los resultados obtenidos evidencian que la metodología propuesta es capaz de generar soluciones factibles y de buena calidad de forma consistente en instancias de 25 hasta 1000 clientes. Asimismo, se observa una escalabilidad adecuada en términos de tiempo de ejecución, manteniéndose dentro de márgenes razonables incluso para instancias de gran tamaño. El análisis de robustez muestra una variabilidad acotada entre ejecuciones, aunque creciente a medida que aumenta la dimensión del problema, lo cual es consistente con el carácter estocástico del método.
 
-Como líneas de trabajo futuro derivadas de este análisis, se propone la integración de un esquema de
-sintonización dinámica o adaptativa para el parámetro $\alpha$, de modo que el peso de las penalizaciones
-de tiempo varíe automáticamente según la densidad de la instancia procesada. Además, se sugiere transicionar
-hacia una arquitectura de Simulated Annealing Híbrido, incorporando estructuras de memoria de corto plazo
-provenientes de la Búsqueda Tabú para restringir la repetición de operadores locales ineficientes y
-acelerar los tiempos de cómputo en instancias que superen los 1000 clientes.
+Respecto al proceso de calibración, los resultados confirman que el desempeño del algoritmo es sensible a la configuración de parámetros, particularmente a la temperatura inicial, la tasa de enfriamiento y el parámetro de penalización asociado a las ventanas de tiempo. En particular, configuraciones intermedias de estos parámetros permiten alcanzar un mejor equilibrio entre exploración del espacio de búsqueda y explotación de soluciones prometedoras.
+
+En términos de ventajas, la propuesta destaca por su simplicidad de implementación, flexibilidad y capacidad de adaptación a instancias de distinto tamaño. Adicionalmente, el uso de múltiples operadores de vecindad permite diversificar la exploración del espacio de soluciones, mejorando la capacidad del algoritmo para escapar de óptimos locales. Como desventajas, se identifica la dependencia significativa de la calibración de parámetros y la variabilidad inherente asociada a la naturaleza estocástica del método, especialmente en instancias de mayor escala.
+
+En relación con el estado del arte, la propuesta se posiciona como una alternativa competitiva frente a otras metaheurísticas clásicas como Búsqueda Tabú, VNS y Algoritmos Genéticos, destacando principalmente en términos de simplicidad conceptual y costo computacional. Sin embargo, enfoques híbridos más avanzados reportados en la literatura pueden alcanzar mejores niveles de calidad, aunque a costa de una mayor complejidad de implementación y ajuste.
+
+Finalmente, los resultados obtenidos son coherentes con los objetivos planteados en la formulación de la propuesta, en el sentido de que el algoritmo logra generar soluciones factibles y de calidad razonable en tiempos acotados. No obstante, también se observa que el desempeño depende fuertemente de la calibración experimental, lo que confirma los supuestos iniciales asociados al carácter heurístico del enfoque. Como trabajo futuro, se considera relevante incorporar estrategias híbridas con búsqueda local intensiva, mecanismos adaptativos de control de parámetros y comparaciones sistemáticas con métodos del estado del arte.
 
 \section{Uso LLMs}
 % Indique acá, las herramientas de LLMs/IA usadas en su proyecto. \\En caso de no utilizar ninguna explicitar:
