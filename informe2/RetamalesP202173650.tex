@@ -448,6 +448,7 @@ se ordena aleatoriamente y se asigna a rutas respetando la capacidad de carga ($
 cliente no puede ser incorporado a una ruta existente, se crea una nueva ruta desde el depósito más cercano.
 El procedimiento se resume en el siguiente pseudocódigo:
 
+{\footnotesize
 \begin{verbatim}
 Procedimiento ConstruirSolucionInicial(instancia)
 MezclarAleatoriamente(clientes)
@@ -466,6 +467,7 @@ Retornar solución
 
 Fin Procedimiento
 \end{verbatim}
+}
 
 La aleatorización del orden de los clientes permite generar soluciones iniciales diversas entre distintas ejecuciones,
 mientras que la selección del depósito más cercano busca reducir la distancia inicial de las rutas.
@@ -506,6 +508,7 @@ Los parámetros $T_{inicial}$, $IntervaloEnfriamiento$, $MaxIteraciones$ y $MaxE
 respectivamente el nivel de exploración inicial, la velocidad de enfriamiento, la duración de la búsqueda
 y la activación del mecanismo de recalentamiento. El procedimiento general se resume en el siguiente pseudocódigo:
 
+{\footnotesize
 \begin{verbatim}
 Procedimiento SimulatedAnnealing(instancia)
     S_inicial <- ConstruirSolucionInicialAleatoria(instancia)
@@ -546,6 +549,7 @@ Procedimiento SimulatedAnnealing(instancia)
     Retornar S_best
 Fin Procedimiento
 \end{verbatim}
+}
 
 \section{Experimentos}
 % Se necesita saber cómo experimentaron, cómo definieron parámetros, 
@@ -635,36 +639,31 @@ Sin embargo, a medida que la complejidad escala hacia las instancias mediana y g
 \subsection{Calibración del Esquema de Enfriamiento y Mecanismo de Estancamiento}
 Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedió a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en la Cuadro~\ref{tab:calibracion_sa}.
 
-{
-\sloppy
 \begin{table}[htbp]
 \centering
 \caption{Resultados detallados del proceso secuencial de sintonización para la instancia de 400 clientes ($\alpha=1.0$).}
 \label{tab:calibracion_sa}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
 
-\begin{tabularx}{\textwidth}{
-l
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
-}
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+\begin{tabularx}{\textwidth}{l CCCC}
 \hline
 \textbf{Parámetro Evaluado} & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalización Tiempo} & \textbf{Distancia Recorrida} \\ \hline
-\textit{Temperatura Inicial ($T_0$)} & & & & \\
+\multicolumn{5}{l}{\textit{Temperatura Inicial ($T_0$)}} \\
 100   & 17088,6 & 11 & 183,465 & 16905,2 \\
 500   & 18108,8 & 11 & 253,658 & 17855,1 \\
 1000  & 18112,3 & 8  & 176,911 & 17935,4 \\
 \textbf{5000}  & \textbf{16022,8} & \textbf{11} & \textbf{82,1674}  & \textbf{15940,6} \\
 10000 & 17445,3 & 13 & 196,747 & 17248,5 \\ \hline
-\textit{Ratio de Enfriamiento} & & & & \\
+\multicolumn{5}{l}{\textit{Ratio de Enfriamiento}} \\
 0.95  & 17321,4 & 15 & 103,058 & 17218,3 \\
 0.97  & 17360,2 & 13 & 184,298 & 17175,9 \\
 \textbf{0.98}  & \textbf{14271}   & \textbf{15} & \textbf{219,675}  & \textbf{14051,3} \\
 0.99  & 16022,8 & 11 & 82,1674  & 15940,6 \\
 0.995 & 17976,5 & 19 & 316,084  & 17660,4 \\ \hline
-\textit{Umbral de Estancamiento} & & & & \\
+\multicolumn{5}{l}{\textit{Umbral de Estancamiento}} \\
 1000  & 26245,7 & 25 & 744,137 & 25501,5 \\
 2500  & 18621,3 & 20 & 411,262 & 18210   \\
 5000  & 14271   & 15 & 219,675 & 14051,3 \\
@@ -674,7 +673,6 @@ l
 30000 & 11175,8 & 1  & 12,1153  & 11163,6 \\ \hline
 \end{tabularx}
 \end{table}
-}
 
 Al analizar la \textbf{temperatura inicial}, se identificó que $T_0 = 5000$ proporciona el
 mejor desempe\~no balanceado, registrando la distancia recorrida más baja ($15940,6$). Valores
