@@ -14,3 +14,10 @@ bool isFeasible(
   const Solution& sol,
   const Instance& instance
 );
+
+void writeSolutionExcel(
+  unsigned int SEED,
+  const Solution& sol,
+  const Instance& instance,
+  double ALPHA
+);

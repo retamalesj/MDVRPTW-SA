@@ -193,3 +193,30 @@ bool isFeasible(
 
   return true;
 }
+
+void writeSolutionExcel(
+  unsigned int SEED,
+  const Solution &sol,
+  const Instance &instance,
+  double ALPHA)
+{
+    EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA);
+
+    set<string> penalizedNodes;
+
+    for (const TimePenalty &p : eval.timePenalties)
+    {
+        if (!p.isDepot)
+            penalizedNodes.insert(p.nodeId);
+    }
+
+    // ROW
+    
+    cout<< SEED << "\t"
+        << ALPHA << "\t"
+         << eval.objectiveValue << "\t"
+         << penalizedNodes.size() << "\t"
+         << eval.totalTimePenalty << "\t"
+         << eval.totalDistance
+         << "\n";
+}

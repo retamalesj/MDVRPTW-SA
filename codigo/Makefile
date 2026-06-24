@@ -38,7 +38,7 @@ debug: clean $(TARGET)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
-	./$(TARGET) \
+	@./$(TARGET) \
 	$(ALPHA) \
 	$(INITIAL_TEMPERATURE) \
 	$(COOLING_RATE) \
