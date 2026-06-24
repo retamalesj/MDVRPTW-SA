@@ -1,11 +1,13 @@
 \documentclass[letter, 10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage[spanish]{babel}
 \usepackage{tabularx}
 \usepackage{amsfonts}
 \usepackage{amsmath}
-\usepackage[dvips]{graphicx}
+\usepackage{graphicx}
 \usepackage{url}
 \usepackage[top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,footskip=1.5cm,headheight=1.5cm,headsep=.5cm,textheight=3cm]{geometry}
 \usepackage[colorlinks=true,urlcolor=blue]{hyperref}
@@ -371,7 +373,52 @@ a un objeto que modela de forma independiente la trayectoria de un vehículo, el
 identificador del depósito (\texttt{int depot}) que especifica su origen y retorno, y una secuencia de clientes
 (\texttt{vector<int>}) que almacena de manera ordenada los índices de los nodos visitados. Por ejemplo, en
 un escenario con dos depósitos, una solución en memoria se estructura mediante un vector principal con elementos
-como \texttt{Ruta 1: [depot = 1, clientes = [3, 5, 1]]} y \texttt{Ruta 2: [depot = 2, clientes = [4, 2]]}.
+como \texttt{Ruta 0: [depot = 1, clientes = [3, 5, 1]]} y \texttt{Ruta 1: [depot = 2, clientes = [4, 2]]}.
+
+Como se ilustra en la Figura~\ref{fig:esquema_representacion}, esta abstracci\'on desacopla las trayectorias f\'isicas en componentes lineales independientes indexados de forma contigua en memoria, facilitando tanto el acceso directo como las operaciones locales de mutaci\'on.
+
+\begin{figure}[htbp]
+\centering
+\shorthandoff{>}
+\begin{tikzpicture}[
+  cell/.style={rectangle, draw=black, fill=blue!10, minimum width=1.4cm, minimum height=0.8cm, font=\small\ttfamily, align=center},
+  title/.style={font=\small\bfseries, color=black!80},
+  vectorlabel/.style={font=\footnotesize\itshape, color=gray},
+  arrow/.style={->, >=stealth, thick, color=black!70}
+]
+  \node[cell, fill=orange!20] (r1) at (0,1.5) {Ruta 0};
+  \node[cell, fill=orange!20] (r2) at (0,-1) {Ruta 1};
+  \node[vectorlabel, above=0.1cm of r1] {Vector Principal};
+  \draw[draw=black!40, thick] (r1.south) -- (r2.north);
+  
+  \node[cell, fill=green!15] (d1) at (3,2.2) {depot = 1};
+  \node[cell, fill=blue!15] (c1_1) at (3,0.8) {3};
+  \node[cell, fill=blue!15] (c1_2) at (4.6,0.8) {5};
+  \node[cell, fill=blue!15] (c1_3) at (6.2,0.8) {1};
+  
+  \node[title, right=0.2cm of d1, anchor=west] {Identificador de Origen};
+  \node[vectorlabel, above=0.05cm of c1_1] {Clientes indexados};
+  
+  \draw[arrow] (c1_1) -- (c1_2);
+  \draw[arrow] (c1_2) -- (c1_3);
+  
+  \draw[arrow, dashed] (r1.east) -- +(0.4,0) |- (d1.west);
+  \draw[arrow, dashed] (r1.east) -- +(0.4,0) |- (c1_1.west);
+
+  \node[cell, fill=green!15] (d2) at (3,-0.3) {depot = 2};
+  \node[cell, fill=blue!15] (c2_1) at (3,-1.7) {4};
+  \node[cell, fill=blue!15] (c2_2) at (4.6,-1.7) {2};
+  
+  \draw[arrow] (c2_1) -- (c2_2);
+  
+  \draw[arrow, dashed] (r2.east) -- +(0.4,0) |- (d2.west);
+  \draw[arrow, dashed] (r2.east) -- +(0.4,0) |- (c2_1.west);
+
+\end{tikzpicture}
+\shorthandon{>}
+\caption{Esquema de la representaci\'on indexada de soluciones en memoria din\'amica.}
+\label{fig:esquema_representacion}
+\end{figure}
 
 Esta representación ofrece ventajas críticas para el desempeño del algoritmo. En primer lugar,
 la asociación directa del depósito dentro de cada ruta permite validar la pertenencia geográfica
