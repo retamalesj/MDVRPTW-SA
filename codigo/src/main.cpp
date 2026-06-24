@@ -5,6 +5,7 @@
 #include "Evaluator.h"
 #include "SolutionUtils.h"
 #include "SA.h"
+#include <chrono>
 
 using namespace std;
 
@@ -37,7 +38,7 @@ int main(int argc, char* argv[])
 
   mt19937 rng(SEED);
 
-  Instance instance = readInstance("./Instancias/instancias_25/C101.txt");
+  Instance instance = readInstance("./Instancias/instancias_1000/C110_1.txt");
 
   #ifdef DEBUG_MODE
     cout << "Instancia: " << instance.name << '\n';
@@ -163,6 +164,8 @@ int main(int argc, char* argv[])
     MAX_STAGNATION
   };
 
+  auto start = std::chrono::high_resolution_clock::now();
+
   Solution Sbest = simulatedAnnealing(
     initialSolution,
     instance,
@@ -170,7 +173,11 @@ int main(int argc, char* argv[])
     rng
   );
   
-  writeSolution(SEED, Sbest, instance, ALPHA);
+  auto end = std::chrono::high_resolution_clock::now();
+
+  std::chrono::duration<double> time_total = end - start;
+
+  writeSolutionExcel(SEED, Sbest, instance, ALPHA, time_total.count());
 
   return 0;
 }

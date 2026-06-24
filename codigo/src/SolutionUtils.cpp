@@ -198,7 +198,8 @@ void writeSolutionExcel(
   unsigned int SEED,
   const Solution &sol,
   const Instance &instance,
-  double ALPHA)
+  double ALPHA,
+  double totalTime)
 {
     EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA);
 
@@ -217,6 +218,6 @@ void writeSolutionExcel(
          << eval.objectiveValue << "\t"
          << penalizedNodes.size() << "\t"
          << eval.totalTimePenalty << "\t"
-         << eval.totalDistance
-         << "\n";
+         << eval.totalDistance << "\t"
+         << totalTime;
 }
