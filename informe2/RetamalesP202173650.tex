@@ -561,12 +561,16 @@ Se consideran cinco instancias con 25, 100, 200, 400 y 1000 clientes, permitiend
 
 Para reducir el efecto de la variabilidad inherente al algoritmo, cada configuración experimental se ejecuta utilizando cinco semillas aleatorias distintas. Los resultados reportados corresponden a los valores obtenidos en dichas ejecuciones, permitiendo evaluar la estabilidad y robustez de cada configuración de parámetros.
 
-Todas las ejecuciones se realizan en un entorno reproducible mediante archivos \texttt{Makefile}. Como indicadores de calidad se consideran el valor de la función objetivo, la distancia total recorrida, la cantidad de nodos penalizados y la penalización acumulada por ventanas de tiempo. El criterio de término corresponde a un máximo de iteraciones prefijado para cada ejecución.
+Durante la calibración del parámetro $\alpha$, se utilizó una semilla fija por instancia con el fin de garantizar comparabilidad
+entre las distintas configuraciones evaluadas. En las pruebas finales de convergencia y robustez se emplearon
+cinco semillas aleatorias independientes por instancia.
+
+Todas las ejecuciones se realizan en un entorno reproducible mediante archivos \texttt{Makefile}. Como indicadores de calidad se consideran el valor de la función objetivo, la distancia total recorrida, la cantidad de nodos penalizados y la penalización acumulada por ventanas de tiempo. El criterio de término corresponde a un máximo de 1.000.000 iteraciones.
 
 El proceso de ajuste de parámetros se estructura en cuatro etapas:
 
 \begin{enumerate}
-  \item \textbf{Calibración del parámetro $\alpha$:} se evalúa el conjunto $\{0, 0.25, 0.5, 0.75, 1, 3, 5, 10\}$ sobre todas las instancias, utilizando una semilla fija por instancia para asegurar comparabilidad entre configuraciones.
+  \item \textbf{Calibración del parámetro $\alpha$:} se evalúa el conjunto $\{0, 0.25, 0.5, 0.75, 1, 3, 5, 10\}$ sobre todas las instancias.
 
   \item \textbf{Temperatura inicial ($T_0$):} se calibra este parámetro utilizando la instancia de 400 clientes, manteniendo fijos los demás parámetros del esquema de enfriamiento.
 
@@ -575,13 +579,13 @@ El proceso de ajuste de parámetros se estructura en cuatro etapas:
   \item \textbf{Umbral de estancamiento:} se calibra \texttt{MAX\_STAGNATION} en el rango de 1000 a 30000 iteraciones, evaluando su efecto en la capacidad del algoritmo para escapar de óptimos locales.
 \end{enumerate}
 
-El entorno experimental se ejecuta en un equipo con procesador AMD Ryzen 5 6600H de 6 núcleos y 12 hilos, 16 GB de memoria RAM y sistema operativo Linux Fedora. La implementación no utiliza aceleración por GPU, ya que el algoritmo fue diseñado y ejecutado de forma secuencial sobre CPU.
+El entorno experimental se ejecuta en un equipo con procesador AMD Ryzen 5 6600H de 6 núcleos y 12 hilos, 16 GB de memoria RAM y sistema operativo Linux Fedora.
+La implementación no utiliza aceleración por GPU, ya que el algoritmo fue diseñado y ejecutado de forma secuencial sobre CPU.
 
 \section{Resultados}
 % Qué fue lo que se logró con la experimentación, incluir tablas y gráficos (lo más explicativos posible).
 % Los resultados deben ser comentados y justificados en detalle en esta sección.
-Los resultados obtenidos en las fases de calibración paramétrica reflejan de manera clara el comportamiento
-estocástico del algoritmo y el impacto crucial de equilibrar adecuadamente las restricciones frente a la función objetivo.
+La presente sección resume los resultados obtenidos durante el ajuste de parámetros y la evaluación final del algoritmo.
 
 \subsection{Análisis del parámetro 'alpha' y escalabilidad}
 La primera fase experimental consistió en evaluar la sensibilidad del algoritmo frente a variaciones del parámetro $\alpha$,
@@ -635,14 +639,11 @@ SEED=42             & N. Penaliz. & 808     & 201     & 150     & 150     & 100 
 \end{minipage}
 \end{table}
 
-A partir de la Cuadro~\ref{tab:resultados_alpha} se observa que el efecto de $\alpha$ depende del tamaño de la instancia.
-En los casos pequeños (25 y 100 clientes), valores intermedios permiten eliminar las penalizaciones por ventanas de tiempo
-manteniendo distancias reducidas.
+La Cuadro~\ref{tab:resultados_alpha} muestra el efecto del parámetro $\alpha$ sobre las cinco instancias evaluadas.
 
-En las instancias de mayor tamaño (200, 400 y 1000 clientes), valores bajos de $\alpha$ generan una cantidad
-considerable de nodos penalizados y altas penalizaciones temporales. En contraste, valores cercanos a $\alpha = 1$
-reducen significativamente las violaciones y producen soluciones más equilibradas. Por este motivo, se seleccionó
-$\alpha = 1$ para las etapas posteriores de calibración.
+Se observa que valores bajos de $\alpha$ generan mayores violaciones de ventanas de tiempo, especialmente en las instancias
+de mayor tamaño. En contraste, valores cercanos a $\alpha=1$ permiten reducir las penalizaciones manteniendo una distancia
+recorrida competitiva. Por este motivo, se seleccionó $\alpha=1$ para las etapas posteriores de calibración.
 
 \subsection{Calibración del Esquema de Enfriamiento y Mecanismo de Estancamiento}
 Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedió a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en la Cuadro~\ref{tab:calibracion_sa}.
@@ -682,19 +683,12 @@ Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\al
 \end{tabularx}
 \end{table}
 
-La Cuadro~\ref{tab:calibracion_sa} resume el proceso de calibración del esquema de enfriamiento sobre la instancia de 400 clientes.
+La Cuadro~\ref{tab:calibracion_sa} resume el proceso de calibración realizado sobre la instancia de 400 clientes.
 
-Respecto a la temperatura inicial, el mejor resultado se obtuvo con $T_0=5000$, alcanzando la
-menor distancia recorrida y una baja penalización temporal. Temperaturas menores reducen la exploración
-del espacio de búsqueda, mientras que valores excesivamente altos deterioran la calidad de las soluciones.
-
-Para la tasa de enfriamiento, el valor $0.98$ produjo el mejor compromiso entre exploración e intensificación,
-obteniendo el menor valor de la función objetivo entre las configuraciones evaluadas.
-
-Finalmente, el parámetro \texttt{MAX\_STAGNATION} mostró el mayor impacto sobre la calidad final.
-Al aumentar este umbral, la función objetivo disminuyó progresivamente hasta alcanzar su mejor valor con
-$20000$ iteraciones sin mejora. Incrementos adicionales no generaron beneficios, por lo que dicho valor
-fue seleccionado como configuración final.
+La mejor temperatura inicial fue $T_0=5000$, mientras que una tasa de enfriamiento de $0.98$ produjo el menor valor de función objetivo.
+Respecto al criterio de estancamiento, el desempeño mejoró progresivamente al aumentar \texttt{MAX\_STAGNATION},
+alcanzando su mejor resultado con 20000 iteraciones sin mejora. Valores superiores no generaron beneficios adicionales,
+por lo que dicha configuración fue seleccionada para la evaluación final.
 
 \subsection{Análisis de convergencia y robustez}
 
@@ -715,15 +709,26 @@ fue seleccionado como configuración final.
 \end{tabular}
 \end{table}
 
-Con el objetivo de evaluar la estabilidad del algoritmo frente a su componente estocástica, se realizaron cinco ejecuciones independientes para cada instancia utilizando distintas semillas aleatorias. La Cuadro~\ref{tab:analisis_convergencia} resume el mejor, peor y promedio valor de la función objetivo obtenido, junto con la desviación estándar y el tiempo promedio de ejecución.
+Para evaluar la robustez del algoritmo, cada instancia fue ejecutada cinco veces utilizando distintas semillas aleatorias.
+La Cuadro~\ref{tab:analisis_convergencia} presenta el mejor, peor y promedio valor de la función objetivo,
+junto con la desviación estándar y el tiempo promedio de ejecución.
 
-Una desviación estándar reducida indica un comportamiento consistente entre ejecuciones, mientras que valores elevados reflejan una mayor sensibilidad a la solución inicial y a las decisiones probabilísticas tomadas durante la búsqueda. El tiempo promedio permite analizar la escalabilidad del algoritmo conforme aumenta el tamaño de la instancia.
+Los resultados muestran un incremento progresivo del tiempo computacional a medida que aumenta el tamaño de la instancia,
+pasando de 3,77 s para 25 clientes a 84,05 s para 1000 clientes. Este comportamiento es consistente con el crecimiento
+del espacio de búsqueda y evidencia una escalabilidad razonable de la metaheurística.
 
-Se observa que el tiempo de ejecución aumenta progresivamente con la cantidad de clientes, pasando de 3,77 segundos para la instancia de 25 clientes a 84,05 segundos para la instancia de 1000 clientes. Este comportamiento es consistente con el crecimiento del espacio de búsqueda y evidencia la capacidad del algoritmo para abordar instancias de mayor tamaño manteniendo tiempos de ejecución razonables.
+Respecto a la calidad de las soluciones, la diferencia entre el mejor y el peor valor de la función objetivo aumenta con
+el tamaño de la instancia, lo que indica una mayor sensibilidad al componente estocástico en problemas de mayor complejidad.
+Sin embargo, la desviación estándar permanece acotada en relación con la magnitud de la función objetivo obtenida en cada caso,
+sugiriendo un comportamiento estable entre ejecuciones.
 
-Asimismo, la diferencia entre el mejor y el peor valor de la función objetivo tiende a incrementarse en las instancias más grandes, lo que indica una mayor dificultad para alcanzar soluciones de calidad de manera consistente. Sin embargo, los valores promedio obtenidos muestran que el algoritmo mantiene un desempeño estable y competitivo incluso en escenarios de alta complejidad.
+En particular, para la instancia de 1000 clientes se obtiene un promedio de 98508,04 con una desviación estándar de 2510,34,
+equivalente a aproximadamente un 2,5\% del valor promedio. Este resultado indica que, pese al aumento del espacio de búsqueda,
+el algoritmo converge de manera consistente hacia soluciones de calidad similar.
 
-En conjunto, los resultados sugieren que la configuración final seleccionada proporciona un equilibrio adecuado entre calidad de solución, robustez y tiempo computacional.
+En conjunto, los resultados muestran que la configuración seleccionada mantiene un equilibrio adecuado entre calidad de solución,
+robustez y tiempo computacional, permitiendo abordar instancias de hasta 1000 clientes con una variabilidad relativamente baja
+entre ejecuciones.
 
 \section{Conclusiones}
 % Conclusiones RELEVANTES del estudio realizado. Incluir conclusiones acerca de la adecuación de la propuesta de solución al problema que se busca resolver. Listar y analizar ventajas y desventajas de la propuesta en base a los resultados obtenidos y comportamiento de la propuesta en diferentes escenarios (problemas/instancias/parámetros). Incluir trabajo futuro en base a las conclusiones.
