@@ -439,67 +439,69 @@ internos de las rutas seleccionadas sin alterar el resto del sistema.
 % general y en párrafos explicativos cómo fue implementada cada parte para su problema particular. Si
 % se utilizan operadores/movimientos se debe justificar por qué se utilizaron dichos operadores/movimientos. 
 % En caso de una técnica completa, describir detalles relevantes del proceso, si se utiliza recursión o no, explicar cómo se van construyendo soluciones, cuándo se revisan restricciones, cómo se registran conflictos, etc. En este punto no se espera que se incluya código, eso va aparte.
-La resolución del MDVRP-TW se aborda mediante una implementación particular de la metaheurística Simulated Annealing (SA).
-El proceso comienza construyendo una solución inicial ($S_{inicial}$) mediante una heurística estocástica de empaquetamiento:
-se altera aleatoriamente el orden de la lista de clientes (\textit{shuffle}) y se asignan secuencialmente a las rutas respetando
-la capacidad de carga ($Q$); si un cliente no cabe en las trayectorias existentes,
-se abre una nueva ruta asociada deterministamente al depósito geográficamente más cercano. 
-Como ejemplo, si un cliente con demanda mayor al espacio restante en las rutas actuales es procesado, el algoritmo calcula las distancias hacia todos los depósitos disponibles y abre una ruta exclusiva desde el más próximo.
-El flujo de esta construcción inicial se detalla a continuación:
+La resolución del MDVRP-TW se aborda mediante una implementación de Simulated Annealing (SA). La propuesta se compone
+de tres etapas principales: generación de una solución inicial, exploración mediante operadores de vecindad
+y evaluación de soluciones mediante una función objetivo penalizada.
+
+La búsqueda comienza con la construcción de una solución inicial ($S_{inicial}$), donde la lista de clientes
+se ordena aleatoriamente y se asigna a rutas respetando la capacidad de carga ($Q$). Cuando un
+cliente no puede ser incorporado a una ruta existente, se crea una nueva ruta desde el depósito más cercano.
+El procedimiento se resume en el siguiente pseudocódigo:
 
 \begin{verbatim}
-Procedimiento ConstruirSolucionInicialAleatoria(instancia)
-    ClientesAleatorios <- Shuffle(instancia.clientes)
-    Solución <- CrearSoluciónVacia()
-    
-    Para Cada cliente En ClientesAleatorios Hacer
-        Asignado <- Falso
-        Para Cada ruta En Solución.rutas En OrdenAleatorio() Hacer
-            Si ruta.cargaActual + cliente.demanda <= Q Entonces
-                InsertarCliente(ruta, cliente)
-                Asignado <- Verdadero
-                Romper Ciclo
-            Fin Si
-        Fin Para
-        
-        Si No Asignado Entonces
-            DepósitoCercano <- ObtenerDepósitoMasCercano(cliente, instancia.depósitos)
-            NuevaRuta <- CrearNuevaRuta(DepósitoCercano)
-            InsertarCliente(NuevaRuta, cliente)
-            AgregarRutaASolución(Solución, NuevaRuta)
-        Fin Si
-    Fin Para
-    
-    Retornar Solución
+Procedimiento ConstruirSolucionInicial(instancia)
+MezclarAleatoriamente(clientes)
+
+Para cada cliente hacer
+    Intentar asignarlo a una ruta existente
+
+    Si no fue asignado Entonces
+        Seleccionar depósito más cercano
+        Crear nueva ruta
+        Insertar cliente
+    Fin Si
+Fin Para
+
+Retornar solución
+
 Fin Procedimiento
 \end{verbatim}
 
-A partir de este estado, la calidad de cada solución se mide mediante una función de evaluación $f(S)$ que relaja las restricciones
-de tiempo para explorar el espacio infactible mediante la siguiente ecuación:
+La calidad de cada solución se evalúa mediante la función de evaluación:
 
-$$f(S) = \sum_{r \in S} D(r) + \alpha \cdot P_{tiempo}$$
+$$
+f(S) = \sum_{r \in S} D(r) + \alpha \cdot P_{tiempo}
+$$
 
-Donde $D(r)$ es la sumatoria de distancias euclidianas (trayectos depósito-cliente, inter-clientes y retorno) y $P_{tiempo}$
-acumula linealmente la tardanza total. Esta penalización computa el retraso respecto a la ventana de tiempo tardía ($t - l_i$)
-en cada nodo visitado y en el retorno al depósito, utilizando el parámetro $\alpha$ como factor de ponderación para inducir el
-regreso hacia zonas factibles del dominio. Un valor elevado de $\alpha$ prioriza la factibilidad temporal de manera agresiva restringiendo la búsqueda, mientras que un $\alpha$ bajo permite diversificar explorando soluciones infactibles con trayectos más cortos.
+donde $D(r)$ corresponde a la distancia total recorrida y $P_{tiempo}$ representa la tardanza acumulada respecto a las
+ventanas de tiempo. La incorporación de esta penalización permite explorar soluciones temporalmente
+infactibles durante la búsqueda. El parámetro $\alpha$ controla el equilibrio entre minimizar la distancia
+y respetar las restricciones temporales: valores altos favorecen la factibilidad, mientras que valores bajos aumentan la exploración.
 
-El algoritmo ejecuta un ciclo de $MaxIteraciones$, seleccionando en cada paso un operador de vecindad según ponderaciones
-asimétricas para balancear intensificación y diversificación: un \textbf{Swap} ($70\%$, intercambia dos clientes en la misma
-ruta para corregir cruces sin alterar depósitos; por ejemplo, transformar la secuencia $[c_1, c_2, c_3]$ en $[c_3, c_2, c_1]$), un \textbf{Relocate} ($20\%$, traslada un cliente a otra ruta y elimina la
-de origen si queda vacía; por ejemplo, mover $c_1$ de una ruta saturada a una con capacidad disponible), o un \textbf{Split} ($10\%$, corta una ruta y transfiere el resto de clientes a un nuevo vehículo
-del mismo depósito; por ejemplo, segmentar $[c_1, c_2, c_3, c_4]$ en dos rutas independientes desde el mismo origen). La asignación asimétrica se justifica para priorizar la intensificación mediante el ajuste fino de secuencias (Swap), delegando las mutaciones macro (Split) a una frecuencia mínima que evite el crecimiento descontrolado de vehículos, reservándolo para romper estancamientos severos bajo temperaturas favorables.
+El algoritmo ejecuta un ciclo de $MaxIteraciones$. En cada iteración se selecciona un operador de vecindad según las siguientes probabilidades:
 
-Tras alterar las rutas, se evalúa estrictamente la factibilidad frente a la capacidad de carga ($Q$); si el vecino viola
-este límite, se descarta mediante un rechazo duro para continuar a la siguiente iteración, garantizando una exploración
-exclusiva en soluciones válidas respecto al peso. Para los vecinos válidos en carga, se determina la diferencia de la
-función de evaluación ($\Delta = f(S_{vecino}) - f(S)$): las mejoras se aceptan automáticamente, mientras que las
-soluciones desfavorables se aceptan de manera condicional bajo la probabilidad exponencial $e^{-\Delta / T}$. La mejor
-solución histórica ($S_{best}$) se mantiene actualizada ante cualquier reducción del costo mínimo, restableciendo a cero
-el contador de estancamiento. Por su parte, la temperatura disminuye geométricamente tras transcurrir un $IntervaloEnfriamiento$
-fijo de iteraciones. Finalmente, si el sistema alcanza el límite de $MaxEstancamiento$, se activa un mecanismo de recalentamiento
-ligero que reajusta la temperatura al $30\%$ de su valor inicial ($T_{inicial}$), restituyendo transitoriamente la capacidad de
-aceptar peores soluciones para facilitar la salida de óptimos locales. El comportamiento de los parámetros regula la búsqueda de la siguiente forma: $T_{inicial}$ controla la emisividad de aceptación inicial para diversificar; $IntervaloEnfriamiento$ y $MaxIteraciones$ definen la tasa y extensión de la convergencia hacia la explotación; y $MaxEstancamiento$ actúa como el disparador energético ante óptimos locales. El comportamiento general de la búsqueda se detalla a continuación:
+\begin{itemize}
+  \item \textbf{Swap} (70\%): intercambia dos clientes dentro de una misma ruta.
+  \item \textbf{Relocate} (20\%): traslada un cliente entre rutas.
+  \item \textbf{Split} (10\%): divide una ruta en dos rutas asociadas al mismo depósito.
+\end{itemize}
+
+La distribución de probabilidades prioriza la intensificación mediante modificaciones locales frecuentes (\textit{Swap}),
+mientras que \textit{Relocate} y \textit{Split} favorecen la diversificación al introducir cambios estructurales que
+permiten escapar de óptimos locales.
+
+Tras generar un vecino, se verifica la restricción de capacidad ($Q$). Las soluciones que la incumplen se descartan
+inmediatamente. Para los vecinos factibles se calcula la diferencia de evaluación $\Delta = f(S_{vecino}) - f(S)$:
+las mejoras se aceptan de forma directa, mientras que las soluciones de peor calidad se aceptan con probabilidad $e^{-\Delta/T}$.
+
+La mejor solución encontrada ($S_{best}$) se actualiza cada vez que se obtiene un menor costo. Paralelamente,
+la temperatura disminuye de forma geométrica cada $IntervaloEnfriamiento$ iteraciones. Si se alcanza el límite
+de $MaxEstancamiento$, se aplica un recalentamiento que restablece la temperatura al 30\% de $T_{inicial}$
+para favorecer la salida de óptimos locales.
+
+Los parámetros $T_{inicial}$, $IntervaloEnfriamiento$, $MaxIteraciones$ y $MaxEstancamiento$ controlan
+respectivamente el nivel de exploración inicial, la velocidad de enfriamiento, la duración de la búsqueda
+y la activación del mecanismo de recalentamiento. El procedimiento general se resume en el siguiente pseudocódigo:
 
 \begin{verbatim}
 Procedimiento SimulatedAnnealing(instancia)
