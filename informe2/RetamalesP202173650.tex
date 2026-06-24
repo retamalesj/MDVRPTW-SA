@@ -370,12 +370,12 @@ El espacio de búsqueda del modelo anterior está determinado principalmente por
 Para abordar el MDVRP-TW mediante la técnica de Simulated Annealing, se define una
 representación estructurada basada en un vector de rutas activas. Cada componente de este vector corresponde
 a un objeto que modela de forma independiente la trayectoria de un vehículo, el cual está compuesto por un
-identificador del depósito (\texttt{int depot}) que especifica su origen y retorno, y una secuencia de clientes
-(\texttt{vector<int>}) que almacena de manera ordenada los índices de los nodos visitados. Por ejemplo, en
-un escenario con dos depósitos, una solución en memoria se estructura mediante un vector principal con elementos
-como \texttt{Ruta 0: [depot = 1, clientes = [3, 5, 1]]} y \texttt{Ruta 1: [depot = 2, clientes = [4, 2]]}.
+identificador numérico del depósito que especifica su origen y retorno, y una secuencia indexada de clientes
+que almacena de manera ordenada los índices de los nodos visitados. Por ejemplo, en
+un escenario con dos depósitos, la solución se estructura como un vector principal cuyos elementos corresponden a
+\texttt{Ruta 0: [depot = 1, clientes = [3, 5, 1]]} y \texttt{Ruta 1: [depot = 2, clientes = [4, 2]]}.
 
-Como se ilustra en la Figura~\ref{fig:esquema_representacion}, esta abstracci\'on desacopla las trayectorias f\'isicas en componentes lineales independientes indexados de forma contigua en memoria, facilitando tanto el acceso directo como las operaciones locales de mutaci\'on.
+Como se ilustra en la Figura~\ref{fig:esquema_representacion}, esta abstracción desacopla las trayectorias físicas en componentes lineales independientes indexados de forma contigua en memoria, facilitando tanto el acceso directo como las operaciones locales de mutación.
 
 \begin{figure}[htbp]
 \centering
@@ -416,18 +416,22 @@ Como se ilustra en la Figura~\ref{fig:esquema_representacion}, esta abstracci\'o
 
 \end{tikzpicture}
 \shorthandon{>}
-\caption{Esquema de la representaci\'on indexada de soluciones en memoria din\'amica.}
+\caption{Esquema de la representación indexada de soluciones en memoria dinámica.}
 \label{fig:esquema_representacion}
 \end{figure}
 
-Esta representación ofrece ventajas críticas para el desempeño del algoritmo. En primer lugar,
-la asociación directa del depósito dentro de cada ruta permite validar la pertenencia geográfica
-y calcular distancias euclidianas sin mapeos externos. En segundo lugar, al agrupar los clientes
-secuencialmente en un vector dinámico, la verificación de la capacidad y la propagación temporal
-para las ventanas de tiempo $[e_i, l_i]$ se realizan mediante un recorrido lineal simple, optimizando
-el tiempo de cómputo por iteración. Finalmente, esta estructura agiliza la aplicación de operadores de
-vecindad, ya que los movimientos locales como transferencias o intercambios modifican directamente los
-vectores internos de las rutas seleccionadas sin alterar el resto del sistema.
+Esta representación ofrece ventajas críticas tanto para el modelado del problema como para el desempeño del algoritmo.
+En primer lugar, la estructura garantiza por diseño la factibilidad básica de las soluciones, asegurando que el
+espacio de búsqueda contenga la solución óptima sin desperdiciar cómputo en configuraciones inválidas fuera del
+dominio. Esto se logra al encapsular de forma fija el depósito de origen y retorno dentro de cada vehículo, lo
+que automatiza la validación del cierre de las rutas y permite calcular distancias euclidianas directamente, sin
+requerir mapeos externos.
+
+En segundo lugar, al agrupar a los clientes secuencialmente, la verificación de capacidad y la propagación de las
+ventanas de tiempo $[e_i, l_i]$ se ejecutan mediante un recorrido lineal simple, lo que optimiza drásticamente el
+tiempo de cómputo por iteración. Finalmente, esta organización agiliza la aplicación de operadores
+de vecindad, ya que movimientos locales como transferencias o intercambios modifican exclusivamente los vectores
+internos de las rutas seleccionadas sin alterar el resto del sistema.
 
 \section{Descripción del algoritmo}
 % Cómo fue implementada la solución. Interesa la implementación particular más que el algoritmo genérico, es decir, si se tiene que implementar SA, lo que se espera es que se explique en pseudocódigo la estructura
