@@ -580,60 +580,53 @@ Los resultados obtenidos en las fases de calibración paramétrica reflejan de m
 estocástico del algoritmo y el impacto crucial de equilibrar adecuadamente las restricciones frente a la función objetivo.
 
 \subsection{Análisis del parámetro 'alpha' y escalabilidad}
-La primera fase experimental consistió en evaluar la sensibilidad del algoritmo frente a variaciones del parámetro $\alpha$, el cual pondera los componentes de la función objetivo. Los datos consolidados para las cuatro instancias de prueba se presentan en la Cuadro~\ref{tab:resultados_alpha}.
+La primera fase experimental consistió en evaluar la sensibilidad del algoritmo frente a variaciones del parámetro $\alpha$,
+el cual pondera los componentes de la función objetivo. Los datos consolidados para las cuatro instancias de prueba se
+presentan en la Cuadro~\ref{tab:resultados_alpha}.
 
-{
-\sloppy
 \begin{table}[htbp]
 \centering
-\caption{Resultados de la evaluación del parámetro $\alpha$ en las cuatro instancias basales.}
+\caption{Resultados de la evaluación del parámetro $\alpha$ en las cinco instancias basales.}
 \label{tab:resultados_alpha}
-
-\begin{tabularx}{\textwidth}{
-l
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
->{\raggedright\arraybackslash}X
-}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{ll cccccccc}
 \hline
-\textbf{Instancia} & $\alpha$ & \textbf{Valor Objetivo} & \textbf{Nodos Penalizados} & \textbf{Penalización Tiempo} & \textbf{Distancia Recorrida} \\ \hline
-\textbf{(25) C101}  & 0    & 141,039 & 19  & 12289,9 & 141,039 \\
-                    & 0,25 & 213,568 & 1   & 10,6011 & 210,918 \\
-                    & 0,5  & 162,577 & 0   & 0       & 162,577 \\
-                    & 0,75 & 174,17  & 0   & 0       & 174,17  \\
-                    & 1    & 182,328 & 0   & 0       & 182,328 \\
-                    & 3    & 217,064 & 0   & 0       & 217,064 \\
-                    & 5    & 210,982 & 0   & 0       & 210,982 \\
-                    & 10   & 162,577 & 0   & 0       & 162,577 \\ \hline
-\textbf{(100) C101} & 0    & 1275,96 & 74  & 58253   & 1275,96 \\
-                    & 0,25 & 1361,71 & 3   & 48,8076 & 1349,51 \\
-                    & 0,5  & 1475,87 & 0   & 0       & 1475,87 \\
-                    & 0,75 & 1481,79 & 1   & 2,8304  & 1479,66 \\
-                    & 1    & 1766,31 & 0   & 0       & 1766,31 \\
-                    & 3    & 1509,18 & 0   & 0       & 1509,18 \\
-                    & 5    & 1715,88 & 0   & 0       & 1715,88 \\
-                    & 10   & 1763,81 & 0   & 0       & 1763,81 \\ \hline
-\textbf{(400) C1\_4\_1} & 0  & 12027,9 & 305 & 227413  & 12027,9 \\
-                    & 0,25 & 15145,4  & 27  & 991,255 & 14897,6  \\
-                    & 0,5  & 16526,3 & 23  & 544,306 & 16254,2  \\
-                    & 0,75 & 16557,6 & 22  & 522,069 & 16166    \\
-                    & 1    & 15618,3 & 9   & 117,957 & 15500,4  \\
-                    & 3    & 18807,5 & 5   & 18,827  & 18751,1  \\
-                    & 5    & 17690,8 & 1   & 0,511386& 17688,3  \\
-                    & 10   & 18328,5 & 3   & 11,5043 & 18213,4  \\ \hline
-\textbf{(1000) C1\_4\_1}& 0  & 65513,9 & 808 & 751213  & 65513,9  \\
-                    & 0,25 & 90132,6 & 201 & 16925,8 & 85901,2  \\
-                    & 0,5  & 110302  & 150 & 8512,76 & 106046   \\
-                    & 0,75 & 114916  & 150 & 6491,03 & 110047   \\
-                    & 1    & 101571  & 100 & 3756,61 & 97814,6  \\
-                    & 3    & 121151  & 48  & 780,884 & 118808   \\
-                    & 5    & 128280  & 35  & 651,157 & 125024   \\
-                    & 10   & 129886  & 17  & 398,82  & 125898   \\ \hline
-\end{tabularx}
+\textbf{Instancia} & \textbf{Métrica} & $\mathbf{0}$ & $\mathbf{0,25}$ & $\mathbf{0,5}$ & $\mathbf{0,75}$ & $\mathbf{1}$ & $\mathbf{3}$ & $\mathbf{5}$ & $\mathbf{10}$ \\ \hline
+
+\textbf{(25) C101}  & FO & 145,201 & 162,577 & 162,577 & 233,531 & 162,577 & 162,577 & 283,036 & 213,249 \\
+SEED=42             & N. Penaliz. & 19      & 0       & 0       & 0       & 0       & 0       & 0       & 0       \\
+                    & P. Tiempo   & 9767,63 & 0       & 0       & 0       & 0       & 0       & 0       & 0       \\
+                    & Distancia   & 145,201 & 162,577 & 162,577 & 233,531 & 162,577 & 162,577 & 283,036 & 213,249 \\ \hline
+
+\textbf{(100) C101} & FO & 1226,69 & 1540,01 & 1817,22 & 1447,02 & 1292,84 & 1332,85 & 1489,56 & 1344,23 \\
+SEED=24             & N. Penaliz. & 75      & 0       & 1       & 0       & 0       & 0       & 0       & 1       \\
+                    & P. Tiempo   & 57885,9 & 0       & 3,45906 & 0       & 0       & 0       & 0       & 0,80464 \\
+                    & Distancia   & 1226,69 & 1540,01 & 1815,49 & 1447,02 & 1292,84 & 1332,85 & 1489,56 & 1336,18 \\ \hline
+
+\textbf{(200) C1\_2\_1} & FO & 3954,04 & 5830,37 & 6225,42 & 6384,64 & 5241,16 & 6145,43 & 7319,22 & 6004,93 \\
+SEED=36             & N. Penaliz. & 155     & 13      & 7       & 6       & 1       & 0       & 1       & 1       \\
+                    & P. Tiempo   & 130070  & 422,539 & 218,416 & 199,08  & 62,1973 & 0       & 11,9016 & 5,33372 \\
+                    & Distancia   & 3954,04 & 5724,73 & 6116,21 & 6235,33 & 5178,96 & 6145,43 & 7259,71 & 5951,6  \\ \hline
+
+\textbf{(400) C1\_4\_1} & FO & 12072,1 & 13972,8 & 17807,9 & 17033,3 & 20541,5 & 17433,4 & 19661   & 18570,1 \\
+SEED=32             & N. Penaliz. & 308     & 31      & 21      & 15      & 18      & 3       & 1       & 0       \\
+                    & P. Tiempo   & 227800  & 1024,33 & 545,966 & 243,998 & 347,024 & 25,6175 & 10,3776 & 0       \\
+                    & Distancia   & 12072,1 & 13716,7 & 17534,9 & 16850,3 & 20194,4 & 17356,5 & 19609,1 & 18570,1 \\ \hline
+
+\textbf{(1000) C1\_4\_1}& FO & 65513,9 & 90132,6 & 110302  & 114916  & 101571  & 121151  & 128280  & 129886  \\
+SEED=42             & N. Penaliz. & 808     & 201     & 150     & 150     & 100     & 48      & 35      & 17      \\
+                    & P. Tiempo   & 751213  & 16925,8 & 8512,76 & 6491,03 & 3756,61 & 780,884 & 651,157 & 398,82  \\
+                    & Distancia   & 65513,9 & 85901,2 & 106046  & 110047  & 97814,6 & 118808  & 125024  & 125898  \\ \hline
+
+\end{tabular}
+
+\smallskip
+\begin{minipage}{\textwidth}
+\scriptsize
+\textbf{Nota:} \textbf{FO}: Valor de la función objetivo. | \textbf{N. Penaliz.}: Cantidad de nodos penalizados por ventanas de tiempo. | \textbf{P. Tiempo}: Penalización total de tiempo acumulada. | \textbf{Distancia}: Distancia total recorrida por la flota.
+\end{minipage}
 \end{table}
-}
 
 A partir de estos datos, se observa que el comportamiento ideal de $\alpha$ se desplaza en función de la dimensión del problema. Para instancias peque\~nas y muy peque\~nas (25 y 100 clientes), un valor de $\alpha = 0.5$ proporciona el mejor equilibrio, logrando una penalización de tiempo de cero y minimizando eficientemente la distancia total recorrida. Esto ocurre porque en espacios muestrales reducidos, penalizar moderadamente los desajustes temporales guía rápidamente la búsqueda hacia regiones factibles de alta calidad. 
 
