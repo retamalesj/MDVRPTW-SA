@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 
   mt19937 rng(SEED);
 
-  Instance instance = readInstance("./Instancias/instancias_1000/C110_1.txt");
+  Instance instance = readInstance("./Instancias/instancias_100/C101.txt");
 
   #ifdef DEBUG_MODE
     cout << "Instancia: " << instance.name << '\n';
@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
 
   std::chrono::duration<double> time_total = end - start;
 
-  writeSolutionExcel(SEED, Sbest, instance, ALPHA, time_total.count());
+  writeSolution(SEED, Sbest, instance, ALPHA, time_total.count());
 
   return 0;
 }

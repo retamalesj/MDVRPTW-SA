@@ -13,7 +13,8 @@ Pablo Retamales Jara
 * make run
   Ejecuta el MDVRPTW
 
-  Se pueden pasar parámetros como: 'make run ALPHA=10 BETA=10 SEED=42'
+  Se pueden pasar parámetros como: 
+  'make run ALPHA=0.5 INITIAL_TEMPERATURE=5000 COOLING_RATE=0.98 MAX_ITERATIONS=1000000 COOLING_INTERVAL=50 MAX_STAGNATION=20000 SEED=42'
 
 * make clean
   Sirve para limpiar los archivos compilados

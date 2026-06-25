@@ -16,7 +16,8 @@ void writeSolution(
     unsigned int SEED,
     const Solution &sol,
     const Instance &instance,
-    double ALPHA)
+    double ALPHA,
+    double totalTime)
 {
   EvaluationResult eval = evaluateWithDetails(sol, instance, ALPHA);
 
@@ -38,6 +39,9 @@ void writeSolution(
 
   out << "Vehiculos usados: "
        << eval.routeMetrics.size() << "\n\n";
+  
+  out << "Tiempo total del programa: "
+      << totalTime << "\n\n";
 
   out << "=== RUTAS ===\n";
 
@@ -135,29 +139,6 @@ void writeSolution(
   }
 
   out << "\nTotal nodos penalizados: " << penalizedNodes.size() << "\n";
-  
-
-  // cout << "\n=== PENALIZACIONES DE CAPACIDAD ===\n";
-
-  // if (eval.capacityPenalties.empty())
-  // {
-  //   cout << "Ninguna\n";
-  // }
-  // else
-  // {
-  //   for (const CapacityPenalty &p : eval.capacityPenalties)
-  //   {
-  //     cout << "Ruta "
-  //          << p.routeId
-  //          << ": carga="
-  //          << p.load
-  //          << ", capacidad="
-  //          << p.capacity
-  //          << ", exceso="
-  //          << p.violation
-  //          << '\n';
-  //   }
-  // }
 
   string text = out.str();
 
