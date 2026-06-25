@@ -98,7 +98,7 @@ EvaluationResult evaluateWithDetails(
     double t = 0.0;
     int load = 0;
 
-    double routeDistance = 0.0; // ✔ NUEVO
+    double routeDistance = 0.0;
 
     int first = route.customers.front();
 
@@ -124,7 +124,7 @@ EvaluationResult evaluateWithDetails(
       // Ventana tardía
       if (t > node.l)
       {
-        double violation = t - node.l;
+        double violation = t - node.l; // tardanza
 
         timePenalty += violation;
 
@@ -162,7 +162,7 @@ EvaluationResult evaluateWithDetails(
 
     const Node& depotNode = instance.allNodes[depot];
 
-    // penalización de tardanza si retorna tarde
+    // penalización de tardanza si retorna tarde al deposito
     if (t > depotNode.l)
     {
       double violation = t - depotNode.l;

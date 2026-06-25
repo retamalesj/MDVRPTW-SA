@@ -34,7 +34,8 @@ Solution simulatedAnnealing(
     Solution neighbor = current;
 
     bool success = false;
-
+    
+    // se escoge un movimiento con ponderaciones
     double r = move_probability(rng);
 
     if (r < 0.7) { success = swapMove(neighbor, rng); }
@@ -53,10 +54,12 @@ Solution simulatedAnnealing(
 
     if (delta < 0)
     {
+      // es mejor solución que la actual
       accept = true;
     }
     else
     {
+      // es peor solución que la solución actual, se acepta con probabilidad...
       double acceptanceProbability = exp(-delta / temperature);
 
       if (probabilityDist(rng) < acceptanceProbability) accept = true;

@@ -157,6 +157,7 @@ bool isFeasible(
   const Solution &sol,
   const Instance &instance)
 {
+  // revisa la capacidad del vehiculo en la rutam si existe sobrecarga o no.
   for (const Route &route : sol.routes)
   {
     int load = 0;

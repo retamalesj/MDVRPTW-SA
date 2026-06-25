@@ -9,6 +9,15 @@
 
 using namespace std;
 
+/**
+ * @brief Busca una sección específica dentro del archivo.
+ *
+ * Avanza línea por línea hasta encontrar el nombre de la sección indicada.
+ *
+ * @param file Archivo abierto en modo lectura.
+ * @param section Nombre de la sección a buscar.
+ * @throws runtime_error si la sección no se encuentra.
+ */
 static void findSection(ifstream &file, const string &section)
 {
   string line;
@@ -22,6 +31,16 @@ static void findSection(ifstream &file, const string &section)
   throw runtime_error("Sección no encontrada: " + section);
 }
 
+/**
+ * @brief Parsea una línea del archivo y la convierte en un nodo.
+ *
+ * Convierte una línea de texto en un objeto Node con sus atributos
+ * (id, coordenadas, demanda y ventanas de tiempo...).
+ *
+ * @param line Línea del archivo.
+ * @param isDepot Indica si el nodo corresponde a un depósito.
+ * @return Nodo construido a partir de la línea.
+ */
 static Node parseNode(const string &line, bool isDepot)
 {
   Node node;
@@ -38,6 +57,18 @@ static Node parseNode(const string &line, bool isDepot)
   return node;
 }
 
+/**
+ * @brief Lee una instancia del problema MDVRPTW desde un archivo.
+ *
+ * El archivo debe contener:
+ * - Nombre de la instancia
+ * - Parámetros generales (depósitos, vehículos por deposito, capacidad del vehiculo)
+ * - Sección DEPOSITOS
+ * - Sección CLIENTES
+ *
+ * @param filename Ruta del archivo de entrada.
+ * @return Instancia construida en memoria.
+ */
 Instance readInstance(const string &filename)
 {
   ifstream file(filename);
