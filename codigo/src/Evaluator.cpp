@@ -84,7 +84,6 @@ EvaluationResult evaluateWithDetails(
   EvaluationResult result;
 
   double totalDistance = 0.0;
-  double capacityPenalty = 0.0;
   double timePenalty = 0.0;
 
   int routeId = 0;
@@ -180,21 +179,6 @@ EvaluationResult evaluateWithDetails(
       });
     }
 
-    // Capacidad
-    if (load > instance.capacity)
-    {
-      int violation = load - instance.capacity;
-
-      capacityPenalty += violation;
-
-      result.capacityPenalties.push_back({
-        depot,
-        load,
-        instance.capacity,
-        violation
-      });
-    }
-
     // metricas por ruta
     result.routeMetrics.push_back({
       routeId,
@@ -209,7 +193,6 @@ EvaluationResult evaluateWithDetails(
 
   result.totalDistance = totalDistance;
   result.totalTimePenalty = timePenalty;
-  result.totalCapacityPenalty = capacityPenalty;
 
   result.objectiveValue =
     totalDistance +

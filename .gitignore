@@ -1,6 +1,6 @@
 *.o
 mdvrptw
-Soluciones/*
+/codigo/Soluciones/*
 
 # latex
 *.fls
@@ -16,4 +16,3 @@ Soluciones/*
 *.synctex.gz
 
 resultados.txt
-evaluate.sh
