@@ -65,3 +65,15 @@ El proyecto debe ejecutarse desde la raíz del código, donde se encuentra el Ma
 
 * make clean
   Sirve para limpiar los archivos compilados
+
+         &
+      .-"`"-.
+     /       \
+     |   __  _|
+     |  /  \/ \
+    WW  \_o/_o/
+    (        _)
+     |   .----\
+     ;  | '----'
+      \__'--;`
+      |___/\| omero
