@@ -49,8 +49,8 @@ Bibliograf\'ia (5\%): & \underline{\hspace{2cm}}\\
   El Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW) es una variante del
   Vehicle Routing Problem (VRP) que considera múltiples depósitos y restricciones de tiempo para la atención de clientes.
   El objetivo es determinar rutas de mínimo costo para una flota de vehículos que atiende clientes dentro de intervalos de tiempo definidos y retorna a su depósito de origen.
-  Debido a su complejidad computacional, el MDVRP-TW ha sido abordado principalmente mediante metaheurísticas como búsqueda tabú y algoritmos genéticos, aunque también existen métodos exactos para instancias pequeñas.
-  Este informe presenta una descripción general del problema, sus principales variantes, métodos de resolución y un modelo matemático de programación entera mixta.
+  En este informe se implementa la técnica de Simulated Annealing con el uso de múltiples operadores de vecindad (Swap, Relocate y Split).
+  La propuesta fue evaluada usando 5 instancias de 25 hasta 1000 clientes usando 5 semillas aleatorias, demostrando alta robustez con desviaciones del $2,5\%$ y una resolución en un tiempo promedio máximo de 84,05 segundos.
 \end{abstract}
 
 \section{Introducción}
