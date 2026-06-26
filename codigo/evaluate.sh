@@ -7,6 +7,7 @@ OUTPUT="resultados.txt"
 
 for SEED in $SEEDS; do
   make run \
+    INSTANCE_PATH=./Instancias/instancias_100/C101.txt \
     ALPHA=1.0 \
     INITIAL_TEMPERATURE=5000 \
     COOLING_RATE=0.98 \

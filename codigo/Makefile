@@ -1,3 +1,4 @@
+INSTANCE_PATH ?= ./Instancias/instancias_100/C101.txt
 ALPHA ?= 1.0
 
 INITIAL_TEMPERATURE ?= 5000
@@ -39,6 +40,7 @@ debug: clean $(TARGET)
 
 run: $(TARGET)
 	@./$(TARGET) \
+	$(INSTANCE_PATH) \
 	$(ALPHA) \
 	$(INITIAL_TEMPERATURE) \
 	$(COOLING_RATE) \

@@ -11,6 +11,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+  string INSTANCE_PATH = "./Instancias/instancias_100/C101.txt";
   double ALPHA = 10.0;
 
   double INITIAL_TEMPERATURE = 1000.0;
@@ -22,23 +23,24 @@ int main(int argc, char* argv[])
 
   unsigned int SEED = 42;
 
-  if (argc >= 7)
+  if (argc >= 8)
   {
-    ALPHA = stod(argv[1]);
+    INSTANCE_PATH = argv[1];
+    ALPHA = stod(argv[2]);
     
-    INITIAL_TEMPERATURE = stod(argv[2]);
-    COOLING_RATE = stod(argv[3]);
+    INITIAL_TEMPERATURE = stod(argv[3]);
+    COOLING_RATE = stod(argv[4]);
 
-    MAX_ITERATIONS = stoi(argv[4]);
-    COOLING_INTERVAL = stoi(argv[5]);
-    MAX_STAGNATION = stoi(argv[6]);
+    MAX_ITERATIONS = stoi(argv[5]);
+    COOLING_INTERVAL = stoi(argv[6]);
+    MAX_STAGNATION = stoi(argv[7]);
 
-    SEED = (unsigned)stoul(argv[7]);
+    SEED = (unsigned)stoul(argv[8]);
   }
 
   mt19937 rng(SEED);
 
-  Instance instance = readInstance("./Instancias/instancias_100/C101.txt");
+  Instance instance = readInstance(INSTANCE_PATH);
 
   #ifdef DEBUG_MODE
     cout << "Instancia: " << instance.name << '\n';
