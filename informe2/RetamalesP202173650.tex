@@ -150,13 +150,12 @@ La extensión al caso multi-depósito fue formalizada por Cordeau et al. en 1997
 
 \subsection{Representación de Soluciones}
 
-En la resolución del MDVRP-TW, la elección de la estructura de datos para codificar las rutas es crítica para el desempeño del
-algoritmo. El estado del arte clasifica las representaciones principalmente en dos enfoques:
-
-\begin{itemize}
-  \item \textbf{Representación Directa (Multi-ruta):} Codifica las soluciones como una lista explícita de rutas asociadas a cada depósito, delimitadas por el origen y fin de cada viaje. Permite una evaluación inmediata de las restricciones de capacidad y ventanas de tiempo, facilitando la aplicación directa de operadores de vecindad locales como \textit{Swap} o \textit{Relocate}~\cite{Cordeau2001}.
-  \item \textbf{Representación Indirecta (Basada en Permutaciones):} Consiste en una secuencia continua de clientes sin delinear los vehículos ni los depósitos. Este enfoque delega la construcción física de las rutas a un algoritmo decodificador (como el procedimiento Split, introducido por Prins y adaptado para problemas con ventanas de tiempo por Vidal et al.~\cite{VidalAG2013}), el cual segmenta la permutación de forma óptima introduciendo los depósitos y vehículos requeridos. Es la representación predilecta en algoritmos genéticos para evitar la generación de descendencia inválida tras los cruces.
-\end{itemize}
+Las representaciones de soluciones para el MDVRP-TW se clasifican principalmente en dos enfoques.
+La \textbf{representación directa} almacena explícitamente las rutas de cada vehículo y depósito, lo que facilita la
+evaluación de restricciones y la aplicación de operadores de búsqueda local~\cite{Cordeau2001}. Por su parte,
+la \textbf{representación indirecta} utiliza una permutación de clientes que posteriormente es transformada en rutas
+factibles mediante un procedimiento de decodificación, como \textit{Split}~\cite{VidalAG2013}. Este último enfoque es
+frecuente en algoritmos genéticos debido a que favorece la generación de descendencia factible.
 
 \subsection{Métodos Exactos}
 
@@ -382,6 +381,7 @@ Como se ilustra en la Figura~\ref{fig:esquema_representacion}, esta abstracción
 \centering
 \shorthandoff{>}
 \begin{tikzpicture}[
+  scale=0.85,
   cell/.style={rectangle, draw=black, fill=blue!10, minimum width=1.4cm, minimum height=0.8cm, font=\small\ttfamily, align=center},
   title/.style={font=\small\bfseries, color=black!80},
   vectorlabel/.style={font=\footnotesize\itshape, color=gray},
@@ -592,9 +592,10 @@ La presente sección resume los resultados obtenidos durante el ajuste de parám
 
 \subsection{Análisis del parámetro 'alpha' y escalabilidad}
 La primera fase experimental consistió en evaluar la sensibilidad del algoritmo frente a variaciones del parámetro $\alpha$,
-el cual pondera los componentes de la función objetivo. Los datos consolidados para las cuatro instancias de prueba se
-presentan en la Cuadro~\ref{tab:resultados_alpha}.
+el cual pondera los componentes de la función objetivo. Los datos consolidados para las cinco instancias de prueba se
+presentan en el Cuadro~\ref{tab:resultados_alpha}.
 
+\vspace{-5mm}
 \begin{table}[htbp]
 \centering
 \caption{Resultados de la evaluación del parámetro $\alpha$ en las cinco instancias basales.}
@@ -642,14 +643,18 @@ SEED=42             & N. Penaliz. & 808     & 201     & 150     & 150     & 100 
 \end{minipage}
 \end{table}
 
-La Cuadro~\ref{tab:resultados_alpha} muestra el efecto del parámetro $\alpha$ sobre las cinco instancias evaluadas.
+\vspace{-3mm}
 
-Se observa que valores bajos de $\alpha$ generan mayores violaciones de ventanas de tiempo, especialmente en las instancias
-de mayor tamaño. En contraste, valores cercanos a $\alpha=1$ permiten reducir las penalizaciones manteniendo una distancia
-recorrida competitiva. Por este motivo, se seleccionó $\alpha=1$ para las etapas posteriores de calibración.
+El Cuadro~\ref{tab:resultados_alpha} muestra que valores bajos de $\alpha$ saturan las restricciones temporales al escalar
+el problema, alcanzando un retraso de 751.213 s en la instancia de 1000 clientes. En contraposición, $\alpha=1$ equilibra
+de mejor manera ambos objetivos; aunque mantiene 100 nodos penalizados en la instancia mayor debido a la
+estricta densidad del problema, minimiza drásticamente la magnitud del retraso acumulado y optimiza la distancia total,
+consolidando un valor de FO competitivo ($101571$). Por ello, se seleccionó $\alpha=1$ para la calibración.
 
 \subsection{Calibración del Esquema de Enfriamiento y Mecanismo de Estancamiento}
-Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedió a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en la Cuadro~\ref{tab:calibracion_sa}.
+Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\alpha = 1.0$, se procedió a aislar el impacto de la temperatura inicial ($T_0$), la tasa de enfriamiento (\texttt{COOLING\_RATE}) y el umbral de estancamiento (\texttt{MAX\_STAGNATION}). Los resultados de estas tres fases consecutivas se consolidan en el Cuadro~\ref{tab:calibracion_sa}.
+
+\vspace{-5mm}
 
 \begin{table}[htbp]
 \centering
@@ -686,7 +691,7 @@ Tomando como base la instancia mediana de 400 clientes con un valor fijo de $\al
 \end{tabularx}
 \end{table}
 
-La Cuadro~\ref{tab:calibracion_sa} resume el proceso de calibración realizado sobre la instancia de 400 clientes.
+El Cuadro~\ref{tab:calibracion_sa} resume el proceso de calibración realizado sobre la instancia de 400 clientes.
 
 La mejor temperatura inicial fue $T_0=5000$, mientras que una tasa de enfriamiento de $0.98$ produjo el menor valor de función objetivo.
 Respecto al criterio de estancamiento, el desempeño mejoró progresivamente al aumentar \texttt{MAX\_STAGNATION},
@@ -695,6 +700,7 @@ por lo que dicha configuración fue seleccionada para la evaluación final.
 
 \subsection{Análisis de convergencia y robustez}
 
+\vspace{-5mm}
 \begin{table}[htbp]
 \centering
 \caption{Análisis de convergencia, calidad de resultados y robustez de la metaheurística.}
@@ -712,8 +718,18 @@ por lo que dicha configuración fue seleccionada para la evaluación final.
 \end{tabular}
 \end{table}
 
+\vspace{-5mm}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\textwidth]{figure002.png}
+\caption{Escalabilidad del tiempo promedio de ejecución en segundos para cada instancia evaluada.}
+\label{fig:escalabilidad_tiempo}
+\end{figure}
+\vspace{-2mm}
+
 Para evaluar la robustez del algoritmo, cada instancia fue ejecutada cinco veces utilizando distintas semillas aleatorias.
-La Cuadro~\ref{tab:analisis_convergencia} presenta el mejor, peor y promedio valor de la función objetivo,
+El Cuadro~\ref{tab:analisis_convergencia} presenta el mejor, peor y promedio valor de la función objetivo,
 junto con la desviación estándar y el tiempo promedio de ejecución.
 
 Los resultados muestran un incremento progresivo del tiempo computacional a medida que aumenta el tamaño de la instancia,
