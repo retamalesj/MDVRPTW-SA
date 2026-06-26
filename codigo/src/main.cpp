@@ -113,22 +113,22 @@ int main(int argc, char* argv[])
   #ifdef DEBUG_MODE
     cout << "\n--- SOLUCION INICIAL ---\n";
 
-    for (size_t r = 0; r < sol.routes.size(); r++)
+    for (size_t r = 0; r < initialSolution.routes.size(); r++)
     {
       int load = 0;
 
-      for (int c : sol.routes[r].customers)
+      for (int c : initialSolution.routes[r].customers)
       {
         load += instance.allNodes[c].demand;
       }
 
       cout << "Ruta " << r
-          << " | Depot: " << instance.allNodes[sol.routes[r].depot].id
+          << " | Depot: " << instance.allNodes[initialSolution.routes[r].depot].id
           << " | Carga: " << load
           << "/" << instance.capacity
           << " | Clientes: ";
 
-      for (int c : sol.routes[r].customers)
+      for (int c : initialSolution.routes[r].customers)
       {
         cout << instance.allNodes[c].id << " ";
       }
@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
 
     cout << "\n--- REPRESENTACION ---\n";
 
-    for (const Route &route : sol.routes)
+    for (const Route &route : initialSolution.routes)
 {
     cout << "{ depot = "
          << route.depot
