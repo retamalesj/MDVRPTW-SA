@@ -7,6 +7,7 @@ documento: $(texfile).tex $(bibfile)
 	bibtex $(texfile).aux
 	bibtex $(texfile).aux
 	latex $(texfile).tex
+	latex $(texfile).tex
 	dvipdfmx $(texfile).dvi
 
 clean:
