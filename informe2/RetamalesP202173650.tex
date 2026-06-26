@@ -479,7 +479,7 @@ f(S) = \sum_{r \in S} D(r) + \alpha \cdot P_{tiempo}
 $$
 
 donde $D(r)$ corresponde a la distancia total recorrida y $P_{tiempo}$ representa la tardanza acumulada respecto a las
-ventanas de tiempo. La incorporación de esta penalización permite explorar soluciones temporalmente
+ventanas de tiempo. La incorporación de esta penalización permite tratar las ventanas de tiempo como restricciones blandas, permitiendo explorar soluciones temporalmente
 infactibles durante la búsqueda. El parámetro $\alpha$ controla el equilibrio entre minimizar la distancia
 y respetar las restricciones temporales: valores altos favorecen la factibilidad, mientras que valores bajos aumentan la exploración.
 
@@ -495,16 +495,17 @@ La distribución de probabilidades prioriza la intensificación mediante modific
 mientras que \textit{Relocate} y \textit{Split} favorecen la diversificación al introducir cambios estructurales que
 permiten escapar de óptimos locales.
 
-Tras generar un vecino, se verifica la restricción de capacidad ($Q$). Las soluciones que la incumplen se descartan
-inmediatamente. Para los vecinos factibles se calcula la diferencia de evaluación $\Delta = f(S_{vecino}) - f(S)$:
-las mejoras se aceptan de forma directa, mientras que las soluciones de peor calidad se aceptan con probabilidad $e^{-\Delta/T}$.
+Al generar un vecino mediante los operadores, cualquier conflicto con las restricciones se registra y evalúa de forma posterior a su modificación.
+Específicamente, tras aplicar un movimiento, se verifica la restricción de capacidad ($Q$), descartando inmediatamente la
+solución en el flujo principal si esta se incumple.
+Para los vecinos factibles que superan esta validación, se calcula la diferencia de evaluación
+$\Delta = f(S_{vecino}) - f(S)$: las mejoras se aceptan de forma directa, mientras que las soluciones de peor calidad
+se aceptan con probabilidad $e^{-\Delta/T}$.
 
 La mejor solución encontrada ($S_{best}$) se actualiza cada vez que se obtiene un menor costo. Paralelamente,
 la temperatura disminuye de forma geométrica cada $IntervaloEnfriamiento$ iteraciones. Si se alcanza el límite
 de $MaxEstancamiento$, se aplica un recalentamiento que restablece la temperatura al 30\% de $T_{inicial}$
 para favorecer la salida de óptimos locales.
-
-Tras generar un vecino, se verifica la restricción de capacidad ($Q$), descartando inmediatamente cualquier solución inválida. En contraste, las ventanas de tiempo se manejan como restricciones blandas mediante la penalización en $f(S)$, permitiendo explorar estados temporalmente infactibles. Para los vecinos con capacidad válida, se calcula la diferencia de evaluación $\Delta = f(S_{vecino}) - f(S)$: las mejoras se aceptan de forma directa, mientras que las soluciones de peor calidad se aceptan con probabilidad $e^{-\Delta/T}$.
 
 Los parámetros $T_{inicial}$, $IntervaloEnfriamiento$, $MaxIteraciones$ y $MaxEstancamiento$ controlan
 respectivamente el nivel de exploración inicial, la velocidad de enfriamiento, la duración de la búsqueda
