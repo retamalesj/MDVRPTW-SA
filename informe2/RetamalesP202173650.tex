@@ -759,27 +759,29 @@ penalizada demostró ser una propuesta metodológica adecuada, logrando resolver
 asignación, ruteo y cumplimiento de ventanas de tiempo asociadas al problema.
 
 Desde el punto de vista experimental, las conclusiones se justifican directamente en los resultados cuantitativos consolidados.
-La metaheurística demostró una alta robustez al mantener una dispersión acotada entre ejecuciones estocásticas; incluso en
+Esta técnica demostró una alta robustez al mantener una dispersión acotada entre ejecuciones estocásticas; incluso en
 la instancia más compleja de 1000 clientes, la desviación estándar se posicionó en un $2,5\%$ respecto al promedio
 ($98508,04$). Asimismo, el algoritmo exhibió una escalabilidad computacional sobresaliente y viable para entornos
 profesionales, requiriendo un promedio de apenas 3,77 segundos para la instancia menor de 25 clientes y logrando resolver
 la instancia crítica de 1000 clientes en un tiempo promedio de 84,05 segundos.
 
-El proceso de sintonización secuencial permitió aislar y validar el impacto crítico de los parámetros de control,
+El proceso de ajuste de parámetros permitió aislar y validar el impacto crítico de los parámetros de control,
 condiciéndose plenamente con los objetivos de eficiencia planteados. Se determinó de forma empírica que el comportamiento
 del algoritmo alcanza su rendimiento óptimo bajo la configuración $\alpha=1$, $T_0=5000$, \texttt{COOLING\_RATE} $=0.98$ y un
 umbral de \texttt{MAX\_STAGNATION} $=20000$ iteraciones. Los resultados contradijeron el supuesto inicial de que
 una penalización extrema de ventanas de tiempo ($\alpha \geq 3$) induciría soluciones más competitivas; por el contrario,
-se demostró que valores elevados de $\alpha$ vuelven restrictivo el tránsito entre vecindarios, inflando la distancia total
-y desoptimizando la función objetivo. En su lugar, el equilibrio de $\alpha=1$ operó como el \textit{sweet spot} que permite
-explorar zonas transitoriamente infactibles para alcanzar óptimos globales superiores.
+se demostró que valores elevados de $\alpha$ vuelven restrictivo moverse entre vecindarios, inflando la distancia total
+y desoptimizando la función objetivo. En su lugar, el equilibrio de $\alpha=1$ operó como configuración óptima que permite
+explorar zonas transitoriamente infactibles para alcanzar óptimos locales superiores.
 
-obstante, como desventaja intrínseca se reconoce su sensibilidad a la calibración inicial, puesto que un esquema de
-enfriamiento mal configurado degrada la convergencia. En comparación con enfoques heurísticos rígidos, el uso
-de múltiples vecindades dotó al algoritmo de una flexibilidad crucial para escapar de óptimos locales.
-Como trabajo futuro, a partir de las limitaciones observadas en las instancias de mayor densidad, se
-considera relevante incorporar un mecanismo de control adaptativo que modifique dinámicamente los parámetros
-de control durante las iteraciones y explorar la hibridación con estrategias de búsqueda local intensiva.
+En términos de ventajas frente al estado del arte, la propuesta destaca por su bajo costo computacional,
+robustez ante la aleatoriedad y simplicidad de implementación. No obstante, como desventaja intrínseca se
+reconoce su sensibilidad a la calibración inicial, puesto que un esquema de enfriamiento mal configurado
+degrada la convergencia. En comparación con enfoques heurísticos rígidos, el uso de múltiples vecindades
+dotó al algoritmo de una flexibilidad crucial para escapar de óptimos locales. Como trabajo futuro, a
+partir de las limitaciones observadas en las instancias de mayor densidad, se considera relevante incorporar
+un mecanismo de control adaptativo que modifique dinámicamente los parámetros de control durante las iteraciones
+y explorar la hibridación con estrategias de búsqueda local intensiva.
 
 \begin{small}
 \section{Uso LLMs}
