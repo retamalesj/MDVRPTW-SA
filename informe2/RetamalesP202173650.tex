@@ -751,20 +751,35 @@ entre ejecuciones.
 
 \section{Conclusiones}
 % Conclusiones RELEVANTES del estudio realizado. Incluir conclusiones acerca de la adecuación de la propuesta de solución al problema que se busca resolver. Listar y analizar ventajas y desventajas de la propuesta en base a los resultados obtenidos y comportamiento de la propuesta en diferentes escenarios (problemas/instancias/parámetros). Incluir trabajo futuro en base a las conclusiones.
+El Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW) constituye un desafío de optimización combinatoria de alta
+complejidad. Su naturaleza NP-hard y el crecimiento exponencial del espacio de búsqueda justifican plenamente el uso de
+técnicas metaheurísticas frente a la inviabilidad operativa de los métodos exactos en escenarios de gran escala. En este
+trabajo, la implementación de Simulated Annealing (SA) con operadores de vecindad heterogéneos y una función objetivo
+penalizada demostró ser una propuesta metodológica adecuada, logrando resolver de forma sistemática las variantes de
+asignación, ruteo y cumplimiento de ventanas de tiempo asociadas al problema.
 
-El Multi-Depot Vehicle Routing Problem with Time Windows (MDVRP-TW) constituye un problema de optimización combinatoria de alta complejidad, caracterizado por la integración simultánea de decisiones de asignación de clientes a depósitos, construcción de rutas y cumplimiento de restricciones temporales. Su naturaleza NP-hard y el crecimiento exponencial del espacio de búsqueda explican la dificultad de obtener soluciones óptimas mediante métodos exactos en instancias de tamaño realista, lo que justifica el uso de técnicas metaheurísticas.
+Desde el punto de vista experimental, las conclusiones se justifican directamente en los resultados cuantitativos consolidados.
+La metaheurística demostró una alta robustez al mantener una dispersión acotada entre ejecuciones estocásticas; incluso en
+la instancia más compleja de 1000 clientes, la desviación estándar se posicionó en un $2,5\%$ respecto al promedio
+($98508,04$). Asimismo, el algoritmo exhibió una escalabilidad computacional sobresaliente y viable para entornos
+profesionales, requiriendo un promedio de apenas 3,77 segundos para la instancia menor de 25 clientes y logrando resolver
+la instancia crítica de 1000 clientes en un tiempo promedio de 84,05 segundos.
 
-En este trabajo se implementó una estrategia basada en Simulated Annealing (SA), orientada a explorar eficientemente el espacio de soluciones mediante aceptación probabilística de movimientos y el uso de operadores de vecindad heterogéneos. La propuesta incorpora además una función objetivo penalizada que permite manejar violaciones de ventanas de tiempo durante la búsqueda, favoreciendo la exploración de regiones inicialmente infactibles con el objetivo de mejorar la calidad final de las soluciones.
+El proceso de sintonización secuencial permitió aislar y validar el impacto crítico de los parámetros de control,
+condiciéndose plenamente con los objetivos de eficiencia planteados. Se determinó de forma empírica que el comportamiento
+del algoritmo alcanza su rendimiento óptimo bajo la configuración $\alpha=1$, $T_0=5000$, \texttt{COOLING\_RATE} $=0.98$ y un
+umbral de \texttt{MAX\_STAGNATION} $=20000$ iteraciones. Los resultados contradijeron el supuesto inicial de que
+una penalización extrema de ventanas de tiempo ($\alpha \geq 3$) induciría soluciones más competitivas; por el contrario,
+se demostró que valores elevados de $\alpha$ vuelven restrictivo el tránsito entre vecindarios, inflando la distancia total
+y desoptimizando la función objetivo. En su lugar, el equilibrio de $\alpha=1$ operó como el \textit{sweet spot} que permite
+explorar zonas transitoriamente infactibles para alcanzar óptimos globales superiores.
 
-Desde el punto de vista experimental, los resultados obtenidos evidencian que la metodología propuesta es capaz de generar soluciones factibles y de buena calidad de forma consistente en instancias de 25 hasta 1000 clientes. Asimismo, se observa una escalabilidad adecuada en términos de tiempo de ejecución, manteniéndose dentro de márgenes razonables incluso para instancias de gran tamaño. El análisis de robustez muestra una variabilidad acotada entre ejecuciones, aunque creciente a medida que aumenta la dimensión del problema, lo cual es consistente con el carácter estocástico del método.
-
-Respecto al proceso de calibración, los resultados confirman que el desempeño del algoritmo es sensible a la configuración de parámetros, particularmente a la temperatura inicial, la tasa de enfriamiento y el parámetro de penalización asociado a las ventanas de tiempo. En particular, configuraciones intermedias de estos parámetros permiten alcanzar un mejor equilibrio entre exploración del espacio de búsqueda y explotación de soluciones prometedoras.
-
-En términos de ventajas, la propuesta destaca por su simplicidad de implementación, flexibilidad y capacidad de adaptación a instancias de distinto tamaño. Adicionalmente, el uso de múltiples operadores de vecindad permite diversificar la exploración del espacio de soluciones, mejorando la capacidad del algoritmo para escapar de óptimos locales. Como desventajas, se identifica la dependencia significativa de la calibración de parámetros y la variabilidad inherente asociada a la naturaleza estocástica del método, especialmente en instancias de mayor escala.
-
-En relación con el estado del arte, la propuesta se posiciona como una alternativa competitiva frente a otras metaheurísticas clásicas como Búsqueda Tabú, VNS y Algoritmos Genéticos, destacando principalmente en términos de simplicidad conceptual y costo computacional. Sin embargo, enfoques híbridos más avanzados reportados en la literatura pueden alcanzar mejores niveles de calidad, aunque a costa de una mayor complejidad de implementación y ajuste.
-
-Finalmente, los resultados obtenidos son coherentes con los objetivos planteados en la formulación de la propuesta, en el sentido de que el algoritmo logra generar soluciones factibles y de calidad razonable en tiempos acotados. No obstante, también se observa que el desempeño depende fuertemente de la calibración experimental, lo que confirma los supuestos iniciales asociados al carácter heurístico del enfoque. Como trabajo futuro, se considera relevante incorporar estrategias híbridas con búsqueda local intensiva, mecanismos adaptativos de control de parámetros y comparaciones sistemáticas con métodos del estado del arte.
+obstante, como desventaja intrínseca se reconoce su sensibilidad a la calibración inicial, puesto que un esquema de
+enfriamiento mal configurado degrada la convergencia. En comparación con enfoques heurísticos rígidos, el uso
+de múltiples vecindades dotó al algoritmo de una flexibilidad crucial para escapar de óptimos locales.
+Como trabajo futuro, a partir de las limitaciones observadas en las instancias de mayor densidad, se
+considera relevante incorporar un mecanismo de control adaptativo que modifique dinámicamente los parámetros
+de control durante las iteraciones y explorar la hibridación con estrategias de búsqueda local intensiva.
 
 \begin{small}
 \section{Uso LLMs}
