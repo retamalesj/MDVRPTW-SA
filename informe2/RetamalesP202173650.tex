@@ -504,6 +504,8 @@ la temperatura disminuye de forma geométrica cada $IntervaloEnfriamiento$ itera
 de $MaxEstancamiento$, se aplica un recalentamiento que restablece la temperatura al 30\% de $T_{inicial}$
 para favorecer la salida de óptimos locales.
 
+Tras generar un vecino, se verifica la restricción de capacidad ($Q$), descartando inmediatamente cualquier solución inválida. En contraste, las ventanas de tiempo se manejan como restricciones blandas mediante la penalización en $f(S)$, permitiendo explorar estados temporalmente infactibles. Para los vecinos con capacidad válida, se calcula la diferencia de evaluación $\Delta = f(S_{vecino}) - f(S)$: las mejoras se aceptan de forma directa, mientras que las soluciones de peor calidad se aceptan con probabilidad $e^{-\Delta/T}$.
+
 Los parámetros $T_{inicial}$, $IntervaloEnfriamiento$, $MaxIteraciones$ y $MaxEstancamiento$ controlan
 respectivamente el nivel de exploración inicial, la velocidad de enfriamiento, la duración de la búsqueda
 y la activación del mecanismo de recalentamiento. El procedimiento general se resume en el siguiente pseudocódigo:
@@ -778,7 +780,7 @@ Finalmente, los resultados obtenidos son coherentes con los objetivos planteados
 \subsection{ChatGPT 5.5}
 \begin{enumerate}
   \item \textbf{Herramienta utilizada:} ChatGPT 5.5 (OpenAI), versión gratuita accesible desde chatgpt.com.
-  \item \textbf{Propósito de uso:} Apoyo en la implementación de software en C++, incluyendo corrección de tipado, refactorización, estructuración del proyecto, creación del Makefile y debugging de errores. Además, revisión de redacción, ortografía y cumplimiento de formato.
+  \item \textbf{Propósito de uso:} Apoyo en la implementación de software en C++, incluyendo corrección de tipado, documentación, refactorización, estructuración del proyecto, creación del Makefile y debugging de errores. Además, revisión de redacción, ortografía y cumplimiento de formato.
   \item \textbf{Prompts relevantes:} ``¿Cómo puedo corregir este error de tipado?'', ``refactoriza este bloque de código para mejorar la legibilidad'', ``recomiendame como estructurar mi proyecto...'', ``genera un Makefile para este proyecto'' y ``revisa este párrafo para mejorar su redacción académica''.
   \item \textbf{Nivel de edición:} Alto. El código no fue copiado íntegramente; se utilizó para corregir problemas puntuales, mejorar la arquitectura y resolver bugs. Las sugerencias fueron revisadas y adaptadas manualmente.
   \item \textbf{Validación:} El código fue validado por juicio propio, contrastando el funcionamiento con la lógica requerida y observando el código. La redacción fue verificada manualmente contra la rúbrica.
